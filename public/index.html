@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Scan Car - Tổng hợp xe mới</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <header class="hero">
+        <div class="hero-background">
+          <div class="hero-circle hero-circle-1"></div>
+          <div class="hero-circle hero-circle-2"></div>
+          <div class="hero-circle hero-circle-3"></div>
+        </div>
+        <div class="hero-content">
+          <div class="hero-text">
+            <div class="badge-group">
+              <span class="badge badge-accent">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+                Tự động
+              </span>
+            </div>
+            <h1 class="hero-title">
+              <span class="hero-icon">🚗</span>
+            Edukids scan car
+            </h1>
+            <p class="lead">
+              Thu thập và chuẩn hóa danh sách xe đang bán từ <strong>Xe Lướt Toàn Trung</strong> và <strong>Anh Lượng Auto</strong>.
+            </p>
+            <div class="hero-features">
+              <div class="feature-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Cập nhật realtime</span>
+              </div>
+              <div class="feature-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Dữ liệu chuẩn hóa</span>
+              </div>
+              <div class="feature-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Dễ dàng tìm kiếm</span>
+              </div>
+            </div>
+          </div>
+          <div class="hero-actions">
+            <button id="refresh-btn" class="button primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+              </svg>
+              Làm mới dữ liệu
+            </button>
+            <div class="timestamp">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span id="updated-at">---</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Trạng thái nguồn dữ liệu</h2>
+          <div id="status-message" class="status"></div>
+        </div>
+        <div id="source-summary" class="source-summary"></div>
+      </section>
+
+      <section class="panel filter-panel">
+        <div class="filter-header">
+          <h3>Bộ lọc tìm kiếm</h3>
+          <button id="toggle-filters" class="toggle-filters-btn" title="Ẩn/Hiện bộ lọc">
+            <svg class="chevron-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+        </div>
+        <div class="filters" id="filters-content">
+          <label class="filter">
+            <span class="filter-label">Tìm kiếm</span>
+            <input id="search-input" type="search" placeholder="Tên xe, năm, nhiên liệu..." />
+          </label>
+          <div class="filter">
+            <span class="filter-label">Nguồn</span>
+            <div id="source-filters" class="source-filters"></div>
+          </div>
+          <div class="filter">
+            <span class="filter-label">Thương hiệu</span>
+            <div class="multi-select-wrapper">
+              <div class="multi-select-container" id="brand-select-container">
+                <div class="multi-select-input" id="brand-select-input">
+                  <div class="selected-tags" id="brand-selected-tags"></div>
+                  <input
+                    type="text"
+                    placeholder="Chọn thương hiệu..."
+                    id="brand-search-input"
+                    autocomplete="off"
+                  />
+                  <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </div>
+                <div class="multi-select-dropdown" id="brand-dropdown">
+                  <div class="dropdown-options" id="brand-options"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="filter">
+            <span class="filter-label">Giá (triệu VNĐ)</span>
+            <div class="price-range-container">
+              <div class="price-inputs">
+                <input type="number" id="price-min" placeholder="Tối thiểu" min="0" />
+                <span>-</span>
+                <input type="number" id="price-max" placeholder="Tối đa" min="0" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Danh sách xe</h2>
+          <div class="panel-controls">
+            <div class="sort-controls">
+              <label class="filter-label">Sắp xếp:</label>
+              <select id="sort-select" class="sort-select">
+                <option value="newest">Mới nhất</option>
+                <option value="price-asc">Giá thấp đến cao</option>
+                <option value="price-desc">Giá cao đến thấp</option>
+                <option value="brand">Thương hiệu A-Z</option>
+              </select>
+            </div>
+            <div class="view-toggle">
+              <button id="view-grid" class="view-btn active" title="Xem dạng lưới">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="14" width="7" height="7"></rect>
+                  <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+              </button>
+              <button id="view-list" class="view-btn" title="Xem dạng danh sách">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="8" y1="6" x2="21" y2="6"></line>
+                  <line x1="8" y1="12" x2="21" y2="12"></line>
+                  <line x1="8" y1="18" x2="21" y2="18"></line>
+                  <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                  <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                  <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+            <p id="car-count" class="muted">---</p>
+          </div>
+        </div>
+        <div id="car-grid" class="car-grid"></div>
+      </section>
+    </main>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
