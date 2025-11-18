@@ -14,7 +14,8 @@ const state = {
   isLoading: false,
   errors: [],
   brandOptions: [],
-  brandDropdownOpen: false
+  brandDropdownOpen: false,
+  autoReloadTimerId: null
 };
 
 const els = {
@@ -41,6 +42,45 @@ const els = {
 };
 
 const placeholderImage = 'https://placehold.co/600x400?text=No+Image';
+const CACHE_KEY = 'scanCar:data';
+const CACHE_TTL_MS = 2 * 60 * 60 * 1000; // 2 hours
+const AUTO_RELOAD_INTERVAL_MS = CACHE_TTL_MS;
+
+const dataCache = {
+  save(payload) {
+    if (typeof localStorage === 'undefined') return;
+    try {
+      localStorage.setItem(
+        CACHE_KEY,
+        JSON.stringify({
+          payload,
+          cachedAt: Date.now()
+        })
+      );
+    } catch (error) {
+      console.warn('Không thể lưu cache', error);
+    }
+  },
+  load() {
+    if (typeof localStorage === 'undefined') return null;
+    try {
+      const raw = localStorage.getItem(CACHE_KEY);
+      if (!raw) return null;
+      const record = JSON.parse(raw);
+      if (!record?.payload || !record.cachedAt) {
+        return null;
+      }
+      if (Date.now() - record.cachedAt > CACHE_TTL_MS) {
+        localStorage.removeItem(CACHE_KEY);
+        return null;
+      }
+      return record.payload;
+    } catch (error) {
+      console.warn('Không thể đọc cache', error);
+      return null;
+    }
+  }
+};
 
 const formatDate = (value) => {
   if (!value) return '---';
@@ -78,8 +118,11 @@ const extractPrice = (priceText) => {
   return null;
 };
 
-const setLoading = (flag) => {
+const setLoading = (flag, { silent = false } = {}) => {
   state.isLoading = flag;
+  if (silent) {
+    return;
+  }
   els.refreshBtn.disabled = flag;
   els.refreshBtn.textContent = flag ? 'Đang tải...' : 'Làm mới dữ liệu';
 };
@@ -429,8 +472,38 @@ const renderCars = () => {
   els.carGrid.innerHTML = cardHtml;
 };
 
-const fetchCars = async ({ refresh = false } = {}) => {
-  setLoading(true);
+const applyPayload = (payload) => {
+  if (!payload) return;
+  state.data = payload.data || [];
+  state.sources = payload.sources || [];
+  state.errors = payload.errors || [];
+  state.updatedAt = payload.updatedAt || null;
+
+  renderSourceSummary();
+  renderSourceFilters();
+  renderBrandFilters();
+  renderStatus();
+  renderCars();
+};
+
+const hydrateFromCache = () => {
+  const cached = dataCache.load();
+  if (cached) {
+    applyPayload(cached);
+  }
+};
+
+const scheduleAutoReload = () => {
+  if (state.autoReloadTimerId) {
+    clearTimeout(state.autoReloadTimerId);
+  }
+  state.autoReloadTimerId = setTimeout(() => {
+    fetchCars({ refresh: true, silent: true });
+  }, AUTO_RELOAD_INTERVAL_MS);
+};
+
+const fetchCars = async ({ refresh = false, silent = false } = {}) => {
+  setLoading(true, { silent });
   try {
     const query = refresh ? '?refresh=true' : '';
     const response = await fetch(`/api/cars${query}`);
@@ -438,22 +511,15 @@ const fetchCars = async ({ refresh = false } = {}) => {
       throw new Error('Không thể tải dữ liệu');
     }
     const payload = await response.json();
-    state.data = payload.data || [];
-    state.sources = payload.sources || [];
-    state.errors = payload.errors || [];
-    state.updatedAt = payload.updatedAt;
-
-    renderSourceSummary();
-    renderSourceFilters();
-    renderBrandFilters();
-    renderStatus();
-    renderCars();
+    applyPayload(payload);
+    dataCache.save(payload);
   } catch (error) {
     console.error(error);
     els.statusMessage.textContent = 'Không thể tải dữ liệu. Vui lòng thử lại sau.';
     els.statusMessage.classList.add('error');
   } finally {
-    setLoading(false);
+    setLoading(false, { silent });
+    scheduleAutoReload();
   }
 };
 
@@ -534,4 +600,5 @@ document.addEventListener('click', (e) => {
 
 els.refreshBtn.addEventListener('click', () => fetchCars({ refresh: true }));
 
+hydrateFromCache();
 fetchCars();

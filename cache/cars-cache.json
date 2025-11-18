@@ -1,0 +1,5085 @@
+{
+  "cars": [
+    {
+      "id": "xeluottoantrung-4169",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Chevrolet Cruze AT 2014",
+      "priceText": "228 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z72183384534568d95208cfbc2ea5fc737d496518fb315-5526.jpg",
+      "url": "https://xeluottoantrung.com/chevrolet-cruze-at-2014",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "96.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2014"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Chevrolet",
+      "brandSlug": "chevrolet"
+    },
+    {
+      "id": "xeluottoantrung-4018",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Chevrolet Cruze LT MT 2017",
+      "priceText": "249 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z71632103493638608fb38ab049edcd7a4a4d6a0723e41-4397.jpg",
+      "url": "https://xeluottoantrung.com/chevrolet-cruze-lt-mt-2017",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "73.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số sàn"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2017"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Chevrolet",
+      "brandSlug": "chevrolet"
+    },
+    {
+      "id": "otoanhluong-115655",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Ford EcoSport Titanium 1.5L AT",
+      "priceText": "370 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/45/115655/small_3e8488262d0fff0995d39f580b29940d.jpg",
+      "url": "https://otoanhluong.vn/Xe-ford-ecosport-titanium_1.5l_at-2018-115655",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "111 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2018"
+        },
+        {
+          "label": "ODO",
+          "value": "39.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "SUV"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "xeluottoantrung-3918",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Ford Ecosport Titanium 2017",
+      "priceText": "369 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z71390955422312d5cd5a419094daee7aba193a6f4337a-8078.jpg",
+      "url": "https://xeluottoantrung.com/ford-ecosport-titanium-2017",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "33.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2017"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "xeluottoantrung-3571",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Ford Everest MT 2007",
+      "priceText": "135 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z6996810615451a4b8bd223d1b145c0510ab4c09a9ee95-1514.jpg",
+      "url": "https://xeluottoantrung.com/ford-everest-mt-2007",
+      "attributes": [
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số sàn"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2007"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "xeluottoantrung-3888",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Ford Everest Titanium 4x2 2019 128.000km",
+      "priceText": "787 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z71542076911374ee1bf676b0ed3a07363361540abacec-5800.jpg",
+      "url": "https://xeluottoantrung.com/ford-everest-titanium-4x2-2019-128000km",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "128.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Biển số",
+          "value": "2019"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "xeluottoantrung-3826",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Ford Everest Titanium 4x2 2019 68.000km",
+      "priceText": "809 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7204442218634545586ac4ebbeff540719e9c089b3525-1451.jpg",
+      "url": "https://xeluottoantrung.com/ford-everest-titanium-4x2-2019-68000km",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "68.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Biển số",
+          "value": "2019"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "xeluottoantrung-3934",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Ford Everest Titanium 4x2 2024",
+      "priceText": "1 Tỷ 237 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z71229816656890c0c82baa72c5af8b38f353191f37bfc-7576.jpg",
+      "url": "https://xeluottoantrung.com/ford-everest-titanium-4x2-2024",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "35.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "xeluottoantrung-4050",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Ford Everest Titanium 4x4 2025",
+      "priceText": "1 Tỷ 450 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7184779054841bd0cedd52258411d4be4f35880791da9-5248.jpg",
+      "url": "https://xeluottoantrung.com/ford-everest-titanium-4x4-2025",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "7.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Biển số",
+          "value": "2025"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "otoanhluong-115678",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Ford Ranger Raptor 2.0L 4x4 AT",
+      "priceText": "1 Tỷ 190 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/46/115678/small_8bf58f28d6f64e2e7d3de1a217fc5610.jpg",
+      "url": "https://otoanhluong.vn/Xe-ford-ranger-raptor_2.0l_4x4_at-2024-115678",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "357 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2024"
+        },
+        {
+          "label": "ODO",
+          "value": "12.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Pickup"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "otoanhluong-115662",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Ford Ranger Raptor 2.0L 4x4 AT",
+      "priceText": "1 Tỷ 170 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/45/115662/small_e66c27fa352284e00f2de11503a5d1d4.jpg",
+      "url": "https://otoanhluong.vn/Xe-ford-ranger-raptor_2.0l_4x4_at-2024-115662",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "351 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2024"
+        },
+        {
+          "label": "ODO",
+          "value": "31.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Pickup"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "otoanhluong-115629",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Ford Ranger Raptor 2.0L 4x4 AT",
+      "priceText": "1 Tỷ 120 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/43/115629/small_4e265328ee5794ff7370c84ef6410178.jpg",
+      "url": "https://otoanhluong.vn/Xe-ford-ranger-raptor_2.0l_4x4_at-2023-115629",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "336 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2023"
+        },
+        {
+          "label": "ODO",
+          "value": "28.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Pickup"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "otoanhluong-Xe-ford-ranger-stormtrak_2.0l_4x4_at-2025-115689",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Ford Ranger Stormtrak 2.0L 4x4 AT",
+      "priceText": "980 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/47/115689/small_c5b67290a3f77a98b4be9ef558035c5c.jpg",
+      "url": "https://otoanhluong.vn/Xe-ford-ranger-stormtrak_2.0l_4x4_at-2025-115689",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "294 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2025"
+        },
+        {
+          "label": "ODO",
+          "value": "11.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Pickup"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "otoanhluong-Xe-ford-ranger-wildtrak_2.0l_4x4_at-2024-115693",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Ford Ranger Wildtrak 2.0L 4x4 AT",
+      "priceText": "925 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/47/115693/small_da493abc1dea0430386ff66bbe7d6059.jpg",
+      "url": "https://otoanhluong.vn/Xe-ford-ranger-wildtrak_2.0l_4x4_at-2024-115693",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "277 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2024"
+        },
+        {
+          "label": "ODO",
+          "value": "6.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Pickup"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "otoanhluong-Xe-ford-ranger-wildtrak_2.0l_4x4_at-2023-115684",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Ford Ranger Wildtrak 2.0L 4x4 AT",
+      "priceText": "820 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/46/115684/small_37df130bb00280e36a90e10bd43229ad.jpg",
+      "url": "https://otoanhluong.vn/Xe-ford-ranger-wildtrak_2.0l_4x4_at-2023-115684",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "246 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2023"
+        },
+        {
+          "label": "ODO",
+          "value": "35.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Pickup"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "xeluottoantrung-4180",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Ford Ranger Wildtrak 2023",
+      "priceText": "810 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z723377067640795e25c50fdac1a93364f2329e67b1caa-4764.jpg",
+      "url": "https://xeluottoantrung.com/ford-ranger-wildtrak-2023-50000",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "50.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Biển số",
+          "value": "2023"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "otoanhluong-Xe-ford-ranger-xls_2.0l_4x2_at-2024-115690",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Ford Ranger XLS 2.0L 4x2 AT",
+      "priceText": "660 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/47/115690/small_f80b079e0be6e834cf2bd78a03635aa8.jpg",
+      "url": "https://otoanhluong.vn/Xe-ford-ranger-xls_2.0l_4x2_at-2024-115690",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "198 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2024"
+        },
+        {
+          "label": "ODO",
+          "value": "27.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Pickup"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "otoanhluong-Xe-ford-ranger-xls_2.0l_4x2_at-2023-115683",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Ford Ranger XLS 2.0L 4x2 AT",
+      "priceText": "630 Triệu",
+      "thumbnail": "https://bonbanh.com/uploads/users/62462/car/6525400/m_1763022285.448.jpg",
+      "url": "https://otoanhluong.vn/Xe-ford-ranger-xls_2.0l_4x2_at-2023-115683",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "189 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2023"
+        },
+        {
+          "label": "ODO",
+          "value": "27.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Pickup"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "otoanhluong-115666",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Ford Ranger XLS 2.2L 4x2 AT",
+      "priceText": "490 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/45/115666/small_d1ca0497a106f61ae6defdde55f592eb.jpg",
+      "url": "https://otoanhluong.vn/Xe-ford-ranger-xls_2.2l_4x2_at-2019-115666",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "147 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2019"
+        },
+        {
+          "label": "ODO",
+          "value": "60.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Pickup"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "xeluottoantrung-3857",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Ford Ranger XLS AT 4x2 2021",
+      "priceText": "514 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7187844146536702b357c164fabd3b3c6df59d11716d6-4795.jpg",
+      "url": "https://xeluottoantrung.com/ford-ranger-xls-at-4x2-2021",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "129.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "xeluottoantrung-4056",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Ford Ranger XLS AT 4x2 2024",
+      "priceText": "657 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z720230776049787825e3289d0ffbfafdf5517e8915185-7831.jpg",
+      "url": "https://xeluottoantrung.com/ford-ranger-xls-at-4x2-2024",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "15.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "xeluottoantrung-4174",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Ford Ranger XLS MT 4x2 2021",
+      "priceText": "489 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7219652968748ba59a205d418025c42afa948004b5a9e-3240.jpg",
+      "url": "https://xeluottoantrung.com/ford-ranger-xls-mt-4x2-2021",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "91.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số sàn"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "xeluottoantrung-4132",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Ford Raptor 4x4 2022",
+      "priceText": "969 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7202124909732075bc1a5ac985dc24458df9763f2952c-5770.jpg",
+      "url": "https://xeluottoantrung.com/ford-raptor-4x4-2022",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "37.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Biển số",
+          "value": "2022"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "xeluottoantrung-3784",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Honda Brio RS 2021",
+      "priceText": "364 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z67297264134429511a83a3a1170884163236594d7fb35-1042.jpg",
+      "url": "https://xeluottoantrung.com/honda-brio-rs-2021",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "47.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Honda",
+      "brandSlug": "honda"
+    },
+    {
+      "id": "xeluottoantrung-4104",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Honda City RS 2022",
+      "priceText": "470 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7223440329734ec7030a4db75107eeb4e360b3a6ddfad-6929.jpg",
+      "url": "https://xeluottoantrung.com/honda-city-rs-2022",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "55.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2022"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Honda",
+      "brandSlug": "honda"
+    },
+    {
+      "id": "xeluottoantrung-3990",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Honda CRV HEV RS 2024",
+      "priceText": "1 Tỷ 269 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z71915540268679b89f4034c591e2a7e271d15a62641d0-3618.jpg",
+      "url": "https://xeluottoantrung.com/honda-crv-hev-rs-2024",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "21.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng Điện"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Honda",
+      "brandSlug": "honda"
+    },
+    {
+      "id": "otoanhluong-Xe-honda-crv-l-2018-115688",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Honda CRV L",
+      "priceText": "705 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/46/115688/small_aa54af16a4c864cfd7378cc493be8f4d.jpg",
+      "url": "https://otoanhluong.vn/Xe-honda-crv-l-2018-115688",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "211 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2018"
+        },
+        {
+          "label": "ODO",
+          "value": "49.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "SUV"
+        }
+      ],
+      "brand": "Honda",
+      "brandSlug": "honda"
+    },
+    {
+      "id": "xeluottoantrung-4145",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Honda CRV L 2020",
+      "priceText": "832 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z720915111362510bb6f75fc6fd906f6e40b6063c40d09-1579.jpg",
+      "url": "https://xeluottoantrung.com/honda-crv-l",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "58.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2020"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Honda",
+      "brandSlug": "honda"
+    },
+    {
+      "id": "xeluottoantrung-4219",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Hyundai Custin 2.0T Premium 2024",
+      "priceText": "897 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z72361145616110ddc6d2f46dc303559c7b7bee2382d65-3340.jpg",
+      "url": "https://xeluottoantrung.com/hyundai-custin-20t-premium-2024",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "17.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Hyundai",
+      "brandSlug": "hyundai"
+    },
+    {
+      "id": "xeluottoantrung-4209",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Hyundai Elantra 1.6T 2018",
+      "priceText": "403 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7235781983427370ac4dba1be1e40b6e84d1bcdbb369d-5419.jpg",
+      "url": "https://xeluottoantrung.com/hyundai-elantra-16t-2018",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "116.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2018"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Hyundai",
+      "brandSlug": "hyundai"
+    },
+    {
+      "id": "xeluottoantrung-4213",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Hyundai Elantra 2.0 Cao Cấp 2022",
+      "priceText": "569 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z723611262148892fe2e2cbd6a216091fe97bf4a269cad-1278.jpg",
+      "url": "https://xeluottoantrung.com/hyundai-elantra-20-cao-cap-2022",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "33.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2022"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Hyundai",
+      "brandSlug": "hyundai"
+    },
+    {
+      "id": "xeluottoantrung-4007",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Hyundai Elantra AT 2020",
+      "priceText": "479 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7204405369504d0c4b1a4444323817d0589a839329dc3-4447.jpg",
+      "url": "https://xeluottoantrung.com/hyundai-elantra-at-2020",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "9.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2020"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Hyundai",
+      "brandSlug": "hyundai"
+    },
+    {
+      "id": "xeluottoantrung-4142",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Hyundai Kona Đặc Biệt 2019",
+      "priceText": "455 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7207487513004aa20a5e8a2b4ab5ee0abbed3788c5cf3-7470.jpg",
+      "url": "https://xeluottoantrung.com/hyundai-kona-dac-biet-2019",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "83.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2019"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Hyundai",
+      "brandSlug": "hyundai"
+    },
+    {
+      "id": "xeluottoantrung-3977",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Hyundai Palisade Premium Dầu 4x4 2024",
+      "priceText": "1 Tỷ 399 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z720917211681173e5623d97624a9cb45b05b23d5d914c-8857.jpg",
+      "url": "https://xeluottoantrung.com/hyundai-palisade-premium-dau-4x4-2024",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "12.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "6 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Hyundai",
+      "brandSlug": "hyundai"
+    },
+    {
+      "id": "otoanhluong-115615",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Hyundai SantaFe 2.2L",
+      "priceText": "800 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/43/115615/small_86f3f34edd47f5475698a1582df81d04.jpg",
+      "url": "https://otoanhluong.vn/Xe-hyundai-santafe-2.2l-2020-115615",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "240 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2020"
+        },
+        {
+          "label": "ODO",
+          "value": "57.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "SUV"
+        }
+      ],
+      "brand": "Hyundai",
+      "brandSlug": "hyundai"
+    },
+    {
+      "id": "xeluottoantrung-4202",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Hyundai Santafe Prestige Tiêu Chuẩn 4x4 2024",
+      "priceText": "1 Tỷ 122 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7191667810892240cc6a56c204e719976cdb425a318ff-3153.jpg",
+      "url": "https://xeluottoantrung.com/hyundai-santafe-prestige-tieu-chuan-4x4-2024",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "1.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Hyundai",
+      "brandSlug": "hyundai"
+    },
+    {
+      "id": "xeluottoantrung-4123",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Hyundai Santafe Xăng Đặc Biệt 2019",
+      "priceText": "787 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z719841621487221dbba305097a02817fd46435e7167da-6800.jpg",
+      "url": "https://xeluottoantrung.com/hyundai-santafe-xang-dac-biet-2019",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "55.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2019"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Hyundai",
+      "brandSlug": "hyundai"
+    },
+    {
+      "id": "xeluottoantrung-4214",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Hyundai Stargazer Tiêu Chuẩn 2024",
+      "priceText": "430 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z723382405690487ac7ba91d95a3bb6a8444c2e1a1decf-8386.jpg",
+      "url": "https://xeluottoantrung.com/hyundai-stargazer-tieu-chuan-2024",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "28.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Hyundai",
+      "brandSlug": "hyundai"
+    },
+    {
+      "id": "xeluottoantrung-4198",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Hyundai Tucson 1.6T 2024",
+      "priceText": "906 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7232125708806f917bcc788cb8f25141111403e0df67a-2851.jpg",
+      "url": "https://xeluottoantrung.com/hyundai-tucson-16t-2024",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "21.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Hyundai",
+      "brandSlug": "hyundai"
+    },
+    {
+      "id": "xeluottoantrung-4207",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Isuzu Dmaz Full 4x4 AT 2021",
+      "priceText": "599 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z723300640959949b613230c62c5d772f328670518b095-3273.jpg",
+      "url": "https://xeluottoantrung.com/isuzu-dmaz-full-4x4-at-2021",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "128.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Isuzu",
+      "brandSlug": "isuzu"
+    },
+    {
+      "id": "otoanhluong-115668",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Isuzu MU-X B7 Plus 1.9 4X2 AT",
+      "priceText": "825 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/45/115668/small_a4e5b1154f127fb3bcf51fdd3cbf22b6.jpg",
+      "url": "https://otoanhluong.vn/Xe-isuzu-mu-x-b7_plus_1.9_4x2_at-2022-115668",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "247 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2022"
+        },
+        {
+          "label": "ODO",
+          "value": "50.700"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "SUV"
+        }
+      ],
+      "brand": "Isuzu",
+      "brandSlug": "isuzu"
+    },
+    {
+      "id": "xeluottoantrung-4186",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "KIA Carens Luxury 2024",
+      "priceText": "549 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z722341521685046c263e9a6fb611e99c8710bc167a880-2135.jpg",
+      "url": "https://xeluottoantrung.com/kia-carens-luxury-2024",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "90.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Kia",
+      "brandSlug": "kia"
+    },
+    {
+      "id": "otoanhluong-115658",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Kia Carnival Signature 2.2D",
+      "priceText": "1 Tỷ 575 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/45/115658/small_e485cb2c0f7a7424caa053e8e14c70fc.jpg",
+      "url": "https://otoanhluong.vn/Xe-kia-carnival-signature_2.2d-2024-115658",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "472 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2024"
+        },
+        {
+          "label": "ODO",
+          "value": "16.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Van"
+        }
+      ],
+      "brand": "Kia",
+      "brandSlug": "kia"
+    },
+    {
+      "id": "xeluottoantrung-4108",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "KIA Carnival Xăng Signature 2022",
+      "priceText": "1 Tỷ 299 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z71944956081617de2aa590107fa5416b59a55b31520e0-3922.jpg",
+      "url": "https://xeluottoantrung.com/kia-carnival-xang-signature-2022",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "9.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2022"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Kia",
+      "brandSlug": "kia"
+    },
+    {
+      "id": "xeluottoantrung-4143",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "KIA Cerato 1.6AT 2018",
+      "priceText": "409 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7207488985497647281af8c228db941e34552eb8cb52f-5364.jpg",
+      "url": "https://xeluottoantrung.com/kia-cerato-16at-2018",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "67.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2018"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Kia",
+      "brandSlug": "kia"
+    },
+    {
+      "id": "xeluottoantrung-3892",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "KIA K3 Luxury 2021",
+      "priceText": "511 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7140517125367376c8dfe760872068f3a1a0621dca78a-8125.jpg",
+      "url": "https://xeluottoantrung.com/kia-k3-luxury-2021",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "47.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Kia",
+      "brandSlug": "kia"
+    },
+    {
+      "id": "xeluottoantrung-4212",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "KIA K3 Luxury 2021 77.000km",
+      "priceText": "503 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z72361117813193baba056add72ccd1ff8f81ebf5d6a87-2975.jpg",
+      "url": "https://xeluottoantrung.com/kia-k3-luxury-2021-77000km",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "77.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Kia",
+      "brandSlug": "kia"
+    },
+    {
+      "id": "xeluottoantrung-3905",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "KIA Morning 1.2 MT 2016",
+      "priceText": "160 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7219697739194d30446c91f3bcc36a226c9cd2ac45bf1-4781.jpg",
+      "url": "https://xeluottoantrung.com/kia-morning-12-mt-2016",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "223.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số sàn"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2016"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Kia",
+      "brandSlug": "kia"
+    },
+    {
+      "id": "xeluottoantrung-4139",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "KIA Rio MT 2016",
+      "priceText": "271 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z720748512555730f02d5a01fe2c1102452c8d10f74080-5635.jpg",
+      "url": "https://xeluottoantrung.com/kia-rio-mt-2016",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "69.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số sàn"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2016"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Kia",
+      "brandSlug": "kia"
+    },
+    {
+      "id": "xeluottoantrung-4201",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Kia Sedona Dầu 2018",
+      "priceText": "681 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7216012563820c1003db191bddb3c414fac08bec21072-2590.jpg",
+      "url": "https://xeluottoantrung.com/kia-sedona-dau-2018",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "63.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Biển số",
+          "value": "2018"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Kia",
+      "brandSlug": "kia"
+    },
+    {
+      "id": "otoanhluong-Xe-kia-soluto-1.4_mt_deluxe-2021-115691",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Kia Soluto 1.4 MT Deluxe",
+      "priceText": "295 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/47/115691/small_7312643d3f40f6ca8287c53341f6a721.jpg",
+      "url": "https://otoanhluong.vn/Xe-kia-soluto-1.4_mt_deluxe-2021-115691",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "88 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2021"
+        },
+        {
+          "label": "ODO",
+          "value": "48.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Sedan"
+        }
+      ],
+      "brand": "Kia",
+      "brandSlug": "kia"
+    },
+    {
+      "id": "otoanhluong-Xe-kia-sonet-luxury_1.5_at-2024-115685",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Kia Sonet Luxury 1.5 AT",
+      "priceText": "565 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/46/115685/small_19d86c76651c9cecd692595e41b75bcf.jpg",
+      "url": "https://otoanhluong.vn/Xe-kia-sonet-luxury_1.5_at-2024-115685",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "169 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2024"
+        },
+        {
+          "label": "ODO",
+          "value": "18.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "SUV"
+        }
+      ],
+      "brand": "Kia",
+      "brandSlug": "kia"
+    },
+    {
+      "id": "xeluottoantrung-4210",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Kia Sonet Luxury 2023",
+      "priceText": "521 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z72336377121220cf95a30545229672d7c73c825e31e5e-5868.jpg",
+      "url": "https://xeluottoantrung.com/kia-sonet-luxury-2023",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "15.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2023"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Kia",
+      "brandSlug": "kia"
+    },
+    {
+      "id": "xeluottoantrung-3749",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Lexus Es250 2021",
+      "priceText": "1 Tỷ 899 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z70966589624164a2361f578a111b405830d91fabb8575-7056.jpg",
+      "url": "https://xeluottoantrung.com/lexus-es250-2021",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "85.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Luxury Car"
+        }
+      ],
+      "brand": "Lexus",
+      "brandSlug": "lexus"
+    },
+    {
+      "id": "xeluottoantrung-4097",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Lexus RX350 Premium 2022",
+      "priceText": "3 Tỷ 199 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z71950471616609483a2a5742a1a16536716a779918825-3994.jpg",
+      "url": "https://xeluottoantrung.com/lexus-rx350-premium-2022",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "12.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2022"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Luxury Car"
+        }
+      ],
+      "brand": "Lexus",
+      "brandSlug": "lexus"
+    },
+    {
+      "id": "otoanhluong-115663",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Mazda 2 1.5 AT",
+      "priceText": "400 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/45/115663/small_92c9f8116116c9bea3c39aba2b912832.jpg",
+      "url": "https://otoanhluong.vn/Xe-mazda-2-1.5_at-2024-115663",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "120 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2024"
+        },
+        {
+          "label": "ODO",
+          "value": "2.400"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Sedan"
+        }
+      ],
+      "brand": "Mazda",
+      "brandSlug": "mazda"
+    },
+    {
+      "id": "otoanhluong-115548",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Mazda 3 1.5L Luxury",
+      "priceText": "545 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/40/115548/small_62ea47cddc326cf926562819ae5795f3.jpg",
+      "url": "https://otoanhluong.vn/Xe-mazda-3-1.5l_luxury-2022-115548",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "163 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2022"
+        },
+        {
+          "label": "ODO",
+          "value": "23.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Sedan"
+        }
+      ],
+      "brand": "Mazda",
+      "brandSlug": "mazda"
+    },
+    {
+      "id": "xeluottoantrung-4148",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Mazda 3 Luxury 2020",
+      "priceText": "490 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7211641272497125ff49497e02321b0582cee37a37d89-7159.jpg",
+      "url": "https://xeluottoantrung.com/mazda-3-luxury-2020",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "87.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2020"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Mazda",
+      "brandSlug": "mazda"
+    },
+    {
+      "id": "xeluottoantrung-4150",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Mazda 3 Luxury 2020 37.000km",
+      "priceText": "538 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z72116417097784694d81053f01e7b7931162b9e5ed6f4-4065.jpg",
+      "url": "https://xeluottoantrung.com/mazda-3-luxury-2020-37000km",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "37.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2020"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Mazda",
+      "brandSlug": "mazda"
+    },
+    {
+      "id": "xeluottoantrung-3931",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Mazda CX5 2.5G AT 2017",
+      "priceText": "489 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7160540342114d822565bfad431d79cbf889c097fe50e-5132.jpg",
+      "url": "https://xeluottoantrung.com/mazda-cx5-25g-at-2017",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "52.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2017"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Mazda",
+      "brandSlug": "mazda"
+    },
+    {
+      "id": "xeluottoantrung-4090",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Mazda Cx5 Premium Active 2023",
+      "priceText": "796 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7204400884862c0959d0443a56db6df0446022f06a94b-2424.jpg",
+      "url": "https://xeluottoantrung.com/mazda-cx5-premium-active-2023",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "9.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2023"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Mazda",
+      "brandSlug": "mazda"
+    },
+    {
+      "id": "xeluottoantrung-4133",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Mazda Cx5 Premium Sport 2023",
+      "priceText": "799 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7219422913994261c94550714e76516e0d93af3ccaa56-9113.jpg",
+      "url": "https://xeluottoantrung.com/mazda-cx5-premium-sport-2023",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "24.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2023"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Mazda",
+      "brandSlug": "mazda"
+    },
+    {
+      "id": "xeluottoantrung-3852",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Mazda CX8 Luxury 2020",
+      "priceText": "680 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7199347972433ecf4eadd7ace4973250aa6efe317b0e3-4659.jpg",
+      "url": "https://xeluottoantrung.com/mazda-cx8-luxury-2020",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "80.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2020"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Mazda",
+      "brandSlug": "mazda"
+    },
+    {
+      "id": "xeluottoantrung-4023",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Mercedes E180 2021",
+      "priceText": "1 Tỷ 139 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z71915556346882781b826340dc914d1c25dff8efad382-7196.jpg",
+      "url": "https://xeluottoantrung.com/mercedes-e180-2021",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "53.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Luxury Car"
+        }
+      ],
+      "brand": "Mercedes-Benz",
+      "brandSlug": "mercedes-benz"
+    },
+    {
+      "id": "xeluottoantrung-4166",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Mitsubishi Outlander CVT 2020",
+      "priceText": "661 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7216010761986900288b3b8e0f34b7955107cb807f59a-8744.jpg",
+      "url": "https://xeluottoantrung.com/mitsubishi-outlander-cvt-2020",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "18.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2020"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Mitsubishi",
+      "brandSlug": "mitsubishi"
+    },
+    {
+      "id": "xeluottoantrung-4200",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Mitsubishi Outlander Premium 2019",
+      "priceText": "519 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z72266786417033f585308034d25d39788d6d8018da864-3505.jpg",
+      "url": "https://xeluottoantrung.com/mitsubishi-outlander-premium-2019",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "144.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2019"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Mitsubishi",
+      "brandSlug": "mitsubishi"
+    },
+    {
+      "id": "otoanhluong-115607",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Mitsubishi Pajero Sport 2.4D 4x2 AT",
+      "priceText": "710 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/42/115607/small_c7bc2278e041cfa59b98bf82c525d136.jpg",
+      "url": "https://otoanhluong.vn/Xe-mitsubishi-pajero_sport-2.4d_4x2_at-2019-115607",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "213 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2019"
+        },
+        {
+          "label": "ODO",
+          "value": "74.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "SUV"
+        }
+      ],
+      "brand": "Mitsubishi",
+      "brandSlug": "mitsubishi"
+    },
+    {
+      "id": "otoanhluong-115647",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Mitsubishi Triton 4x4 AT Mivec Premium",
+      "priceText": "650 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/44/115647/small_1dabcbc6756a6f50fb143be7db17029e.jpg",
+      "url": "https://otoanhluong.vn/Xe-mitsubishi-triton-4x4_at_mivec_premium-2021-115647",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "195 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2021"
+        },
+        {
+          "label": "ODO",
+          "value": "94.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Pickup"
+        }
+      ],
+      "brand": "Mitsubishi",
+      "brandSlug": "mitsubishi"
+    },
+    {
+      "id": "xeluottoantrung-3961",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Mitsubishi Triton AT 4x2 2021",
+      "priceText": "599 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7184739776778c6d6fb4245184f4e8be40109d2a9a127-8919.jpg",
+      "url": "https://xeluottoantrung.com/mitsubishi-triton-at-4x2-2021",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "49.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Mitsubishi",
+      "brandSlug": "mitsubishi"
+    },
+    {
+      "id": "otoanhluong-115677",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Mitsubishi Triton GLX 2WD AT",
+      "priceText": "595 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/46/115677/small_97101b54e2098fc95c25f0f3986beb73.jpg",
+      "url": "https://otoanhluong.vn/Xe-mitsubishi-triton-glx_2wd_at-2025-115677",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "178 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2025"
+        },
+        {
+          "label": "ODO",
+          "value": "6.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Pickup"
+        }
+      ],
+      "brand": "Mitsubishi",
+      "brandSlug": "mitsubishi"
+    },
+    {
+      "id": "xeluottoantrung-4199",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Mitsubishi Triton Premium AT 4x2 2018",
+      "priceText": "452 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z72265818651399590c6ce99c58c8789de67f11482dfa4-5061.jpg",
+      "url": "https://xeluottoantrung.com/mitsubishi-triton-premium-at-4x2-2018",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "122.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Biển số",
+          "value": "2018"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Mitsubishi",
+      "brandSlug": "mitsubishi"
+    },
+    {
+      "id": "xeluottoantrung-4205",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Mitsubishi Xpander Cross 2020",
+      "priceText": "499 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z723561572924804c0a892ce32b3b193f46b6cc8f96f0c-2192.jpg",
+      "url": "https://xeluottoantrung.com/mitsubishi-xpander-cross-2020",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "40.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2020"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Mitsubishi",
+      "brandSlug": "mitsubishi"
+    },
+    {
+      "id": "otoanhluong-115673",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Mitsubishi Xpander Premium 1.5 AT",
+      "priceText": "565 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/46/115673/small_54c5b61b7f0382ae6783c9e7c2e39e67.jpg",
+      "url": "https://otoanhluong.vn/Xe-mitsubishi-xpander-premium_1.5_at-2023-115673",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "169 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2023"
+        },
+        {
+          "label": "ODO",
+          "value": "37.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "SUV"
+        }
+      ],
+      "brand": "Mitsubishi",
+      "brandSlug": "mitsubishi"
+    },
+    {
+      "id": "otoanhluong-115612",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Mitsubishi Xpander Premium 1.5 AT",
+      "priceText": "580 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/43/115612/small_42aae50684bc5e81902b8c1c1f23f9a3.jpg",
+      "url": "https://otoanhluong.vn/Xe-mitsubishi-xpander-premium_1.5_at-2024-115612",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "174 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2024"
+        },
+        {
+          "label": "ODO",
+          "value": "16.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "SUV"
+        }
+      ],
+      "brand": "Mitsubishi",
+      "brandSlug": "mitsubishi"
+    },
+    {
+      "id": "xeluottoantrung-4099",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Mitsubishi Xpander Premium 2024",
+      "priceText": "579 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z721929503332469b25fdf5e7dac7060afe4602ff9845a-6018.jpg",
+      "url": "https://xeluottoantrung.com/mitsubishi-xpander-premium-2024",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "30.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Mitsubishi",
+      "brandSlug": "mitsubishi"
+    },
+    {
+      "id": "otoanhluong-115676",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Nissan Navara VL 2.5 AT 4WD",
+      "priceText": "400 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/46/115676/small_ea289d77398331dc1d0e52234e49aee4.jpg",
+      "url": "https://otoanhluong.vn/Xe-nissan-navara-vl_2.5_at_4wd-2015-115676",
+      "attributes": [
+        {
+          "label": "Năm sản xuất",
+          "value": "2015"
+        },
+        {
+          "label": "ODO",
+          "value": "198.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Pickup"
+        }
+      ],
+      "brand": "Nissan",
+      "brandSlug": "nissan"
+    },
+    {
+      "id": "xeluottoantrung-4215",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Nissan Sunny AT Premium 2019",
+      "priceText": "307 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7236113223514d523f4e4e8b36094ff0e1b91114a5aba-6164.jpg",
+      "url": "https://xeluottoantrung.com/nissan-sunny-at-premium-2019",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "79.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2019"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Nissan",
+      "brandSlug": "nissan"
+    },
+    {
+      "id": "otoanhluong-115651",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Peugeot 2008 Active 1.2 AT",
+      "priceText": "525 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/44/115651/small_5a25910bbfd8a8876474aa5a836943ba.jpg",
+      "url": "https://otoanhluong.vn/Xe-peugeot-2008-active_1.2_at-2021-115651",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "157 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2021"
+        },
+        {
+          "label": "ODO",
+          "value": "35.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "SUV"
+        }
+      ],
+      "brand": "Peugeot",
+      "brandSlug": "peugeot"
+    },
+    {
+      "id": "xeluottoantrung-3648",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Peugeot 3008 GTLine 2022",
+      "priceText": "781 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7126800754108b430db16a2ee01546c4b8514c590c763-5732.jpg",
+      "url": "https://xeluottoantrung.com/peugeot-3008-gtline-2022",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "37.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2022"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Peugeot",
+      "brandSlug": "peugeot"
+    },
+    {
+      "id": "otoanhluong-115424",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Peugeot 3008 Premium",
+      "priceText": "850 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/43/115424/small_947e225b78f2606c6aa42ab872e55a81.jpg",
+      "url": "https://otoanhluong.vn/Xe-peugeot-3008-premium-2024-115424",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "255 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2024"
+        },
+        {
+          "label": "ODO",
+          "value": "15.700"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "SUV"
+        }
+      ],
+      "brand": "Peugeot",
+      "brandSlug": "peugeot"
+    },
+    {
+      "id": "otoanhluong-115589",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Peugeot 408 GT 1.6 AT",
+      "priceText": "1 Tỷ 90 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/41/115589/small_7435ca8588244c5837580fa5bc476e45.jpg",
+      "url": "https://otoanhluong.vn/Xe-peugeot-408-gt_1.6_at-2024-115589",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "327 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2024"
+        },
+        {
+          "label": "ODO",
+          "value": "5.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "SUV"
+        }
+      ],
+      "brand": "Peugeot",
+      "brandSlug": "peugeot"
+    },
+    {
+      "id": "xeluottoantrung-4165",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Subaru Forester 2.0i-S 2024",
+      "priceText": "887 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z72163893333966ee11297b5d24053eca156a1fc5d7075-6172.jpg",
+      "url": "https://xeluottoantrung.com/subaru-forester-20i-s-2024",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "1.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Subaru",
+      "brandSlug": "subaru"
+    },
+    {
+      "id": "xeluottoantrung-3842",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Suzuki Swift 2021",
+      "priceText": "481 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z709117329939436b7ac8bfc71141563f6af9465f83169-3175.jpg",
+      "url": "https://xeluottoantrung.com/suzuki-swift-2021",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "22.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Suzuki",
+      "brandSlug": "suzuki"
+    },
+    {
+      "id": "xeluottoantrung-4176",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Suzuki Swift 2023",
+      "priceText": "496 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z72194670199573ecee75a7f533997efa96cdc193c7eaf-6413.jpg",
+      "url": "https://xeluottoantrung.com/suzuki-swift-2023",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "36.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2023"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Suzuki",
+      "brandSlug": "suzuki"
+    },
+    {
+      "id": "xeluottoantrung-4179",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Suzuki XL7 2021",
+      "priceText": "406 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7216013287397da2ecc7dcc0af8d1f9401c2ae9f3186b-3207.jpg",
+      "url": "https://xeluottoantrung.com/suzuki-xl7-2021",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "103.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Suzuki",
+      "brandSlug": "suzuki"
+    },
+    {
+      "id": "xeluottoantrung-4193",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Suzuki XL7 2022",
+      "priceText": "469 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7226127204108c0e0737f12857dd33180dc4872bfc8bb-2796.jpg",
+      "url": "https://xeluottoantrung.com/suzuki-xl7-2022",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "63.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2022"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Suzuki",
+      "brandSlug": "suzuki"
+    },
+    {
+      "id": "xeluottoantrung-4216",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Suzuki XL7 2023",
+      "priceText": "470 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7236010446557b12c6c7c19e8ce639b1eb778a15a0b99-2886.jpg",
+      "url": "https://xeluottoantrung.com/suzuki-xl7-2023",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "54.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2023"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Suzuki",
+      "brandSlug": "suzuki"
+    },
+    {
+      "id": "xeluottoantrung-4125",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Altis 1.8G 2009",
+      "priceText": "236 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z719841836650573113664c2bc0a87f0a56aa72e1fbbe0-6574.jpg",
+      "url": "https://xeluottoantrung.com/toyota-altis-18g-2009",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "237.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2009"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-4157",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Altis 1.8G 2014",
+      "priceText": "389 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z715610279487801121b6adc6c1c4405cc59a6e6097cf969e-2246.jpg",
+      "url": "https://xeluottoantrung.com/toyota-altis-18g-2014",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "148.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2014"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "otoanhluong-Xe-toyota-camry-2.5_hev_mid-2025-115611",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Toyota Camry 2.5 HEV Mid",
+      "priceText": "1 Tỷ 350 Triệu",
+      "thumbnail": "https://bonbanh.com/uploads/users/62462/car/6484220/m_1760764449.445.jpg",
+      "url": "https://otoanhluong.vn/Xe-toyota-camry-2.5_hev_mid-2025-115611",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "405 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2025"
+        },
+        {
+          "label": "ODO",
+          "value": "3.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Hybrid"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Sedan"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-4069",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Camry 2.5Q 2023",
+      "priceText": "1 Tỷ 139 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7176872999953fa8ab70a8785129c23bb54b29c56061c-9097.jpg",
+      "url": "https://xeluottoantrung.com/toyota-camry-25q-2023",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "48.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2023"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-4012",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Camry Hybird 2024",
+      "priceText": "1 Tỷ 329 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7191602458353b457cf34364ff93834a968a7a9e1915b-3473.jpg",
+      "url": "https://xeluottoantrung.com/toyota-camry-hybird-2024",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "32.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng Điện"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-3845",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Cross V 2021 18.000km",
+      "priceText": "687 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z71428376989829be25a0acf2918740746c3fa15f8012c-7036.jpg",
+      "url": "https://xeluottoantrung.com/toyota-cross-v-2021-18000km",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "18.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-4170",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Fortuner AT xăng 2010",
+      "priceText": "316 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z72183983893719392292697bc35848eaa0578b7bacb74-2162.jpg",
+      "url": "https://xeluottoantrung.com/toyota-fortuner-at-xang-2010",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "119.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2010"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-4112",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Fortuner Dầu AT 4x2 2022",
+      "priceText": "917 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7194497022485f318750811ce7e9e660926e23a0fddf0-5611.jpg",
+      "url": "",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "58.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Biển số",
+          "value": "2022"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-4053",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Fortuner MT Dầu 2016",
+      "priceText": "469 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7216109631272f348612c5a3fc8a3dc38953a3566636f-2271.jpg",
+      "url": "https://xeluottoantrung.com/toyota-fortuner-mt-dau-2016",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "192.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số sàn"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Biển số",
+          "value": "2016"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-4066",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Fortuner TRD 2014",
+      "priceText": "461 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z717461948638641bb830c77ad498820fca243ccd4ab44-1953.jpg",
+      "url": "https://xeluottoantrung.com/toyota-fotuner-trd-2014",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "119.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2014"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-4203",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Fortuner Xăng AT 2021",
+      "priceText": "927 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z723295884670989177c6101f4c8591103e02d9766e113-3362.jpg",
+      "url": "https://xeluottoantrung.com/toyota-fortuner-xang-at-2021",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "15.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-3839",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Fortuner Xăng AT 4x4 2010",
+      "priceText": "336 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7091064682121f3cdb6efd77c7e715188d0e9238afd03-3096.jpg",
+      "url": "https://xeluottoantrung.com/toyota-fortuner-xang-at-4x4-2010",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "115.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2010"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-4076",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Hilux AT 4x2 2025",
+      "priceText": "684 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7132274725274c2ddfd38e331789fd2abb2b711493427-1768.jpg",
+      "url": "https://xeluottoantrung.com/toyota-hilux-at-4x2-2025",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "12.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2025"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-3983",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Hilux E AT 4x2 2021",
+      "priceText": "629 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7191656507859b1268270e1e2f462e1961220a9b59429-3888.jpg",
+      "url": "https://xeluottoantrung.com/toyota-hilux-e-at-4x2-2021",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "92.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-4078",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Hilux E AT 4x2 2021 89.000km",
+      "priceText": "627 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z70723873844204cf42ddaa5572e9ef4b4a147f4eba832-4041.jpg",
+      "url": "https://xeluottoantrung.com/toyota-hilux-e-at-4x2-2021-89000km",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "89.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Dầu"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-3550",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Innova G MT 2008",
+      "priceText": "199 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z69968982395487b41d4d9dffd9d637494d2700743227b-4114.jpg",
+      "url": "https://xeluottoantrung.com/toyota-innova-g-mt-2008",
+      "attributes": [
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số sàn"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2008"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-3818",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Land Cruize MT 4x4 1997",
+      "priceText": "229 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7218808710008ebc56fc76567e4185c1cb9f3bdde4baa-3041.jpg",
+      "url": "https://xeluottoantrung.com/toyota-land-cruize-mt-4x4-1997",
+      "attributes": [
+        {
+          "label": "Số chỗ",
+          "value": "8 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số sàn"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "1997"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-4218",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Raize 2024",
+      "priceText": "496 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7236001619039d6327c6d3a0b62a3613f8dfb635c3789-4648.jpg",
+      "url": "https://xeluottoantrung.com/toyota-raize-2024",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "8.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-4041",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Rush S 2018",
+      "priceText": "509 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7215762816668096893d41336e8edb07c88a3f394ddef-8679.jpg",
+      "url": "https://xeluottoantrung.com/toyota-rush-s-2018",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "6.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2018"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-4110",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Rush S 2020",
+      "priceText": "539 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z72090251761400a33bb7c86ffc146216dadde04390654-9160.jpg",
+      "url": "https://xeluottoantrung.com/toyota-rush-s-2020",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "24.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2020"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "otoanhluong-Xe-toyota-sienna-le_3.5-2009-115679",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Toyota Sienna LE 3.5",
+      "priceText": "540 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/46/115679/small_39033d8870bc8c5d9a86555b8c0adbaf.jpg",
+      "url": "https://otoanhluong.vn/Xe-toyota-sienna-le_3.5-2009-115679",
+      "attributes": [
+        {
+          "label": "Năm sản xuất",
+          "value": "2009"
+        },
+        {
+          "label": "ODO",
+          "value": "179.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Van"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-4106",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Veloz CVT 2022",
+      "priceText": "539 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7212893611002cb823891188c98371bf7bf878f428363-9106.jpg",
+      "url": "https://xeluottoantrung.com/toyota-veloz-cvt-2022",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "31.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2022"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-4161",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Veloz CVT 2022 94.000km",
+      "priceText": "499 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7216006467968a21d19cb705acdfc2832b46fab154cb9-3607.jpg",
+      "url": "https://xeluottoantrung.com/toyota-veloz-cvt-2022-94000km",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "94.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2022"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-4154",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Veloz Top 2022",
+      "priceText": "577 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z72238962036997ca8ba90ca8ab3b4c9c9e0cf11bfc559-9465.jpg",
+      "url": "https://xeluottoantrung.com/toyota-veloz-top-2022",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "26.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2022"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-4208",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Veloz Top 2023",
+      "priceText": "579 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7233005973285b2cff152d98ed07c753b10add0c5eb63-7873.jpg",
+      "url": "https://xeluottoantrung.com/toyota-veloz-top-2023",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "28.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "7 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2023"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "otoanhluong-Xe-toyota-vios-1.5g-2019-115692",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Toyota Vios 1.5G",
+      "priceText": "397 Triệu",
+      "thumbnail": "https://bonbanh.com/uploads/users/62462/car/6529840/m_1763275059.553.jpg",
+      "url": "https://otoanhluong.vn/Xe-toyota-vios-1.5g-2019-115692",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "119 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2019"
+        },
+        {
+          "label": "ODO",
+          "value": "35.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "Sedan"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-4217",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Toyota Wigo MT 2018",
+      "priceText": "231 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z72361138036010062c32ee03a1d9fd2d8d60873a24033-7660.jpg",
+      "url": "https://xeluottoantrung.com/toyota-wigo-mt-2018",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "76.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số sàn"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2018"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
+      "id": "xeluottoantrung-3524",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast Fadil Base 2019",
+      "priceText": "290 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z70649162507255b5adf8a01973bf8b3a11d1cb2eaee10-3445.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-fadil-base-2019",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "56.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2019"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-3999",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast Fadil Base 2020",
+      "priceText": "317 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z715056644234259eb873dbe12a33f7cc0be87d867892e-9129.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-fadil-base-2020",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "23.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2020"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-4163",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast Fadil Base 2021",
+      "priceText": "316 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z72128531041814e6f5713206c36391a095bbbdf582578-9795.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-fadil-base-2021",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "42.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-4101",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast Fadil Base 2022",
+      "priceText": "321 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z719219975332077e92d4c91766d59d6fdd7c0ae92e63e-9587.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-fadil-base-2022",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "42.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2022"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-3982",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast Fadil Plus 2020",
+      "priceText": "319 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7217559450628524febf25fb9cd71a52c9e441794b54f-7669.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-fadil-plus-2020",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "16.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2020"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-4074",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast Fadil Plus 2021",
+      "priceText": "323 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z72110443035502f12f08bc98ba1d7bcce2494a5a1b2bf-3987.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-fadil-plus-2021",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "53.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "otoanhluong-115674",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "VinFast Lux SA 2.0 Cao cấp",
+      "priceText": "580 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/46/115674/small_67dd32fb6687b9f52329ff8cdd11c8d1.jpg",
+      "url": "https://otoanhluong.vn/Xe-vinfast-lux_sa_2.0-cao_cap-2022-115674",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "174 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2022"
+        },
+        {
+          "label": "ODO",
+          "value": "80.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "SUV"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-3841",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast LuxA Base 2019",
+      "priceText": "499 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z71351410102948b8b40d27b67a6fd5eb6d29787385100-9664.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-luxa-base-2019",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "59.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2019"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-3789",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast LuxA Base 2021",
+      "priceText": "509 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7073719607675942fc016369a7776dbbfafadc46d82e8-6731.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-luxa-base-2021",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "79.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-3822",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast LuxA Base 2022",
+      "priceText": "546 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7135516983150953ea19eaf7ad1d6b7aadc8ff414163f-5199.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-luxa-base-2022",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "72.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2022"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-3762",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast LuxA Plus 2021",
+      "priceText": "582 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7066821325627e7d1c83bae281b652107d5dc89ea9f79-7710.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-luxa-plus-2021",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "21.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2021"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-3815",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast LuxA Premium 2019",
+      "priceText": "519 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z70807905714761ea2959f696aaf1f07501a8dbd1a522f-4162.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-luxa-premium-2019",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "84.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Biển số",
+          "value": "2019"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-3221",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast VF3 2024",
+      "priceText": "228 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z68546577676192455bd8f404e28b57ded3346d5c3f1d1-3895.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-vf3-2024-pin-thue",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "2.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "4 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Điện"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-3206",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast VF3 2024",
+      "priceText": "228 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z690507712787024c9f7d8dfdd4183ab1aa9f6acb88c0f-1933.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-vf3-2024",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "900 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "4 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Điện"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-4137",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast VF3 2024 10.000km",
+      "priceText": "229 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z720748423171215e6049f4e1cff3ab1a67788f4a3096c-9163.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-vf3-2024-10000km",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "10.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "4 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Điện"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-4088",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast VF3 2024 11.000km",
+      "priceText": "218 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7223867738991a26b2baef2e5b6fa7b941818a5b16c74-1368.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-vf3-2024-11000km",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "11.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "4 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Điện"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-3978",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast VF3 2024 13.000km",
+      "priceText": "218 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7143793498906772fb11b65f73ccbc9fd1eb25a3975d7-3906.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-vf3-2024-13000km",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "13.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "4 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Điện"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-4119",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast VF3 2024 14.000km",
+      "priceText": "228 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7198413338343618b49dddd4a525e917c911ac181f450-4220.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-vf3-2024-14000km",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "14.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "4 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Điện"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-3891",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast VF3 2024 22.000km",
+      "priceText": "205 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7219719919125c71c16a352e9fdad4a61a14e8fae7d3e-8469.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-vf3-2024-22000km",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "22.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "4 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Điện"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung Gia Lai"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-3382",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast VF3 2024 9.000km",
+      "priceText": "228 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z69432822478402e10767efee324bc1adf70e9d52c8366-1682.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-vf3-2024-9000km",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "9.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "4 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Điện"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-4211",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast VF3 2025 (mua pin)",
+      "priceText": "271 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z72336463888761a710aeba0dba670a719becc1171c7c7-4354.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-vf3-2025-mua-pin",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "4.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "4 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Điện"
+        },
+        {
+          "label": "Biển số",
+          "value": "2025"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-3959",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast VF3 2025 5.000km (mua pin)",
+      "priceText": "275 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7207671983220924d539c87b68c9efd43305d92125066-7501.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-vf3-2025-5000km-mua-pin",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "5.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "4 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Điện"
+        },
+        {
+          "label": "Biển số",
+          "value": "2025"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-1502",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast VF3 New",
+      "priceText": "228 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z694313169054506b4d1c4e75ccc76f5d3ce946ed3a2ad-1151.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-vf3-new",
+      "attributes": [
+        {
+          "label": "Số chỗ",
+          "value": "4 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Điện"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 10"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-3871",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast VF7 4x4 2025 (Mua Pin, trần thép)",
+      "priceText": "822 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z71945873097326b48a8ec5f40536340819c42bcf4c6e2-6762.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-vf7-4x4-2025-mua-pin-tran-thep",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "2.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Điện"
+        },
+        {
+          "label": "Biển số",
+          "value": "2025"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-3970",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast VF7 Plus 2025 (Pin mua, trần thép)",
+      "priceText": "845 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7194594437456917a7ba1570aa48934c2f5e51204f6ab-2729.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-vf7-plus-2025-pin-mua-tran-thep",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "900 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Điện"
+        },
+        {
+          "label": "Biển số",
+          "value": "2025"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "xeluottoantrung-3897",
+      "source": "xeluottoantrung",
+      "sourceName": "Xe Lướt Toàn Trung",
+      "title": "Vinfast VF7 Plus 4x4 2024 (Thuê Pin, Trần Thép)",
+      "priceText": "732 Triệu",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7111879597047779b24e7b7882e7dedd837b836a2f9e9-8442.jpg",
+      "url": "https://xeluottoantrung.com/vinfast-vf7-plus-2024",
+      "attributes": [
+        {
+          "label": "Km",
+          "value": "23.000 km"
+        },
+        {
+          "label": "Số chỗ",
+          "value": "5 chỗ"
+        },
+        {
+          "label": "Hộp số",
+          "value": "Số tự động"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Điện"
+        },
+        {
+          "label": "Biển số",
+          "value": "2024"
+        },
+        {
+          "label": "Chi nhánh",
+          "value": "Showroom Toàn Trung 9"
+        }
+      ],
+      "brand": "VinFast",
+      "brandSlug": "vinfast"
+    },
+    {
+      "id": "otoanhluong-Xe-volkswagen-t-cross-elegance_1.0_at-2022-115682",
+      "source": "otoanhluong",
+      "sourceName": "Anh Lượng Auto",
+      "title": "Volkswagen T-Cross Elegance 1.0 AT",
+      "priceText": "670 Triệu",
+      "thumbnail": "https://otoanhluong.vn/uploads/img/2025/46/115682/small_41c0b8854f8cf48a6b005180c4df83d9.jpg",
+      "url": "https://otoanhluong.vn/Xe-volkswagen-t-cross-elegance_1.0_at-2022-115682",
+      "attributes": [
+        {
+          "label": "Trả trước",
+          "value": "201 Triệu"
+        },
+        {
+          "label": "Năm sản xuất",
+          "value": "2022"
+        },
+        {
+          "label": "ODO",
+          "value": "4.000"
+        },
+        {
+          "label": "Nhiên liệu",
+          "value": "Xăng"
+        },
+        {
+          "label": "Kiểu dáng",
+          "value": "SUV"
+        }
+      ],
+      "brand": "Volkswagen",
+      "brandSlug": "volkswagen"
+    }
+  ],
+  "sources": [
+    {
+      "id": "xeluottoantrung",
+      "name": "Xe Lướt Toàn Trung",
+      "count": 109,
+      "status": "ok"
+    },
+    {
+      "id": "otoanhluong",
+      "name": "Anh Lượng Auto",
+      "count": 32,
+      "status": "ok"
+    }
+  ],
+  "errors": [],
+  "fetchedAt": 1763449214654
+}
