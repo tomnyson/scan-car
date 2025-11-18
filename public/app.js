@@ -15,7 +15,14 @@ const state = {
   errors: [],
   brandOptions: [],
   brandDropdownOpen: false,
-  autoReloadTimerId: null
+  autoReloadTimerId: null,
+  detail: {
+    isOpen: false,
+    isLoading: false,
+    carId: null,
+    data: null,
+    error: ''
+  }
 };
 
 const els = {
@@ -38,13 +45,18 @@ const els = {
   brandSearchInput: document.getElementById('brand-search-input'),
   brandDropdown: document.getElementById('brand-dropdown'),
   brandOptions: document.getElementById('brand-options'),
-  brandSelectedTags: document.getElementById('brand-selected-tags')
+  brandSelectedTags: document.getElementById('brand-selected-tags'),
+  detailModal: document.getElementById('detail-modal'),
+  detailModalContent: document.getElementById('detail-modal-content'),
+  detailModalClose: document.getElementById('detail-modal-close'),
+  detailModalOverlay: document.querySelector('[data-detail-close]')
 };
 
 const placeholderImage = 'https://placehold.co/600x400?text=No+Image';
 const CACHE_KEY = 'scanCar:data';
 const CACHE_TTL_MS = 2 * 60 * 60 * 1000; // 2 hours
 const AUTO_RELOAD_INTERVAL_MS = CACHE_TTL_MS;
+const detailCache = new Map();
 
 const dataCache = {
   save(payload) {
@@ -81,6 +93,17 @@ const dataCache = {
     }
   }
 };
+
+const escapeHtml = (value = '') =>
+  String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
+const escapeAttr = (value = '') => escapeHtml(value);
+const formatMultiline = (value = '') => escapeHtml(value).replace(/\n/g, '<br />');
 
 const formatDate = (value) => {
   if (!value) return '---';
@@ -443,8 +466,11 @@ const renderCars = () => {
         ? `<a href="${car.url}" target="_blank" rel="noopener noreferrer">${car.title}</a>`
         : `<span>${car.title}</span>`;
       const brandTag = car.brand ? `<p class="tag secondary">${car.brand}</p>` : '';
-      const detailLink = car.url
-        ? `<a class="detail-link" href="${car.url}" target="_blank" rel="noopener noreferrer">Xem chi tiết</a>`
+      const detailButton = car.url
+        ? `<button class="detail-link detail-btn" type="button" data-car-id="${car.id}">Xem chi tiết</button>`
+        : '';
+      const externalLink = car.url
+        ? `<a class="detail-link external-link" href="${car.url}" target="_blank" rel="noopener noreferrer">Trang gốc</a>`
         : '';
 
       return `
@@ -461,7 +487,8 @@ const renderCars = () => {
             <div class="price">${car.priceText || 'Liên hệ'}</div>
             <ul class="attributes">${attrs}</ul>
             <div class="card-footer">
-              ${detailLink}
+              ${detailButton}
+              ${externalLink}
             </div>
           </div>
         </article>
@@ -470,6 +497,233 @@ const renderCars = () => {
     .join('');
 
   els.carGrid.innerHTML = cardHtml;
+};
+
+const buildSummaryGrid = (items = []) => {
+  if (!Array.isArray(items) || !items.length) return '';
+  return `
+    <div class="detail-summary-grid">
+      ${items
+        .map(
+          (item) => `
+        <div class="detail-summary-item">
+          <span>${escapeHtml(item.label || 'Thông tin')}</span>
+          <strong>${escapeHtml(item.value || '---')}</strong>
+        </div>
+      `
+        )
+        .join('')}
+    </div>
+  `;
+};
+
+const buildSectionsHtml = (sections = []) => {
+  if (!Array.isArray(sections) || !sections.length) return '';
+  return sections
+    .filter((section) => Array.isArray(section?.items) && section.items.length)
+    .map(
+      (section) => `
+        <section class="detail-section">
+          <h3>${escapeHtml(section.title || 'Thông tin')}</h3>
+          <ul>
+            ${section.items
+              .map(
+                (item) => `
+                  <li>
+                    <strong>${escapeHtml(item.label || 'Thông tin')}</strong>
+                    ${escapeHtml(item.value || '---')}
+                  </li>
+                `
+              )
+              .join('')}
+          </ul>
+        </section>
+      `
+    )
+    .join('');
+};
+
+const buildDescriptionBlock = (description = '') => {
+  if (!description) return '';
+  return `
+    <section class="detail-section">
+      <h3>Mô tả chi tiết</h3>
+      <div class="detail-description">${formatMultiline(description)}</div>
+    </section>
+  `;
+};
+
+const buildDetailActions = (detail) => {
+  const actions = [];
+  if (detail.url) {
+    actions.push(
+      `<a class="detail-link external-link" href="${escapeAttr(detail.url)}" target="_blank" rel="noopener noreferrer">Mở trang gốc</a>`
+    );
+  }
+  const hotlineLink = detail.contact?.hotlineLink;
+  if (hotlineLink) {
+    const label = detail.contact?.hotline ? `Gọi ${escapeHtml(detail.contact.hotline)}` : 'Gọi hotline';
+    actions.push(`<a class="detail-link" href="${escapeAttr(hotlineLink)}">${label}</a>`);
+  }
+  if (detail.contact?.zaloUrl) {
+    actions.push(
+      `<a class="detail-link" href="${escapeAttr(detail.contact.zaloUrl)}" target="_blank" rel="noopener noreferrer">Chat Zalo</a>`
+    );
+  }
+  return actions.length ? `<div class="detail-actions">${actions.join('')}</div>` : '';
+};
+
+const buildGalleryHtml = (detail) => {
+  const images = Array.isArray(detail.gallery) ? detail.gallery : [];
+  if (!images.length) return '';
+  const [main, ...thumbs] = images;
+  const thumbHtml = thumbs
+    .map(
+      (src, index) => `
+        <button type="button" data-detail-thumb="true" data-src="${escapeAttr(src)}" class="${
+          index === 0 ? 'active' : ''
+        }" aria-label="Ảnh ${index + 2}">
+          <img src="${escapeAttr(src)}" alt="${escapeHtml(`${detail.title || 'Ảnh xe'} ${index + 2}`)}" />
+        </button>
+      `
+    )
+    .join('');
+  return `
+    <div class="detail-gallery">
+      <div class="detail-gallery-main">
+        <img src="${escapeAttr(main)}" alt="${escapeHtml(detail.title || 'Ảnh xe')}" data-detail-main />
+      </div>
+      ${thumbs.length ? `<div class="detail-gallery-thumbs">${thumbHtml}</div>` : ''}
+    </div>
+  `;
+};
+
+const renderDetailModal = () => {
+  if (!els.detailModalContent) return;
+  if (!state.detail.isOpen) {
+    els.detailModal?.classList.remove('is-open');
+    els.detailModal?.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    els.detailModalContent.innerHTML =
+      '<div class="detail-modal-empty">Chọn một xe để xem thông tin chi tiết.</div>';
+    return;
+  }
+
+  document.body.classList.add('modal-open');
+  els.detailModal?.classList.add('is-open');
+  els.detailModal?.setAttribute('aria-hidden', 'false');
+
+  if (state.detail.isLoading) {
+    els.detailModalContent.innerHTML = '<div class="detail-modal-loading">Đang tải thông tin xe...</div>';
+    return;
+  }
+
+  if (state.detail.error) {
+    els.detailModalContent.innerHTML = `<div class="detail-modal-error">${escapeHtml(state.detail.error)}</div>`;
+    return;
+  }
+
+  if (!state.detail.data) {
+    els.detailModalContent.innerHTML =
+      '<div class="detail-modal-empty">Không tìm thấy dữ liệu chi tiết cho xe này.</div>';
+    return;
+  }
+
+  const detail = state.detail.data;
+  const sourceMeta = [];
+  if (detail.sourceName) {
+    sourceMeta.push(`<p class="detail-source">Nguồn: ${escapeHtml(detail.sourceName)}</p>`);
+  }
+  if (detail.scrapedAt) {
+    sourceMeta.push(`<p class="detail-source">Cập nhật: ${escapeHtml(formatDate(detail.scrapedAt))}</p>`);
+  }
+
+  const summaryHtml = buildSummaryGrid(detail.summary);
+  const sectionsHtml = buildSectionsHtml(detail.sections);
+  const descriptionHtml = buildDescriptionBlock(detail.description);
+  const galleryHtml = buildGalleryHtml(detail);
+  const actionHtml = buildDetailActions(detail);
+
+  els.detailModalContent.innerHTML = `
+    <div class="detail-header">
+      <h2>${escapeHtml(detail.title || 'Thông tin xe')}</h2>
+      <p class="detail-price">${escapeHtml(detail.priceText || 'Liên hệ')}</p>
+      ${sourceMeta.join('')}
+      ${actionHtml}
+    </div>
+    ${galleryHtml}
+    ${summaryHtml}
+    ${sectionsHtml}
+    ${descriptionHtml}
+  `;
+};
+
+const closeDetailModal = () => {
+  state.detail = {
+    isOpen: false,
+    isLoading: false,
+    carId: null,
+    data: null,
+    error: ''
+  };
+  renderDetailModal();
+};
+
+const loadCarDetail = async (car) => {
+  if (!car.url) {
+    state.detail = { ...state.detail, isLoading: false, error: 'Xe này chưa có đường dẫn chi tiết.' };
+    renderDetailModal();
+    return;
+  }
+  const cacheKey = `${car.source || 'unknown'}|${car.url}`;
+  const cached = detailCache.get(cacheKey);
+  if (cached) {
+    state.detail = { ...state.detail, isLoading: false, data: cached, error: '' };
+    renderDetailModal();
+    return;
+  }
+
+  try {
+    const params = new URLSearchParams({ url: car.url });
+    if (car.source) {
+      params.set('source', car.source);
+    }
+    const response = await fetch(`/api/cars/detail?${params.toString()}`);
+    if (!response.ok) {
+      throw new Error('Không thể tải chi tiết xe');
+    }
+    const payload = await response.json();
+    const detail = payload.data || null;
+    if (!detail) {
+      throw new Error('Không tìm thấy dữ liệu chi tiết');
+    }
+    detailCache.set(cacheKey, detail);
+    state.detail = { ...state.detail, data: detail, error: '' };
+  } catch (error) {
+    console.error(error);
+    state.detail = {
+      ...state.detail,
+      error: 'Không thể tải chi tiết xe. Vui lòng thử lại sau.'
+    };
+  } finally {
+    state.detail = { ...state.detail, isLoading: false };
+    renderDetailModal();
+  }
+};
+
+const openDetailModal = (car) => {
+  state.detail = {
+    ...state.detail,
+    isOpen: true,
+    isLoading: true,
+    carId: car?.id || null,
+    data: null,
+    error: ''
+  };
+  renderDetailModal();
+  if (car) {
+    loadCarDetail(car);
+  }
 };
 
 const applyPayload = (payload) => {
@@ -598,7 +852,48 @@ document.addEventListener('click', (e) => {
   }
 });
 
+if (els.carGrid) {
+  els.carGrid.addEventListener('click', (event) => {
+    const button = event.target.closest('.detail-btn');
+    if (!button) return;
+    const car = state.data.find((item) => item.id === button.dataset.carId);
+    if (!car) return;
+    event.preventDefault();
+    openDetailModal(car);
+  });
+}
+
+if (els.detailModalClose) {
+  els.detailModalClose.addEventListener('click', () => closeDetailModal());
+}
+
+if (els.detailModalOverlay) {
+  els.detailModalOverlay.addEventListener('click', () => closeDetailModal());
+}
+
+if (els.detailModalContent) {
+  els.detailModalContent.addEventListener('click', (event) => {
+    const thumb = event.target.closest('[data-detail-thumb]');
+    if (!thumb) return;
+    const targetSrc = thumb.dataset.src;
+    const mainImage = els.detailModalContent.querySelector('[data-detail-main]');
+    if (targetSrc && mainImage) {
+      mainImage.src = targetSrc;
+      els.detailModalContent.querySelectorAll('[data-detail-thumb]').forEach((node) => {
+        node.classList.toggle('active', node === thumb);
+      });
+    }
+  });
+}
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && state.detail.isOpen) {
+    closeDetailModal();
+  }
+});
+
 els.refreshBtn.addEventListener('click', () => fetchCars({ refresh: true }));
 
 hydrateFromCache();
+renderDetailModal();
 fetchCars();

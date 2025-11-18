@@ -219,6 +219,20 @@
         </div>
       </footer>
     </main>
+    <div id="detail-modal" class="detail-modal" aria-hidden="true">
+      <div class="detail-modal-overlay" data-detail-close></div>
+      <div class="detail-modal-dialog" role="dialog" aria-modal="true" aria-label="Thông tin chi tiết xe">
+        <button id="detail-modal-close" class="detail-modal-close" type="button" aria-label="Đóng chi tiết">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <div id="detail-modal-content" class="detail-modal-content">
+          <div class="detail-modal-empty">Chọn một xe để xem thông tin chi tiết.</div>
+        </div>
+      </div>
+    </div>
     <script src="/app.js" type="module"></script>
   </body>
 </html>

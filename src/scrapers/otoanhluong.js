@@ -12,6 +12,7 @@ const FORM_HEADERS = {
   ...REQUEST_HEADERS,
   'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
 };
+const SOURCE_NAME = 'Anh Lượng Auto';
 
 const ICON_LABEL_MAP = {
   'fa-calendar-alt': 'Năm sản xuất',
@@ -21,6 +22,13 @@ const ICON_LABEL_MAP = {
 };
 
 const cleanText = (value = '') => value.replace(/\s+/g, ' ').trim();
+const cleanMultiline = (value = '') =>
+  value
+    .replace(/\r?\n/g, '\n')
+    .split('\n')
+    .map((line) => cleanText(line))
+    .filter(Boolean)
+    .join('\n');
 const absoluteUrl = (value = '') => {
   if (!value) return '';
   try {
@@ -49,7 +57,7 @@ function normalizeCar({ id, title, priceText, thumbnail, url, attributes = [], b
   return {
     id,
     source: 'otoanhluong',
-    sourceName: 'Anh Lượng Auto',
+    sourceName: SOURCE_NAME,
     title,
     priceText: cleanText(priceText),
     thumbnail,
@@ -227,4 +235,99 @@ function mapApiCar(item = {}) {
   };
 }
 
-module.exports = { fetchOtoAnhLuongCars };
+function extractDetailSummary($) {
+  const items = [];
+  $('.al-info-car li').each((_, li) => {
+    const node = $(li);
+    const label = cleanText(node.find('label').text().replace(/:$/, ''));
+    const value = cleanText(node.find('span').text());
+    if (label || value) {
+      items.push({ label: label || 'Thông tin', value: value || label });
+    }
+  });
+  return items;
+}
+
+function extractFeeItems($) {
+  const items = [];
+  $('.al-name-transfer-fee .al-item').each((_, li) => {
+    const node = $(li);
+    if (node.hasClass('al-title') || node.hasClass('al-choose') || node.hasClass('al-cacu')) {
+      return;
+    }
+    const label = cleanText(node.find('label').text());
+    const value = cleanText(node.find('span').text());
+    if (label && value) {
+      items.push({ label, value });
+    }
+  });
+  return items;
+}
+
+function extractGallery($) {
+  const gallery = [];
+  const seen = new Set();
+  $('.al-box-img .al-photo-list').each((_, anchor) => {
+    const href = absoluteUrl($(anchor).attr('href'));
+    if (href && !seen.has(href)) {
+      seen.add(href);
+      gallery.push(href);
+    }
+  });
+  return gallery;
+}
+
+function extractDescription($) {
+  const node = $('.al-car-description').first();
+  if (!node.length) return '';
+  const clone = node.clone();
+  clone.find('script,style,noscript').remove();
+  return cleanMultiline(clone.text());
+}
+
+function extractContact($) {
+  const hotlineNode = $('.al-info-hotline').first();
+  const hotline = cleanText(hotlineNode.find('b').text());
+  return {
+    hotline,
+    hotlineLink: hotlineNode.attr('href') || (hotline ? `tel:${hotline.replace(/\s+/g, '')}` : ''),
+    hotlineLabel: cleanText(hotlineNode.text()),
+    dealer: cleanText($('.al-box-info-salon h3').first().text()),
+    address: cleanMultiline($('.al-box-info-salon p').first().text())
+  };
+}
+
+async function fetchOtoAnhLuongCarDetail(detailUrl) {
+  const url = absoluteUrl(detailUrl);
+  const response = await fetch(url, { headers: REQUEST_HEADERS });
+  if (!response.ok) {
+    throw new Error(`Anh Lượng trả về mã lỗi ${response.status}`);
+  }
+
+  const html = await response.text();
+  const $ = cheerio.load(html);
+  const title = cleanText($('.al-title-car').first().text());
+  const priceText = cleanText($('.gia-xe-al').first().text());
+  const summary = extractDetailSummary($);
+  const sections = [];
+  const feeItems = extractFeeItems($);
+  if (feeItems.length) {
+    sections.push({ title: 'Chi phí lăn bánh', items: feeItems });
+  }
+
+  return {
+    source: 'otoanhluong',
+    sourceName: SOURCE_NAME,
+    url,
+    title,
+    priceText,
+    summary,
+    sections,
+    description: extractDescription($),
+    gallery: extractGallery($),
+    contact: extractContact($),
+    scrapedAt: new Date().toISOString()
+  };
+}
+
+module.exports = { fetchOtoAnhLuongCars, fetchOtoAnhLuongCarDetail };

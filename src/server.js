@@ -4,8 +4,8 @@ const fsPromises = fs.promises;
 const express = require('express');
 const compression = require('compression');
 const helmet = require('helmet');
-const { fetchXeLuotToanTrungCars } = require('./scrapers/xeluottoantrung');
-const { fetchOtoAnhLuongCars } = require('./scrapers/otoanhluong');
+const { fetchXeLuotToanTrungCars, fetchXeLuotToanTrungCarDetail } = require('./scrapers/xeluottoantrung');
+const { fetchOtoAnhLuongCars, fetchOtoAnhLuongCarDetail } = require('./scrapers/otoanhluong');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,6 +15,21 @@ const tasks = [
   { id: 'xeluottoantrung', name: 'Xe Lướt Toàn Trung', loader: fetchXeLuotToanTrungCars },
   { id: 'otoanhluong', name: 'Anh Lượng Auto', loader: fetchOtoAnhLuongCars }
 ];
+const SOURCE_CONFIG = {
+  xeluottoantrung: {
+    baseUrl: 'https://xeluottoantrung.com/',
+    hosts: ['xeluottoantrung.com', 'www.xeluottoantrung.com']
+  },
+  otoanhluong: {
+    baseUrl: 'https://otoanhluong.vn/',
+    hosts: ['otoanhluong.vn', 'www.otoanhluong.vn']
+  }
+};
+const detailFetchers = {
+  xeluottoantrung: fetchXeLuotToanTrungCarDetail,
+  otoanhluong: fetchOtoAnhLuongCarDetail
+};
+const detailCache = new Map();
 
 const createEmptyCache = () => ({ cars: [], fetchedAt: 0, sources: [], errors: [] });
 
@@ -49,6 +64,41 @@ const persistCacheToDisk = async (snapshot) => {
 };
 
 let cache = loadCacheFromDisk();
+const DETAIL_CACHE_TTL_MS = CACHE_TTL_MS;
+
+const normalizeHost = (value = '') => value.trim().toLowerCase().replace(/^www\./, '');
+
+const detectSourceFromUrl = (value = '') => {
+  try {
+    const parsed = new URL(value);
+    const host = normalizeHost(parsed.hostname);
+    return Object.entries(SOURCE_CONFIG).find(([, config]) => config.hosts.includes(host))?.[0] || null;
+  } catch (error) {
+    return null;
+  }
+};
+
+const normalizeDetailUrl = (source, rawUrl) => {
+  try {
+    return new URL(rawUrl).href;
+  } catch (error) {
+    const base = SOURCE_CONFIG[source]?.baseUrl;
+    if (!base) {
+      throw new Error('Nguồn không được hỗ trợ');
+    }
+    return new URL(rawUrl, base).href;
+  }
+};
+
+const getDetailCacheEntry = (key) => {
+  const entry = detailCache.get(key);
+  if (!entry) return null;
+  if (Date.now() - entry.fetchedAt > DETAIL_CACHE_TTL_MS) {
+    detailCache.delete(key);
+    return null;
+  }
+  return entry.data;
+};
 
 app.use(
   helmet({
@@ -137,6 +187,59 @@ app.get('/api/cars', async (req, res) => {
       return res.status(200).json(buildPayload(cache));
     }
     return res.status(500).json({ error: 'Không thể lấy dữ liệu xe. Vui lòng thử lại sau.' });
+  }
+});
+
+app.get('/api/cars/detail', async (req, res) => {
+  const rawUrl = String(req.query.url || '').trim();
+  let source = String(req.query.source || '').trim().toLowerCase();
+
+  if (!rawUrl) {
+    return res.status(400).json({ error: 'Thiếu tham số url' });
+  }
+  if (!source) {
+    source = detectSourceFromUrl(rawUrl);
+  }
+  if (!source || !detailFetchers[source]) {
+    return res.status(400).json({ error: 'Nguồn không được hỗ trợ' });
+  }
+
+  let normalizedUrl;
+  try {
+    normalizedUrl = normalizeDetailUrl(source, rawUrl);
+  } catch (error) {
+    return res.status(400).json({ error: 'URL không hợp lệ' });
+  }
+
+  let parsed;
+  try {
+    parsed = new URL(normalizedUrl);
+  } catch (error) {
+    return res.status(400).json({ error: 'URL không hợp lệ' });
+  }
+
+  const host = normalizeHost(parsed.hostname);
+  if (!SOURCE_CONFIG[source].hosts.includes(host)) {
+    return res.status(400).json({ error: 'URL không thuộc nguồn hợp lệ' });
+  }
+
+  const cacheKey = `${source}|${parsed.href}`;
+  const cached = getDetailCacheEntry(cacheKey);
+  if (cached) {
+    return res.json({ data: cached, cached: true });
+  }
+
+  try {
+    const fetcher = detailFetchers[source];
+    if (!fetcher) {
+      return res.status(400).json({ error: 'Nguồn không được hỗ trợ' });
+    }
+    const data = await fetcher(parsed.href);
+    detailCache.set(cacheKey, { data, fetchedAt: Date.now() });
+    return res.json({ data });
+  } catch (error) {
+    console.error('Không thể tải chi tiết xe:', error);
+    return res.status(500).json({ error: 'Không thể lấy chi tiết xe. Vui lòng thử lại sau.' });
   }
 });
 
