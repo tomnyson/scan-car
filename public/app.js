@@ -28,7 +28,6 @@ const state = {
 const els = {
   carGrid: document.getElementById('car-grid'),
   carCount: document.getElementById('car-count'),
-  sourceSummary: document.getElementById('source-summary'),
   sourceFilters: document.getElementById('source-filters'),
   searchInput: document.getElementById('search-input'),
   statusMessage: document.getElementById('status-message'),
@@ -39,8 +38,6 @@ const els = {
   sortSelect: document.getElementById('sort-select'),
   viewGrid: document.getElementById('view-grid'),
   viewList: document.getElementById('view-list'),
-  toggleFilters: document.getElementById('toggle-filters'),
-  filterPanel: document.querySelector('.filter-panel'),
   brandSelectInput: document.getElementById('brand-select-input'),
   brandSearchInput: document.getElementById('brand-search-input'),
   brandDropdown: document.getElementById('brand-dropdown'),
@@ -62,11 +59,19 @@ const dataCache = {
   save(payload) {
     if (typeof localStorage === 'undefined') return;
     try {
+      let cachedAt = Date.now();
+      if (payload?.updatedAt) {
+        const serverTime = new Date(payload.updatedAt).getTime();
+        if (!isNaN(serverTime)) {
+          cachedAt = serverTime;
+        }
+      }
+
       localStorage.setItem(
         CACHE_KEY,
         JSON.stringify({
           payload,
-          cachedAt: Date.now()
+          cachedAt
         })
       );
     } catch (error) {
@@ -171,19 +176,7 @@ const renderStatus = () => {
   els.updatedAt.textContent = formatDate(state.updatedAt);
 };
 
-const renderSourceSummary = () => {
-  els.sourceSummary.innerHTML = state.sources
-    .map(
-      (source) => `
-        <div class="source-card">
-          <div class="status-chip ${source.status}">${source.status === 'ok' ? 'Hoạt động' : 'Lỗi'}</div>
-          <h3>${source.name}</h3>
-          <p class="muted">${source.count} xe</p>
-        </div>
-      `
-    )
-    .join('');
-};
+
 
 const handleSourceChange = (id, checked) => {
   if (checked) {
@@ -456,47 +449,89 @@ const renderCars = () => {
 
   const cardHtml = cars
     .map((car) => {
-      const attrs =
-        (car.attributes || [])
-          .slice(0, 6)
-          .map((attr) => `<li><strong>${attr.label}:</strong> ${attr.value}</li>`)
-          .join('') || '<li>Chưa cập nhật thêm thông tin</li>';
+      // Extract key specs
+      const keySpecs = {};
+      (car.attributes || []).forEach(attr => {
+        const label = (attr.label || '').toLowerCase();
+        if (label.includes('năm') || label.includes('year')) keySpecs.year = attr.value;
+        if (label.includes('km') || label.includes('odo') || label.includes('số km')) keySpecs.odometer = attr.value;
+        if (label.includes('nhiên liệu') || label.includes('fuel')) keySpecs.fuel = attr.value;
+        if (label.includes('hộp số') || label.includes('transmission')) keySpecs.transmission = attr.value;
+      });
 
-      const titleMarkup = car.url
-        ? `<a href="${car.url}" target="_blank" rel="noopener noreferrer">${car.title}</a>`
-        : `<span>${car.title}</span>`;
-      const brandTag = car.brand ? `<p class="tag secondary">${car.brand}</p>` : '';
-      const detailButton = car.url
-        ? `<button class="detail-link detail-btn" type="button" data-car-id="${car.id}">Xem chi tiết</button>`
-        : '';
-      const externalLink = car.url
-        ? `<a class="detail-link external-link" href="${car.url}" target="_blank" rel="noopener noreferrer">Trang gốc</a>`
-        : '';
+      // Source Badge Logic
+      const sourceLower = (car.source || '').toLowerCase();
+      let sourceClass = 'other';
+      let sourceName = car.source || 'N/A';
+      if (sourceLower.includes('bonbanh')) {
+        sourceClass = 'bonbanh';
+        sourceName = 'Bonbanh';
+      } else if (sourceLower.includes('chotot') || sourceLower.includes('chợ tốt')) {
+        sourceClass = 'chotot';
+        sourceName = 'Chợ Tốt';
+      }
+
+      // Price Indicator Logic (Simple Heuristic)
+      // In a real app, this would compare against market average
+      const priceVal = parseInt((car.priceText || '0').replace(/\D/g, ''));
+      const priceClass = priceVal > 0 && priceVal < 800 ? 'good' : 'high';
+
+      // Attributes List (Max 4 items)
+      const attrs = [];
+      if (keySpecs.year) {
+        attrs.push(`<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> ${escapeHtml(keySpecs.year)}</li>`);
+      }
+      if (keySpecs.odometer) {
+        attrs.push(`<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> ${escapeHtml(keySpecs.odometer)}</li>`);
+      }
+      if (keySpecs.fuel) {
+        attrs.push(`<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 19V5c0-1.1.9-2 2-2h9c1.1 0 2 .9 2 2v14H3z"></path><path d="M18 8v8"></path><path d="M21 8v8"></path></svg> ${escapeHtml(keySpecs.fuel)}</li>`);
+      }
+      if (keySpecs.transmission) {
+        attrs.push(`<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2"></circle><path d="M12 2v8"></path><path d="M12 14v8"></path></svg> ${escapeHtml(keySpecs.transmission)}</li>`);
+      }
+
+      const detailButton = `<button class="detail-link detail-btn" type="button" data-car-id="${escapeAttr(car.id)}">Xem chi tiết</button>`;
 
       return `
-        <article class="car-card">
+        <div class="car-card" onclick="document.querySelector('.detail-btn[data-car-id=\\'${escapeAttr(car.id)}\\']').click()">
           <div class="image-container">
-            <img src="${car.thumbnail || placeholderImage}" alt="${car.title}" loading="lazy" />
+            <img src="${escapeAttr(car.thumbnail || 'https://via.placeholder.com/300x200?text=No+Image')}" alt="${escapeAttr(car.title)}" loading="lazy" />
           </div>
           <div class="card-body">
-            <div class="tag-stack">
-              <p class="tag">${car.sourceName}</p>
-              ${brandTag}
+            <div class="card-header">
+              <span class="source-badge ${sourceClass}">${escapeHtml(sourceName)}</span>
             </div>
-            <h3 class="car-title">${titleMarkup}</h3>
-            <div class="price">${car.priceText || 'Liên hệ'}</div>
-            <ul class="attributes">${attrs}</ul>
+            <h3 class="car-title">${escapeHtml(car.title)}</h3>
+            <div class="price">
+              <span class="price-indicator ${priceClass}"></span>
+              ${escapeHtml(car.priceText || 'Liên hệ')}
+            </div>
+            <ul class="attributes">
+              ${attrs.join('')}
+            </ul>
             <div class="card-footer">
               ${detailButton}
-              ${externalLink}
             </div>
           </div>
-        </article>
+        </div>
       `;
     })
     .join('');
 
   els.carGrid.innerHTML = cardHtml;
+
+  // Re-attach event listeners for detail buttons
+  document.querySelectorAll('.detail-btn').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const carId = btn.dataset.carId;
+      const car = state.data.find((c) => c.id === carId); // Changed state.cars to state.data
+      if (car) {
+        openDetailModal(car);
+      }
+    });
+  });
 };
 
 const buildSummaryGrid = (items = []) => {
@@ -504,15 +539,15 @@ const buildSummaryGrid = (items = []) => {
   return `
     <div class="detail-summary-grid">
       ${items
-        .map(
-          (item) => `
+      .map(
+        (item) => `
         <div class="detail-summary-item">
           <span>${escapeHtml(item.label || 'Thông tin')}</span>
           <strong>${escapeHtml(item.value || '---')}</strong>
         </div>
       `
-        )
-        .join('')}
+      )
+      .join('')}
     </div>
   `;
 };
@@ -527,15 +562,15 @@ const buildSectionsHtml = (sections = []) => {
           <h3>${escapeHtml(section.title || 'Thông tin')}</h3>
           <ul>
             ${section.items
-              .map(
-                (item) => `
+          .map(
+            (item) => `
                   <li>
                     <strong>${escapeHtml(item.label || 'Thông tin')}</strong>
                     ${escapeHtml(item.value || '---')}
                   </li>
                 `
-              )
-              .join('')}
+          )
+          .join('')}
           </ul>
         </section>
       `
@@ -580,17 +615,31 @@ const buildGalleryHtml = (detail) => {
   const thumbHtml = thumbs
     .map(
       (src, index) => `
-        <button type="button" data-detail-thumb="true" data-src="${escapeAttr(src)}" class="${
-          index === 0 ? 'active' : ''
+        <button type="button" data-detail-thumb="true" data-src="${escapeAttr(src)}" class="${index === 0 ? 'active' : ''
         }" aria-label="Ảnh ${index + 2}">
           <img src="${escapeAttr(src)}" alt="${escapeHtml(`${detail.title || 'Ảnh xe'} ${index + 2}`)}" />
         </button>
       `
     )
     .join('');
+
+  const arrowsHtml = images.length > 1 ? `
+    <button class="gallery-nav prev" aria-label="Ảnh trước">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+    <button class="gallery-nav next" aria-label="Ảnh sau">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  ` : '';
+
   return `
     <div class="detail-gallery">
       <div class="detail-gallery-main">
+        ${arrowsHtml}
         <img src="${escapeAttr(main)}" alt="${escapeHtml(detail.title || 'Ảnh xe')}" data-detail-main />
       </div>
       ${thumbs.length ? `<div class="detail-gallery-thumbs">${thumbHtml}</div>` : ''}
@@ -733,7 +782,6 @@ const applyPayload = (payload) => {
   state.errors = payload.errors || [];
   state.updatedAt = payload.updatedAt || null;
 
-  renderSourceSummary();
   renderSourceFilters();
   renderBrandFilters();
   renderStatus();
@@ -820,12 +868,7 @@ els.viewList.addEventListener('click', () => {
   renderCars();
 });
 
-// Toggle filter panel
-els.toggleFilters.addEventListener('click', () => {
-  els.filterPanel.classList.toggle('collapsed');
-  const isCollapsed = els.filterPanel.classList.contains('collapsed');
-  els.toggleFilters.setAttribute('title', isCollapsed ? 'Hiện bộ lọc' : 'Ẩn bộ lọc');
-});
+
 
 // Brand multi-select dropdown
 els.brandSelectInput.addEventListener('click', (e) => {
@@ -873,15 +916,53 @@ if (els.detailModalOverlay) {
 
 if (els.detailModalContent) {
   els.detailModalContent.addEventListener('click', (event) => {
+    // Handle thumbnail click
     const thumb = event.target.closest('[data-detail-thumb]');
-    if (!thumb) return;
-    const targetSrc = thumb.dataset.src;
-    const mainImage = els.detailModalContent.querySelector('[data-detail-main]');
-    if (targetSrc && mainImage) {
-      mainImage.src = targetSrc;
-      els.detailModalContent.querySelectorAll('[data-detail-thumb]').forEach((node) => {
-        node.classList.toggle('active', node === thumb);
-      });
+    if (thumb) {
+      const targetSrc = thumb.dataset.src;
+      const mainImage = els.detailModalContent.querySelector('[data-detail-main]');
+      if (targetSrc && mainImage) {
+        mainImage.src = targetSrc;
+        els.detailModalContent.querySelectorAll('[data-detail-thumb]').forEach((node) => {
+          node.classList.toggle('active', node === thumb);
+        });
+      }
+      return;
+    }
+
+    // Handle main image click (next image)
+    if (event.target.closest('[data-detail-main]')) {
+      const thumbs = Array.from(els.detailModalContent.querySelectorAll('[data-detail-thumb]'));
+      if (!thumbs.length) return;
+
+      const currentIndex = thumbs.findIndex(t => t.classList.contains('active'));
+      const nextIndex = (currentIndex + 1) % thumbs.length;
+      const nextThumb = thumbs[nextIndex];
+
+      if (nextThumb) {
+        nextThumb.click();
+      }
+    }
+
+    // Handle gallery navigation arrows
+    const navBtn = event.target.closest('.gallery-nav');
+    if (navBtn) {
+      const thumbs = Array.from(els.detailModalContent.querySelectorAll('[data-detail-thumb]'));
+      if (!thumbs.length) return;
+
+      const currentIndex = thumbs.findIndex(t => t.classList.contains('active'));
+      let nextIndex;
+
+      if (navBtn.classList.contains('prev')) {
+        nextIndex = (currentIndex - 1 + thumbs.length) % thumbs.length;
+      } else {
+        nextIndex = (currentIndex + 1) % thumbs.length;
+      }
+
+      const nextThumb = thumbs[nextIndex];
+      if (nextThumb) {
+        nextThumb.click();
+      }
     }
   });
 }
@@ -894,6 +975,49 @@ document.addEventListener('keydown', (event) => {
 
 els.refreshBtn.addEventListener('click', () => fetchCars({ refresh: true }));
 
+// Reset filters
+const resetFiltersBtn = document.getElementById('reset-filters-btn');
+if (resetFiltersBtn) {
+  resetFiltersBtn.addEventListener('click', () => {
+    state.filters.keyword = '';
+    state.filters.selectedSources.clear();
+    state.filters.selectedBrands.clear();
+    state.filters.priceMin = null;
+    state.filters.priceMax = null;
+
+    // Reset UI inputs
+    els.searchInput.value = '';
+    els.priceMin.value = '';
+    els.priceMax.value = '';
+    els.brandSearchInput.value = '';
+
+    // Reset checkboxes
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+    document.querySelectorAll('.source-toggle').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.dropdown-option').forEach(el => el.classList.remove('selected'));
+
+    renderBrandTags();
+    renderCars();
+  });
+}
+
 hydrateFromCache();
 renderDetailModal();
 fetchCars();
+
+// Mobile menu toggle
+const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+const mainNav = document.getElementById('main-nav');
+
+if (mobileMenuToggle && mainNav) {
+  mobileMenuToggle.addEventListener('click', () => {
+    mainNav.classList.toggle('open');
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!mainNav.contains(e.target) && !mobileMenuToggle.contains(e.target) && mainNav.classList.contains('open')) {
+      mainNav.classList.remove('open');
+    }
+  });
+}

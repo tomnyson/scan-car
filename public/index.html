@@ -1,238 +1,263 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Scan Car - Tổng hợp xe mới</title>
-    <link rel="stylesheet" href="/styles.css" />
-  </head>
-  <body>
-    <main class="layout">
-      <header class="hero">
-        <div class="hero-background">
-          <div class="hero-circle hero-circle-1"></div>
-          <div class="hero-circle hero-circle-2"></div>
-          <div class="hero-circle hero-circle-3"></div>
-        </div>
-        <div class="hero-content">
-          <div class="hero-text">
-            <h1 class="hero-title">
-              Tìm xe cũ chất lượng
-            </h1>
-            <p class="lead">
-              Thu thập và chuẩn hóa danh sách xe đang bán từ <strong>Xe Lướt Toàn Trung</strong> và <strong>Anh Lượng Auto</strong>.
-            </p>
-            <div class="hero-features">
-              <div class="feature-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-                <span>Cập nhật realtime</span>
-              </div>
-              <div class="feature-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-                <span>Dữ liệu chuẩn hóa</span>
-              </div>
-              <div class="feature-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-                <span>Dễ dàng tìm kiếm</span>
-              </div>
-            </div>
-          </div>
-          <div class="hero-actions">
-            <button id="refresh-btn" class="button primary">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
-              </svg>
-              Làm mới dữ liệu
-            </button>
-            <div class="timestamp">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg>
-              <span id="updated-at">---</span>
-            </div>
-          </div>
-        </div>
-      </header>
 
-      <section class="panel">
-        <div class="panel-header">
-          <h2>Trạng thái nguồn dữ liệu</h2>
-          <div id="status-message" class="status"></div>
-        </div>
-        <div id="source-summary" class="source-summary"></div>
-      </section>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scan Car - Tổng hợp xe mới</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+</head>
 
-      <section class="panel filter-panel">
-        <div class="filter-header">
-          <h3>Bộ lọc tìm kiếm</h3>
-          <button id="toggle-filters" class="toggle-filters-btn" title="Ẩn/Hiện bộ lọc">
-            <svg class="chevron-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </button>
-        </div>
-        <div class="filters" id="filters-content">
-          <label class="filter">
-            <span class="filter-label">Tìm kiếm</span>
-            <input id="search-input" type="search" placeholder="Tên xe, năm, nhiên liệu..." />
-          </label>
-          <div class="filter">
-            <span class="filter-label">Nguồn</span>
-            <div id="source-filters" class="source-filters"></div>
-          </div>
-          <div class="filter">
-            <span class="filter-label">Thương hiệu</span>
-            <div class="multi-select-wrapper">
-              <div class="multi-select-container" id="brand-select-container">
-                <div class="multi-select-input" id="brand-select-input">
-                  <div class="selected-tags" id="brand-selected-tags"></div>
-                  <input
-                    type="text"
-                    placeholder="Chọn thương hiệu..."
-                    id="brand-search-input"
-                    autocomplete="off"
-                  />
-                  <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                  </svg>
-                </div>
-                <div class="multi-select-dropdown" id="brand-dropdown">
-                  <div class="dropdown-options" id="brand-options"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="filter">
-            <span class="filter-label">Giá (triệu VNĐ)</span>
-            <div class="price-range-container">
-              <div class="price-inputs">
-                <input type="number" id="price-min" placeholder="Tối thiểu" min="0" />
-                <span>-</span>
-                <input type="number" id="price-max" placeholder="Tối đa" min="0" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-header">
-          <h2>Danh sách xe</h2>
-          <div class="panel-controls">
-            <div class="sort-controls">
-              <label class="filter-label">Sắp xếp:</label>
-              <select id="sort-select" class="sort-select">
-                <option value="newest">Mới nhất</option>
-                <option value="price-asc">Giá thấp đến cao</option>
-                <option value="price-desc">Giá cao đến thấp</option>
-                <option value="brand">Thương hiệu A-Z</option>
-              </select>
-            </div>
-            <div class="view-toggle">
-              <button id="view-grid" class="view-btn active" title="Xem dạng lưới">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="3" y="3" width="7" height="7"></rect>
-                  <rect x="14" y="3" width="7" height="7"></rect>
-                  <rect x="14" y="14" width="7" height="7"></rect>
-                  <rect x="3" y="14" width="7" height="7"></rect>
-                </svg>
-              </button>
-              <button id="view-list" class="view-btn" title="Xem dạng danh sách">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <line x1="8" y1="6" x2="21" y2="6"></line>
-                  <line x1="8" y1="12" x2="21" y2="12"></line>
-                  <line x1="8" y1="18" x2="21" y2="18"></line>
-                  <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                  <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                  <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                </svg>
-              </button>
-            </div>
-            <p id="car-count" class="muted">---</p>
-          </div>
-        </div>
-        <div id="car-grid" class="car-grid"></div>
-      </section>
-
-      <footer class="footer">
-        <div class="footer-content">
-          <div class="footer-section">
-            <div class="footer-logo">
-              <span class="footer-icon">🚗</span>
-              <span class="footer-brand">Edukids Scan Car</span>
-            </div>
-            <p class="footer-description">
-              Thu thập và chuẩn hóa dữ liệu xe ô tô từ nhiều nguồn khác nhau.
-            </p>
-          </div>
-
-          <div class="footer-section">
-            <h4 class="footer-title">Liên kết</h4>
-            <ul class="footer-links">
-              <li>
-                <a href="https://github.com/tomnyson/scan-car" target="_blank" rel="noopener noreferrer">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                  </svg>
-                  Source Code
-                </a>
-              </li>
-              <li>
-                <a href="https://github.com/tomnyson" target="_blank" rel="noopener noreferrer">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                  </svg>
-                  GitHub Profile
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="footer-section">
-            <h4 class="footer-title">Thông tin</h4>
-            <p class="footer-info">
-              Open Source Project
-            </p>
-            <p class="footer-info">
-              MIT License
-            </p>
-          </div>
+<body>
+  <main class="layout">
+    <nav class="app-header">
+      <div class="container app-header-content">
+        <div class="app-logo">
+          <img src="/image/logo.png" alt="Scan Car Logo" class="logo-image" />
         </div>
 
-        <div class="footer-bottom">
-          <p class="footer-credit">
-            Made with <span class="heart">❤️</span> by
-            <a href="https://github.com/tomnyson" target="_blank" rel="noopener noreferrer">
-              tomnyson
-            </a>
-          </p>
-          <p class="footer-copyright">
-            © 2024 Edukids Scan Car. All rights reserved.
-          </p>
+        <div class="main-nav" id="main-nav">
+          <ul class="nav-list">
+            <li class="nav-item"><a href="#" class="nav-link">Trang chủ</a></li>
+            <li class="nav-item"><a href="#" class="nav-link active">Tìm xe</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Tin tức</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Liên hệ</a></li>
+          </ul>
         </div>
-      </footer>
-    </main>
-    <div id="detail-modal" class="detail-modal" aria-hidden="true">
-      <div class="detail-modal-overlay" data-detail-close></div>
-      <div class="detail-modal-dialog" role="dialog" aria-modal="true" aria-label="Thông tin chi tiết xe">
-        <button id="detail-modal-close" class="detail-modal-close" type="button" aria-label="Đóng chi tiết">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
+
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
           </svg>
         </button>
-        <div id="detail-modal-content" class="detail-modal-content">
-          <div class="detail-modal-empty">Chọn một xe để xem thông tin chi tiết.</div>
+      </div>
+    </nav>
+    <header class="hero">
+      <div class="hero-background">
+        <div class="hero-circle hero-circle-1"></div>
+        <div class="hero-circle hero-circle-2"></div>
+        <div class="hero-circle hero-circle-3"></div>
+      </div>
+      <div class="hero-content centered">
+        <div class="hero-text-center">
+          <h1 class="hero-title">
+            Tìm xe cũ chất lượng
+          </h1>
+          <p class="lead">
+            So sánh giá theo thời gian thực từ <strong>Xe Lướt Toàn Trung</strong> và <strong>Anh Lượng Auto</strong>.
+          </p>
+        </div>
+
+        <div class="hero-search-container">
+          <div class="search-bar-wrapper">
+            <div class="search-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input id="search-input" type="search" class="hero-search-input"
+              placeholder="Tìm theo hãng xe, mẫu xe hoặc từ khóa..." />
+            <button id="hero-search-btn" class="hero-search-btn">
+              Tìm kiếm
+            </button>
+          </div>
+          <div class="hero-tags">
+            <span>Phổ biến:</span>
+            <button class="hero-tag">Camry</button>
+            <button class="hero-tag">SantaFe</button>
+            <button class="hero-tag">Mercedes</button>
+          </div>
         </div>
       </div>
+    </header>
+
+    <div class="container layout-grid">
+      <aside class="filters-sidebar">
+        <div class="sidebar-header">
+          <h3>Bộ lọc</h3>
+          <button id="reset-filters-btn" class="reset-link">Đặt lại tất cả</button>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Nguồn</label>
+          <div id="source-filters" class="source-filters"></div>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Thương hiệu</label>
+          <div class="multi-select-wrapper">
+            <div class="multi-select-container" id="brand-select-container">
+              <div class="multi-select-input" id="brand-select-input">
+                <div class="selected-tags" id="brand-selected-tags"></div>
+                <input type="text" id="brand-search-input" placeholder="Chọn thương hiệu..." autocomplete="off" />
+                <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="multi-select-dropdown" id="brand-dropdown">
+                <div class="dropdown-options" id="brand-options"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Khoảng giá (Triệu VNĐ)</label>
+          <div class="price-inputs">
+            <input type="number" id="price-min" placeholder="Tối thiểu" min="0" step="10" />
+            <span class="separator">-</span>
+            <input type="number" id="price-max" placeholder="Tối đa" min="0" step="10" />
+          </div>
+        </div>
+      </aside>
+
+      <main class="results-area">
+        <div class="results-toolbar">
+          <div class="results-header">
+            <div class="results-count">
+              <h2 id="car-count">0 xe phù hợp</h2>
+              <div class="timestamp">
+                <span id="updated-at">Cập nhật: ---</span>
+                <button id="refresh-btn" class="icon-btn" title="Làm mới dữ liệu">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="view-controls">
+              <div class="sort-controls">
+                <select id="sort-select" class="sort-select">
+                  <option value="newest">Mới nhất</option>
+                  <option value="price-asc">Giá: Thấp đến cao</option>
+                  <option value="price-desc">Giá: Cao đến thấp</option>
+                </select>
+              </div>
+              <div class="layout-toggles">
+                <button id="view-grid" class="view-btn active" title="Xem dạng lưới">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                  </svg>
+                </button>
+                <button id="view-list" class="view-btn" title="Xem dạng danh sách">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="8" y1="6" x2="21" y2="6"></line>
+                    <line x1="8" y1="12" x2="21" y2="12"></line>
+                    <line x1="8" y1="18" x2="21" y2="18"></line>
+                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="status-message" class="status-message"></div>
+
+        <div id="car-grid" class="car-grid">
+          <!-- Cars will be rendered here -->
+        </div>
+
+        <div id="loading" class="loading-state hidden">
+          <div class="spinner"></div>
+          <p>Đang tìm kiếm xe phù hợp...</p>
+        </div>
+
+        <div id="error-message" class="error-state hidden"></div>
+      </main>
     </div>
-    <script src="/app.js" type="module"></script>
-  </body>
+    <!-- Cleaned up leftover code -->
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <span class="footer-icon">🚗</span>
+            <span class="footer-brand">Edukids Scan Car</span>
+          </div>
+          <p class="footer-description">
+            Thu thập và chuẩn hóa dữ liệu xe ô tô từ nhiều nguồn khác nhau.
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h4 class="footer-title">Liên kết</h4>
+          <ul class="footer-links">
+            <li>
+              <a href="https://github.com/tomnyson/scan-car" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                </svg>
+                Source Code
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/tomnyson" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                </svg>
+                GitHub Profile
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4 class="footer-title">Thông tin</h4>
+          <p class="footer-info">
+            Open Source Project
+          </p>
+          <p class="footer-info">
+            MIT License
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-credit">
+          Made with <span class="heart">❤️</span> by
+          <a href="https://github.com/tomnyson" target="_blank" rel="noopener noreferrer">
+            tomnyson
+          </a>
+        </p>
+        <p class="footer-copyright">
+          © 2024 Edukids Scan Car. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  </main>
+  <div id="detail-modal" class="detail-modal" aria-hidden="true">
+    <div class="detail-modal-overlay" data-detail-close></div>
+    <div class="detail-modal-dialog" role="dialog" aria-modal="true" aria-label="Thông tin chi tiết xe">
+      <button id="detail-modal-close" class="detail-modal-close" type="button" aria-label="Đóng chi tiết">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div id="detail-modal-content" class="detail-modal-content">
+        <div class="detail-modal-empty">Chọn một xe để xem thông tin chi tiết.</div>
+      </div>
+    </div>
+  </div>
+  <script src="/app.js" type="module"></script>
+</body>
+
 </html>
