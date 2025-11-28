@@ -6,6 +6,7 @@ const compression = require('compression');
 const helmet = require('helmet');
 const { fetchXeLuotToanTrungCars, fetchXeLuotToanTrungCarDetail } = require('./scrapers/xeluottoantrung');
 const { fetchOtoAnhLuongCars, fetchOtoAnhLuongCarDetail } = require('./scrapers/otoanhluong');
+const { fetchBonbanhCars, fetchBonbanhCarDetail } = require('./scrapers/bonbanh');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,7 +14,8 @@ const CACHE_TTL_MS = Number(process.env.CACHE_TTL_MS || 2 * 60 * 60 * 1000);
 const CACHE_FILE_PATH = path.join(__dirname, '../cache/cars-cache.json');
 const tasks = [
   { id: 'xeluottoantrung', name: 'Xe Lướt Toàn Trung', loader: fetchXeLuotToanTrungCars },
-  { id: 'otoanhluong', name: 'Anh Lượng Auto', loader: fetchOtoAnhLuongCars }
+  { id: 'otoanhluong', name: 'Anh Lượng Auto', loader: fetchOtoAnhLuongCars },
+  { id: 'bonbanh', name: 'Bonbanh Đắk Lắk', loader: fetchBonbanhCars }
 ];
 const SOURCE_CONFIG = {
   xeluottoantrung: {
@@ -23,11 +25,16 @@ const SOURCE_CONFIG = {
   otoanhluong: {
     baseUrl: 'https://otoanhluong.vn/',
     hosts: ['otoanhluong.vn', 'www.otoanhluong.vn']
+  },
+  bonbanh: {
+    baseUrl: 'https://bonbanh.com/',
+    hosts: ['bonbanh.com']
   }
 };
 const detailFetchers = {
   xeluottoantrung: fetchXeLuotToanTrungCarDetail,
-  otoanhluong: fetchOtoAnhLuongCarDetail
+  otoanhluong: fetchOtoAnhLuongCarDetail,
+  bonbanh: fetchBonbanhCarDetail
 };
 const detailCache = new Map();
 
@@ -67,12 +74,18 @@ let cache = loadCacheFromDisk();
 const DETAIL_CACHE_TTL_MS = CACHE_TTL_MS;
 
 const normalizeHost = (value = '') => value.trim().toLowerCase().replace(/^www\./, '');
+const matchesHost = (host, candidate) => host === candidate || host.endsWith(`.${candidate}`);
+const isHostAllowedForSource = (source, host) => {
+  const config = SOURCE_CONFIG[source];
+  if (!config) return false;
+  return config.hosts.some((candidate) => matchesHost(host, candidate));
+};
 
 const detectSourceFromUrl = (value = '') => {
   try {
     const parsed = new URL(value);
     const host = normalizeHost(parsed.hostname);
-    return Object.entries(SOURCE_CONFIG).find(([, config]) => config.hosts.includes(host))?.[0] || null;
+    return Object.entries(SOURCE_CONFIG).find(([, config]) => config.hosts.some((candidate) => matchesHost(host, candidate)))?.[0] || null;
   } catch (error) {
     return null;
   }
@@ -219,7 +232,7 @@ app.get('/api/cars/detail', async (req, res) => {
   }
 
   const host = normalizeHost(parsed.hostname);
-  if (!SOURCE_CONFIG[source].hosts.includes(host)) {
+  if (!isHostAllowedForSource(source, host)) {
     return res.status(400).json({ error: 'URL không thuộc nguồn hợp lệ' });
   }
 
