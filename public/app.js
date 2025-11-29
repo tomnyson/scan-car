@@ -187,8 +187,8 @@ const renderStatus = () => {
     els.statusMessage.classList.remove('error');
   }
 
-  if (els.updatedAt) {
-    els.updatedAt.textContent = formatDate(state.updatedAt);
+  if (els.updatedAt && state.updatedAt) {
+    els.updatedAt.textContent = `Cập nhật lúc: ${formatDate(state.updatedAt)}`;
   }
 };
 
