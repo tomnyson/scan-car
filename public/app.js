@@ -46,7 +46,8 @@ const els = {
   detailModal: document.getElementById('detail-modal'),
   detailModalContent: document.getElementById('detail-modal-content'),
   detailModalClose: document.getElementById('detail-modal-close'),
-  detailModalOverlay: document.querySelector('[data-detail-close]')
+  detailModalOverlay: document.querySelector('[data-detail-close]'),
+  loading: document.getElementById('loading')
 };
 
 const placeholderImage = 'https://placehold.co/600x400?text=No+Image';
@@ -151,8 +152,21 @@ const setLoading = (flag, { silent = false } = {}) => {
   if (silent) {
     return;
   }
-  els.refreshBtn.disabled = flag;
-  els.refreshBtn.textContent = flag ? 'Đang tải...' : 'Làm mới dữ liệu';
+
+  // Show/hide loading element
+  if (els.loading) {
+    if (flag) {
+      els.loading.classList.remove('hidden');
+    } else {
+      els.loading.classList.add('hidden');
+    }
+  }
+
+  // Update refresh button if it exists
+  if (els.refreshBtn) {
+    els.refreshBtn.disabled = flag;
+    els.refreshBtn.textContent = flag ? 'Đang tải...' : 'Làm mới dữ liệu';
+  }
 };
 
 const renderStatus = () => {
@@ -173,7 +187,9 @@ const renderStatus = () => {
     els.statusMessage.classList.remove('error');
   }
 
-  els.updatedAt.textContent = formatDate(state.updatedAt);
+  if (els.updatedAt) {
+    els.updatedAt.textContent = formatDate(state.updatedAt);
+  }
 };
 
 
@@ -200,19 +216,18 @@ const renderSourceFilters = () => {
   els.sourceFilters.innerHTML = '';
   state.sources.forEach((source) => {
     const wrapper = document.createElement('label');
-    wrapper.className = `source-toggle ${selected.has(source.id) ? 'active' : ''}`;
+    wrapper.className = 'source-checkbox-label';
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.value = source.id;
     checkbox.checked = selected.has(source.id);
     checkbox.addEventListener('change', (event) => {
-      wrapper.classList.toggle('active', event.target.checked);
       handleSourceChange(source.id, event.target.checked);
     });
 
     const text = document.createElement('span');
-    text.textContent = `${source.name} (${source.count})`;
+    text.textContent = source.name;
 
     wrapper.appendChild(checkbox);
     wrapper.appendChild(text);
@@ -297,7 +312,7 @@ const renderBrandTags = () => {
 
   if (selectedBrands.length === 0) {
     els.brandSelectedTags.innerHTML = '';
-    els.brandSearchInput.placeholder = 'Chọn thương hiệu...';
+    els.brandSearchInput.placeholder = 'Tất cả hãng xe...';
     return;
   }
 
@@ -433,7 +448,12 @@ const sortCars = (cars) => {
 const renderCars = () => {
   const filtered = filterCars();
   const cars = sortCars(filtered);
-  els.carCount.textContent = `${cars.length} xe phù hợp`;
+  els.carCount.textContent = `Hiển thị ${cars.length} kết quả`;
+
+  // Hide loading element when rendering cars
+  if (els.loading) {
+    els.loading.classList.add('hidden');
+  }
 
   // Apply view mode
   if (state.viewMode === 'list') {
@@ -491,7 +511,12 @@ const renderCars = () => {
         attrs.push(`<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2"></circle><path d="M12 2v8"></path><path d="M12 14v8"></path></svg> ${escapeHtml(keySpecs.transmission)}</li>`);
       }
 
-      const detailButton = `<button class="detail-link detail-btn" type="button" data-car-id="${escapeAttr(car.id)}">Xem chi tiết</button>`;
+      const detailButton = `<button class="detail-link detail-btn" type="button" data-car-id="${escapeAttr(car.id)}">
+        Xem Chi Tiết
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>`;
 
       return `
         <div class="car-card" onclick="document.querySelector('.detail-btn[data-car-id=\\'${escapeAttr(car.id)}\\']').click()">
@@ -854,19 +879,27 @@ els.sortSelect.addEventListener('change', (event) => {
 });
 
 // View mode toggle
-els.viewGrid.addEventListener('click', () => {
-  state.viewMode = 'grid';
-  els.viewGrid.classList.add('active');
-  els.viewList.classList.remove('active');
-  renderCars();
-});
+if (els.viewGrid) {
+  els.viewGrid.addEventListener('click', () => {
+    state.viewMode = 'grid';
+    els.viewGrid.classList.add('active');
+    if (els.viewList) {
+      els.viewList.classList.remove('active');
+    }
+    renderCars();
+  });
+}
 
-els.viewList.addEventListener('click', () => {
-  state.viewMode = 'list';
-  els.viewList.classList.add('active');
-  els.viewGrid.classList.remove('active');
-  renderCars();
-});
+if (els.viewList) {
+  els.viewList.addEventListener('click', () => {
+    state.viewMode = 'list';
+    els.viewList.classList.add('active');
+    if (els.viewGrid) {
+      els.viewGrid.classList.remove('active');
+    }
+    renderCars();
+  });
+}
 
 
 
@@ -973,7 +1006,9 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
-els.refreshBtn.addEventListener('click', () => fetchCars({ refresh: true }));
+if (els.refreshBtn) {
+  els.refreshBtn.addEventListener('click', () => fetchCars({ refresh: true }));
+}
 
 // Reset filters
 const resetFiltersBtn = document.getElementById('reset-filters-btn');
