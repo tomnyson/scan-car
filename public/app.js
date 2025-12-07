@@ -6,7 +6,9 @@ const state = {
     selectedSources: new Set(),
     selectedBrands: new Set(),
     priceMin: null,
-    priceMax: null
+    priceMax: null,
+    odoMin: null,
+    odoMax: null
   },
   sortBy: 'newest',
   viewMode: 'grid',
@@ -16,6 +18,9 @@ const state = {
   brandOptions: [],
   brandDropdownOpen: false,
   autoReloadTimerId: null,
+  // Pagination
+  currentPage: 1,
+  itemsPerPage: 12,
   detail: {
     isOpen: false,
     isLoading: false,
@@ -47,7 +52,18 @@ const els = {
   detailModalContent: document.getElementById('detail-modal-content'),
   detailModalClose: document.getElementById('detail-modal-close'),
   detailModalOverlay: document.querySelector('[data-detail-close]'),
-  loading: document.getElementById('loading')
+  loading: document.getElementById('loading'),
+  // Pagination
+  pagination: document.getElementById('pagination'),
+  paginationPrev: document.getElementById('pagination-prev'),
+  paginationNext: document.getElementById('pagination-next'),
+  paginationPages: document.getElementById('pagination-pages'),
+  // ODO Range
+  odoMin: document.getElementById('odo-min'),
+  odoMax: document.getElementById('odo-max'),
+  odoMinDisplay: document.getElementById('odo-min-display'),
+  odoMaxDisplay: document.getElementById('odo-max-display'),
+  odoRangeProgress: document.getElementById('odo-range-progress')
 };
 
 const placeholderImage = 'https://placehold.co/600x400?text=No+Image';
@@ -372,6 +388,8 @@ const filterCars = () => {
   const selectedBrands = state.filters.selectedBrands;
   const priceMin = state.filters.priceMin;
   const priceMax = state.filters.priceMax;
+  const odoMin = state.filters.odoMin;
+  const odoMax = state.filters.odoMax;
 
   return state.data.filter((car) => {
     // Source filter
@@ -395,6 +413,30 @@ const filterCars = () => {
           return false;
         }
         if (priceMax !== null && carPrice > priceMax) {
+          return false;
+        }
+      }
+    }
+
+    // ODO (km) range filter
+    if (odoMin !== null || odoMax !== null) {
+      // Extract km from attributes
+      let carOdo = null;
+      (car.attributes || []).forEach(attr => {
+        const label = (attr.label || '').toLowerCase();
+        if (label.includes('km') || label.includes('odo') || label.includes('số km')) {
+          const value = (attr.value || '').replace(/[^\d]/g, '');
+          if (value) {
+            carOdo = parseInt(value);
+          }
+        }
+      });
+
+      if (carOdo !== null) {
+        if (odoMin !== null && carOdo < odoMin) {
+          return false;
+        }
+        if (odoMax !== null && odoMax < 200000 && carOdo > odoMax) {
           return false;
         }
       }
@@ -447,8 +489,26 @@ const sortCars = (cars) => {
 
 const renderCars = () => {
   const filtered = filterCars();
-  const cars = sortCars(filtered);
-  els.carCount.textContent = `Hiển thị ${cars.length} kết quả`;
+  const allCars = sortCars(filtered);
+
+  // Pagination calculations
+  const totalItems = allCars.length;
+  const totalPages = Math.ceil(totalItems / state.itemsPerPage);
+
+  // Ensure current page is valid
+  if (state.currentPage > totalPages) {
+    state.currentPage = Math.max(1, totalPages);
+  }
+
+  // Get cars for current page
+  const startIndex = (state.currentPage - 1) * state.itemsPerPage;
+  const endIndex = startIndex + state.itemsPerPage;
+  const cars = allCars.slice(startIndex, endIndex);
+
+  // Update count display
+  const showingStart = totalItems > 0 ? startIndex + 1 : 0;
+  const showingEnd = Math.min(endIndex, totalItems);
+  els.carCount.textContent = `Hiển thị ${showingStart}-${showingEnd} / ${totalItems} kết quả`;
 
   // Hide loading element when rendering cars
   if (els.loading) {
@@ -464,6 +524,7 @@ const renderCars = () => {
 
   if (!cars.length) {
     els.carGrid.innerHTML = '<p class="muted">Không có dữ liệu phù hợp với bộ lọc hiện tại.</p>';
+    renderPagination(0, 0);
     return;
   }
 
@@ -620,6 +681,9 @@ const renderCars = () => {
 
   els.carGrid.innerHTML = cardHtml;
 
+  // Render pagination
+  renderPagination(totalPages, totalItems);
+
   // Re-attach event listeners for detail buttons
   document.querySelectorAll('.detail-btn').forEach((btn) => {
     btn.addEventListener('click', (e) => {
@@ -631,6 +695,91 @@ const renderCars = () => {
       }
     });
   });
+};
+
+const renderPagination = (totalPages, totalItems) => {
+  if (!els.pagination) return;
+
+  // Hide pagination if only 1 page or no items
+  if (totalPages <= 1) {
+    els.pagination.style.display = 'none';
+    return;
+  }
+
+  els.pagination.style.display = 'flex';
+
+  // Update prev/next buttons
+  els.paginationPrev.disabled = state.currentPage <= 1;
+  els.paginationNext.disabled = state.currentPage >= totalPages;
+
+  // Generate page numbers with ellipsis
+  const pages = [];
+  const current = state.currentPage;
+  const maxVisible = 5;
+
+  if (totalPages <= maxVisible + 2) {
+    // Show all pages if not too many
+    for (let i = 1; i <= totalPages; i++) {
+      pages.push(i);
+    }
+  } else {
+    // Always show first page
+    pages.push(1);
+
+    // Calculate range around current page
+    let start = Math.max(2, current - 1);
+    let end = Math.min(totalPages - 1, current + 1);
+
+    // Adjust range to show more pages
+    if (current <= 3) {
+      end = Math.min(totalPages - 1, 4);
+    } else if (current >= totalPages - 2) {
+      start = Math.max(2, totalPages - 3);
+    }
+
+    // Add ellipsis before range if needed
+    if (start > 2) {
+      pages.push('...');
+    }
+
+    // Add range pages
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    // Add ellipsis after range if needed
+    if (end < totalPages - 1) {
+      pages.push('...');
+    }
+
+    // Always show last page
+    pages.push(totalPages);
+  }
+
+  // Render page buttons
+  els.paginationPages.innerHTML = pages.map(page => {
+    if (page === '...') {
+      return '<span class="pagination-page ellipsis">...</span>';
+    }
+    return `<button class="pagination-page ${page === current ? 'active' : ''}" data-page="${page}">${page}</button>`;
+  }).join('');
+
+  // Add click handlers for page buttons
+  els.paginationPages.querySelectorAll('button[data-page]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const page = parseInt(btn.dataset.page);
+      if (page !== state.currentPage) {
+        goToPage(page);
+      }
+    });
+  });
+};
+
+const goToPage = (page) => {
+  state.currentPage = page;
+  renderCars();
+  // Scroll to top of car grid
+  els.carGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
 
 const buildSummaryGrid = (items = []) => {
@@ -927,6 +1076,7 @@ const fetchCars = async ({ refresh = false, silent = false } = {}) => {
 // Event listeners
 els.searchInput.addEventListener('input', (event) => {
   state.filters.keyword = event.target.value || '';
+  state.currentPage = 1; // Reset to first page when filter changes
   renderCars();
 });
 
@@ -939,6 +1089,7 @@ const handlePriceChange = () => {
     const max = parseFloat(els.priceMax.value);
     state.filters.priceMin = !isNaN(min) && min > 0 ? min : null;
     state.filters.priceMax = !isNaN(max) && max > 0 ? max : null;
+    state.currentPage = 1; // Reset to first page when filter changes
     renderCars();
   }, 500); // Debounce for 500ms
 };
@@ -946,9 +1097,62 @@ const handlePriceChange = () => {
 els.priceMin.addEventListener('input', handlePriceChange);
 els.priceMax.addEventListener('input', handlePriceChange);
 
+// ODO range slider
+const formatOdo = (value) => {
+  if (value >= 1000) {
+    return (value / 1000).toFixed(0) + '.000 km';
+  }
+  return value + ' km';
+};
+
+const updateOdoDisplay = () => {
+  if (!els.odoMin || !els.odoMax) return;
+
+  const min = parseInt(els.odoMin.value);
+  const max = parseInt(els.odoMax.value);
+
+  // Update display values
+  if (els.odoMinDisplay) {
+    els.odoMinDisplay.textContent = formatOdo(min);
+  }
+  if (els.odoMaxDisplay) {
+    els.odoMaxDisplay.textContent = formatOdo(max);
+  }
+};
+
+const handleOdoChange = () => {
+  let min = parseInt(els.odoMin.value);
+  let max = parseInt(els.odoMax.value);
+
+  // Ensure min doesn't exceed max
+  if (min > max) {
+    const temp = min;
+    min = max;
+    max = temp;
+    els.odoMin.value = min;
+    els.odoMax.value = max;
+  }
+
+  updateOdoDisplay();
+
+  // Update filter state
+  state.filters.odoMin = min > 0 ? min : null;
+  state.filters.odoMax = max < 200000 ? max : null;
+  state.currentPage = 1;
+  renderCars();
+};
+
+if (els.odoMin && els.odoMax) {
+  els.odoMin.addEventListener('input', handleOdoChange);
+  els.odoMax.addEventListener('input', handleOdoChange);
+  // Initialize display
+  updateOdoDisplay();
+}
+
 // Sort select
 els.sortSelect.addEventListener('change', (event) => {
   state.sortBy = event.target.value;
+  state.currentPage = 1; // Reset to first page when sort changes
   renderCars();
 });
 
@@ -1082,6 +1286,25 @@ document.addEventListener('keydown', (event) => {
 
 if (els.refreshBtn) {
   els.refreshBtn.addEventListener('click', () => fetchCars({ refresh: true }));
+}
+
+// Pagination event listeners
+if (els.paginationPrev) {
+  els.paginationPrev.addEventListener('click', () => {
+    if (state.currentPage > 1) {
+      goToPage(state.currentPage - 1);
+    }
+  });
+}
+
+if (els.paginationNext) {
+  els.paginationNext.addEventListener('click', () => {
+    const filtered = filterCars();
+    const totalPages = Math.ceil(filtered.length / state.itemsPerPage);
+    if (state.currentPage < totalPages) {
+      goToPage(state.currentPage + 1);
+    }
+  });
 }
 
 // Reset filters
@@ -1474,3 +1697,40 @@ function formatViolationDateTime(dateTimeStr) {
     minute: '2-digit'
   }).format(date);
 }
+
+// Mobile Filter Toggle
+const mobileFilterToggle = document.getElementById('mobile-filter-toggle');
+const mobileFilterClose = document.getElementById('mobile-filter-close');
+const mobileFilterOverlay = document.getElementById('mobile-filter-overlay');
+const filtersSidebar = document.getElementById('filters-sidebar');
+
+const openMobileFilters = () => {
+  filtersSidebar.classList.add('open');
+  mobileFilterOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+const closeMobileFilters = () => {
+  filtersSidebar.classList.remove('open');
+  mobileFilterOverlay.classList.remove('active');
+  document.body.style.overflow = '';
+};
+
+if (mobileFilterToggle) {
+  mobileFilterToggle.addEventListener('click', openMobileFilters);
+}
+
+if (mobileFilterClose) {
+  mobileFilterClose.addEventListener('click', closeMobileFilters);
+}
+
+if (mobileFilterOverlay) {
+  mobileFilterOverlay.addEventListener('click', closeMobileFilters);
+}
+
+// Close on escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && filtersSidebar?.classList.contains('open')) {
+    closeMobileFilters();
+  }
+});

@@ -10,7 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" type="image/png" href="./image/logo.png" />
 </head>
 
 <body>
@@ -90,8 +92,26 @@
   </header>
 
   <main class="main-container">
+    <!-- Mobile Filter Toggle -->
+    <button id="mobile-filter-toggle" class="mobile-filter-toggle">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+      </svg>
+      Bộ Lọc
+    </button>
+
+    <div class="mobile-filter-overlay" id="mobile-filter-overlay"></div>
+
     <aside class="filters-sidebar" id="filters-sidebar">
-      <h2 class="filter-title">Bộ Lọc</h2>
+      <div class="filter-header">
+        <h2 class="filter-title">Bộ Lọc</h2>
+        <button id="mobile-filter-close" class="mobile-filter-close" aria-label="Đóng">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
 
       <div class="filter-group">
         <label class="filter-label">Nguồn Website</label>
@@ -123,6 +143,20 @@
           <input type="number" id="price-min" placeholder="Tối thiểu" min="0" step="10" />
           <span class="separator">-</span>
           <input type="number" id="price-max" placeholder="Tối đa" min="0" step="10" />
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Số Km Đã Đi</label>
+        <div class="odo-range-container">
+          <div class="odo-range-values">
+            <span id="odo-min-display" class="odo-value-badge">0</span>
+            <span id="odo-max-display" class="odo-value-badge">200.000 km</span>
+          </div>
+          <div class="odo-range-slider">
+            <input type="range" class="form-range" id="odo-min" min="0" max="200000" value="0" step="5000" />
+            <input type="range" class="form-range" id="odo-max" min="0" max="200000" value="200000" step="5000" />
+          </div>
         </div>
       </div>
 
@@ -263,6 +297,23 @@
 
       <div id="car-grid" class="car-grid">
         <!-- Cars will be rendered here -->
+      </div>
+
+      <!-- Pagination -->
+      <div id="pagination" class="pagination">
+        <button id="pagination-prev" class="pagination-btn" disabled aria-label="Trang trước">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <div id="pagination-pages" class="pagination-pages">
+          <!-- Page numbers will be rendered here -->
+        </div>
+        <button id="pagination-next" class="pagination-btn" aria-label="Trang sau">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
       </div>
 
       <div id="loading" class="loading-state hidden">
