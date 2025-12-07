@@ -469,76 +469,150 @@ const renderCars = () => {
 
   const cardHtml = cars
     .map((car) => {
-      // Extract key specs
-      const keySpecs = {};
+      // Extract key specs from attributes
+      const specs = {
+        odometer: '',
+        seats: '',
+        transmission: '',
+        fuel: '',
+        year: '',
+        location: ''
+      };
+
       (car.attributes || []).forEach(attr => {
         const label = (attr.label || '').toLowerCase();
-        if (label.includes('năm') || label.includes('year')) keySpecs.year = attr.value;
-        if (label.includes('km') || label.includes('odo') || label.includes('số km')) keySpecs.odometer = attr.value;
-        if (label.includes('nhiên liệu') || label.includes('fuel')) keySpecs.fuel = attr.value;
-        if (label.includes('hộp số') || label.includes('transmission')) keySpecs.transmission = attr.value;
+        const value = attr.value || '';
+
+        if (label.includes('năm') || label.includes('year')) {
+          specs.year = value;
+        } else if (label.includes('km') || label.includes('odo') || label.includes('số km')) {
+          specs.odometer = value;
+        } else if (label.includes('nhiên liệu') || label.includes('fuel') || label.includes('động cơ')) {
+          specs.fuel = value;
+        } else if (label.includes('hộp số') || label.includes('transmission') || label.includes('số sàn') || label.includes('tự động')) {
+          specs.transmission = value;
+        } else if (label.includes('chỗ') || label.includes('seat')) {
+          specs.seats = value;
+        } else if (label.includes('địa chỉ') || label.includes('location') || label.includes('nơi bán') || label.includes('vị trí')) {
+          specs.location = value;
+        }
       });
 
-      // Source Badge Logic
+      // Source badge
       const sourceLower = (car.source || '').toLowerCase();
-      let sourceClass = 'other';
-      let sourceName = car.source || 'N/A';
+      let sourceName = car.sourceName || car.source || '';
       if (sourceLower.includes('bonbanh')) {
-        sourceClass = 'bonbanh';
         sourceName = 'Bonbanh';
       } else if (sourceLower.includes('chotot') || sourceLower.includes('chợ tốt')) {
-        sourceClass = 'chotot';
         sourceName = 'Chợ Tốt';
       }
 
-      // Price Indicator Logic (Simple Heuristic)
-      // In a real app, this would compare against market average
-      const priceVal = parseInt((car.priceText || '0').replace(/\D/g, ''));
-      const priceClass = priceVal > 0 && priceVal < 800 ? 'good' : 'high';
+      // Build specs HTML - only show specs that have values
+      const specsHtml = [];
 
-      // Attributes List (Max 4 items)
-      const attrs = [];
-      if (keySpecs.year) {
-        attrs.push(`<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> ${escapeHtml(keySpecs.year)}</li>`);
-      }
-      if (keySpecs.odometer) {
-        attrs.push(`<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> ${escapeHtml(keySpecs.odometer)}</li>`);
-      }
-      if (keySpecs.fuel) {
-        attrs.push(`<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 19V5c0-1.1.9-2 2-2h9c1.1 0 2 .9 2 2v14H3z"></path><path d="M18 8v8"></path><path d="M21 8v8"></path></svg> ${escapeHtml(keySpecs.fuel)}</li>`);
-      }
-      if (keySpecs.transmission) {
-        attrs.push(`<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2"></circle><path d="M12 2v8"></path><path d="M12 14v8"></path></svg> ${escapeHtml(keySpecs.transmission)}</li>`);
+      if (specs.odometer) {
+        specsHtml.push(`
+          <div class="car-spec-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>${escapeHtml(specs.odometer)}</span>
+          </div>
+        `);
       }
 
-      const detailButton = `<button class="detail-link detail-btn" type="button" data-car-id="${escapeAttr(car.id)}">
-        Xem Chi Tiết
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </button>`;
+      if (specs.seats) {
+        specsHtml.push(`
+          <div class="car-spec-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span>${escapeHtml(specs.seats)}</span>
+          </div>
+        `);
+      }
+
+      if (specs.transmission) {
+        specsHtml.push(`
+          <div class="car-spec-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+              <path d="M6 8v8"></path>
+              <path d="M18 8v8"></path>
+              <path d="M6 12h12"></path>
+            </svg>
+            <span>${escapeHtml(specs.transmission)}</span>
+          </div>
+        `);
+      }
+
+      if (specs.fuel) {
+        specsHtml.push(`
+          <div class="car-spec-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 22V6c0-1.1.9-2 2-2h8c1.1 0 2 .9 2 2v16"></path>
+              <path d="M3 22h12"></path>
+              <path d="M18 14v4c0 1.1.9 2 2 2 0 0 0-6 0-10 0-2-3-2-3 0v3"></path>
+              <rect x="6" y="7" width="5" height="4"></rect>
+            </svg>
+            <span>${escapeHtml(specs.fuel)}</span>
+          </div>
+        `);
+      }
+
+      if (specs.year) {
+        specsHtml.push(`
+          <div class="car-spec-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>${escapeHtml(specs.year)}</span>
+          </div>
+        `);
+      }
+
+      if (specs.location || sourceName) {
+        specsHtml.push(`
+          <div class="car-spec-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>${escapeHtml(specs.location || sourceName)}</span>
+          </div>
+        `);
+      }
 
       return `
         <div class="car-card" onclick="document.querySelector('.detail-btn[data-car-id=\\'${escapeAttr(car.id)}\\']').click()">
-          <div class="image-container">
-            <img src="${escapeAttr(car.thumbnail || 'https://via.placeholder.com/300x200?text=No+Image')}" alt="${escapeAttr(car.title)}" loading="lazy" />
+          <div class="car-card-image">
+            <img src="${escapeAttr(car.thumbnail || 'https://via.placeholder.com/400x250?text=No+Image')}" alt="${escapeAttr(car.title)}" loading="lazy" />
+            <button class="car-image-nav prev" onclick="event.stopPropagation()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button class="car-image-nav next" onclick="event.stopPropagation()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
           </div>
-          <div class="card-body">
-            <div class="card-header">
-              <span class="source-badge ${sourceClass}">${escapeHtml(sourceName)}</span>
-            </div>
+          <div class="car-card-content">
+            <div class="car-price-banner">${escapeHtml(car.priceText || 'Liên hệ')}</div>
             <h3 class="car-title">${escapeHtml(car.title)}</h3>
-            <div class="price">
-              <span class="price-indicator ${priceClass}"></span>
-              ${escapeHtml(car.priceText || 'Liên hệ')}
-            </div>
-            <ul class="attributes">
-              ${attrs.join('')}
-            </ul>
-            <div class="card-footer">
-              ${detailButton}
+            <div class="car-specs">
+              ${specsHtml.join('')}
             </div>
           </div>
+          <button class="detail-btn" type="button" data-car-id="${escapeAttr(car.id)}" style="display:none;">Xem Chi Tiết</button>
         </div>
       `;
     })
@@ -551,7 +625,7 @@ const renderCars = () => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       const carId = btn.dataset.carId;
-      const car = state.data.find((c) => c.id === carId); // Changed state.cars to state.data
+      const car = state.data.find((c) => c.id === carId);
       if (car) {
         openDetailModal(car);
       }
@@ -1055,4 +1129,348 @@ if (mobileMenuToggle && mainNav) {
       mainNav.classList.remove('open');
     }
   });
+}
+
+// ========================================
+// TRAFFIC FINE CHECKER
+// ========================================
+
+const trafficFineEls = {
+  section: document.getElementById('traffic-fine-section'),
+  filtersSidebar: document.getElementById('filters-sidebar'),
+  resultsArea: document.querySelector('.results-area'),
+  licensePlateInput: document.getElementById('license-plate-input'),
+  checkFineBtn: document.getElementById('check-fine-btn'),
+  fineResult: document.getElementById('fine-result'),
+  fineLoading: document.getElementById('fine-loading'),
+  captchaContainer: document.getElementById('fine-captcha-container'),
+  captchaImage: document.getElementById('captcha-image'),
+  captchaInput: document.getElementById('captcha-input'),
+  reloadCaptchaBtn: document.getElementById('reload-captcha-btn'),
+  methodIframeBtn: document.getElementById('method-iframe-btn'),
+  methodManualBtn: document.getElementById('method-manual-btn'),
+  iframeMethod: document.getElementById('iframe-method'),
+  manualMethod: document.getElementById('manual-method')
+};
+
+// Method switching buttons
+if (trafficFineEls.methodIframeBtn && trafficFineEls.methodManualBtn) {
+  trafficFineEls.methodIframeBtn.addEventListener('click', () => {
+    // Show iframe method
+    trafficFineEls.iframeMethod.style.display = 'block';
+    trafficFineEls.manualMethod.style.display = 'none';
+
+    // Update button styles
+    trafficFineEls.methodIframeBtn.classList.add('active');
+    trafficFineEls.methodIframeBtn.style.background = 'var(--gold)';
+    trafficFineEls.methodIframeBtn.style.color = 'var(--black)';
+    trafficFineEls.methodIframeBtn.style.border = 'none';
+
+    trafficFineEls.methodManualBtn.classList.remove('active');
+    trafficFineEls.methodManualBtn.style.background = 'var(--bg-secondary)';
+    trafficFineEls.methodManualBtn.style.color = 'var(--white)';
+    trafficFineEls.methodManualBtn.style.border = '2px solid var(--border-medium)';
+  });
+
+  trafficFineEls.methodManualBtn.addEventListener('click', () => {
+    // Show manual method
+    trafficFineEls.iframeMethod.style.display = 'none';
+    trafficFineEls.manualMethod.style.display = 'block';
+
+    // Update button styles
+    trafficFineEls.methodManualBtn.classList.add('active');
+    trafficFineEls.methodManualBtn.style.background = 'var(--gold)';
+    trafficFineEls.methodManualBtn.style.color = 'var(--black)';
+    trafficFineEls.methodManualBtn.style.border = 'none';
+
+    trafficFineEls.methodIframeBtn.classList.remove('active');
+    trafficFineEls.methodIframeBtn.style.background = 'var(--bg-secondary)';
+    trafficFineEls.methodIframeBtn.style.color = 'var(--white)';
+    trafficFineEls.methodIframeBtn.style.border = '2px solid var(--border-medium)';
+
+    // Load CAPTCHA when switching to manual
+    loadCaptcha();
+  });
+}
+
+// Load CAPTCHA image
+function loadCaptcha() {
+  if (trafficFineEls.captchaImage) {
+    trafficFineEls.captchaImage.src = `/api/captcha?t=${Date.now()}`;
+    trafficFineEls.captchaContainer.style.display = 'flex';
+    if (trafficFineEls.captchaInput) {
+      trafficFineEls.captchaInput.value = '';
+    }
+  }
+}
+
+// Reload CAPTCHA button
+if (trafficFineEls.reloadCaptchaBtn) {
+  trafficFineEls.reloadCaptchaBtn.addEventListener('click', () => {
+    loadCaptcha();
+  });
+}
+
+// View switching
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const view = link.getAttribute('data-view');
+
+    if (view === 'traffic-fine') {
+      // Show traffic fine section, hide cars section
+      trafficFineEls.section.style.display = 'block';
+      trafficFineEls.filtersSidebar.style.display = 'none';
+      trafficFineEls.resultsArea.style.display = 'none';
+
+      // Add traffic-fine class to main container
+      const mainContainer = document.querySelector('.main-container');
+      if (mainContainer) {
+        mainContainer.classList.add('traffic-fine');
+      }
+
+      // Clear previous results
+      trafficFineEls.fineResult.style.display = 'none';
+      if (trafficFineEls.licensePlateInput) {
+        trafficFineEls.licensePlateInput.value = '';
+      }
+
+      // Don't load CAPTCHA by default - user will click manual method if needed
+    } else {
+      // Show cars section, hide traffic fine section
+      trafficFineEls.section.style.display = 'none';
+      trafficFineEls.filtersSidebar.style.display = 'block';
+      trafficFineEls.resultsArea.style.display = 'block';
+
+      // Remove traffic-fine class from main container
+      const mainContainer = document.querySelector('.main-container');
+      if (mainContainer) {
+        mainContainer.classList.remove('traffic-fine');
+      }
+    }
+  });
+});
+
+// Format license plate input
+if (trafficFineEls.licensePlateInput) {
+  trafficFineEls.licensePlateInput.addEventListener('input', (e) => {
+    e.target.value = e.target.value.toUpperCase();
+  });
+
+  // Allow Enter key to trigger check
+  trafficFineEls.licensePlateInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      trafficFineEls.checkFineBtn.click();
+    }
+  });
+}
+
+// Allow Enter key in captcha input
+if (trafficFineEls.captchaInput) {
+  trafficFineEls.captchaInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      trafficFineEls.checkFineBtn.click();
+    }
+  });
+}
+
+// Check fine button
+if (trafficFineEls.checkFineBtn) {
+  trafficFineEls.checkFineBtn.addEventListener('click', async () => {
+    const licensePlate = trafficFineEls.licensePlateInput.value.trim();
+    const captcha = trafficFineEls.captchaInput ? trafficFineEls.captchaInput.value.trim() : '';
+
+    if (!licensePlate) {
+      alert('Vui lòng nhập biển số xe');
+      return;
+    }
+
+    if (!captcha) {
+      alert('Vui lòng nhập mã xác nhận');
+      trafficFineEls.captchaInput?.focus();
+      return;
+    }
+
+    // Show loading
+    trafficFineEls.fineLoading.style.display = 'block';
+    trafficFineEls.fineResult.style.display = 'none';
+    trafficFineEls.checkFineBtn.disabled = true;
+
+    try {
+      const response = await fetch('/api/check-fine', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ licensePlate, captcha })
+      });
+
+      const data = await response.json();
+
+      // If CAPTCHA is required or incorrect, reload it
+      if (data.requiresCaptcha || (data.error && data.error.includes('captcha'))) {
+        loadCaptcha();
+        throw new Error('Mã xác nhận không chính xác. Vui lòng thử lại.');
+      }
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || 'Không thể kiểm tra phạt nguội');
+      }
+
+      renderFineResult(data);
+
+      // Clear captcha input after successful check
+      if (trafficFineEls.captchaInput) {
+        trafficFineEls.captchaInput.value = '';
+      }
+
+      // Reload CAPTCHA for next check
+      loadCaptcha();
+    } catch (error) {
+      console.error('Error checking fine:', error);
+      trafficFineEls.fineResult.innerHTML = `
+        <div class="fine-no-violation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+          </svg>
+          <h3>Lỗi Tra Cứu</h3>
+          <p>${error.message}</p>
+        </div>
+      `;
+      trafficFineEls.fineResult.style.display = 'block';
+    } finally {
+      trafficFineEls.fineLoading.style.display = 'none';
+      trafficFineEls.checkFineBtn.disabled = false;
+    }
+  });
+}
+
+function renderFineResult(data) {
+  const { licensePlate, violations, totalFines, count, checkedAt, isDemo, message } = data;
+
+  if (count === 0) {
+    trafficFineEls.fineResult.innerHTML = `
+      <div class="fine-no-violation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9 12l2 2 4-4"></path>
+        </svg>
+        <h3>Không Có Vi Phạm</h3>
+        <p>${message || 'Xe chưa có vi phạm nào được ghi nhận'}</p>
+        ${isDemo ? `
+          <div class="fine-demo-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            Dữ liệu demo
+          </div>
+        ` : ''}
+      </div>
+    `;
+  } else {
+    const violationsHtml = violations.map((v, index) => `
+      <div class="fine-violation-item">
+        <div class="fine-violation-header">
+          <span class="fine-violation-id">#${v.id || `V${String(index + 1).padStart(3, '0')}`}</span>
+          <span class="fine-violation-amount">${formatViolationCurrency(v.fine)}</span>
+        </div>
+
+        <div class="fine-violation-date-time">
+          <div class="fine-violation-date">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>${formatViolationDate(v.date)}</span>
+          </div>
+          <div class="fine-violation-time">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>${v.time}</span>
+          </div>
+        </div>
+
+        <div class="fine-violation-location">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <span>${v.location}</span>
+        </div>
+
+        <div class="fine-violation-description">
+          ${v.violation}
+        </div>
+
+        <div class="fine-violation-footer">
+          <span class="fine-violation-authority">${v.authority || 'CSGT'}</span>
+          <span class="fine-violation-status ${v.status === 'Đã xử lý' ? 'paid' : ''}">${v.status}</span>
+        </div>
+      </div>
+    `).join('');
+
+    trafficFineEls.fineResult.innerHTML = `
+      <div class="fine-result-header">
+        <div class="fine-result-info">
+          <div class="fine-license-plate">${licensePlate}</div>
+          <div class="fine-checked-at">Tra cứu lúc: ${formatViolationDateTime(checkedAt)}</div>
+          ${isDemo ? `
+            <div class="fine-demo-badge" style="margin-top: 0.5rem;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              Dữ liệu demo
+            </div>
+          ` : ''}
+        </div>
+        <div class="fine-summary">
+          <div class="fine-count">${count}</div>
+          <div class="fine-total-label">Vi phạm chưa xử lý</div>
+          <div class="fine-total-amount">${formatViolationCurrency(totalFines)}</div>
+        </div>
+      </div>
+      <div class="fine-violations-list">
+        ${violationsHtml}
+      </div>
+    `;
+  }
+
+  trafficFineEls.fineResult.style.display = 'block';
+}
+
+function formatViolationCurrency(amount) {
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND'
+  }).format(amount);
+}
+
+function formatViolationDate(dateStr) {
+  const date = new Date(dateStr);
+  return new Intl.DateTimeFormat('vi-VN', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  }).format(date);
+}
+
+function formatViolationDateTime(dateTimeStr) {
+  const date = new Date(dateTimeStr);
+  return new Intl.DateTimeFormat('vi-VN', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  }).format(date);
 }

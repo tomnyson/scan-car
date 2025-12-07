@@ -4,41 +4,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AutoHunt - Tìm Xe Ưng Ý Của Bạn</title>
+  <title>Car BMT - Tìm Xe Ưng Ý</title>
+  <meta name="description"
+    content="Tìm kiếm và tra cứu xe ô tô tại BMT. Dễ dàng tìm xe mới, xe cũ và kiểm tra phạt nguội." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css" />
 </head>
 
 <body>
+  <!-- Clean Header -->
   <nav class="app-header">
     <div class="header-container">
-      <div class="app-logo">
-        <svg class="car-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M5 17h14v-5l-3-5H8l-3 5v5z"/>
-          <circle cx="7.5" cy="17.5" r="1.5"/>
-          <circle cx="16.5" cy="17.5" r="1.5"/>
+      <a href="/" class="app-logo">
+        <svg class="car-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2">
+          <path d="M5 17h14v-5l-3-5H8l-3 5v5z" />
+          <circle cx="7.5" cy="17.5" r="1.5" />
+          <circle cx="16.5" cy="17.5" r="1.5" />
         </svg>
         <span class="brand-name">Car BMT</span>
-      </div>
+      </a>
 
       <div class="main-nav" id="main-nav">
         <ul class="nav-list">
-          <li class="nav-item"><a href="#" class="nav-link">Xe Mới</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">Xe Cũ</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">Bán Xe</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">Giới Thiệu</a></li>
+          <li class="nav-item"><a href="#" class="nav-link active" data-view="cars">Tìm Xe</a></li>
+          <li class="nav-item"><a href="#" class="nav-link" data-view="traffic-fine">Tra Phạt Nguội</a></li>
         </ul>
-      </div>
-
-      <div class="user-profile">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
       </div>
 
       <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Menu">
@@ -51,30 +44,53 @@
     </div>
   </nav>
 
+  <!-- Simplified Hero -->
   <header class="hero">
-    <div class="hero-background">
-      <div class="hero-circle hero-circle-1"></div>
-      <div class="hero-circle hero-circle-2"></div>
-      <div class="hero-circle hero-circle-3"></div>
-    </div>
     <div class="hero-content">
-      <h1 class="hero-title">Tìm chiếc xe ưng ý</h1>
-      <p class="hero-subtitle">
-        Khám phá bộ sưu tập xe cao cấp được tuyển chọn từ các thương hiệu uy tín hàng đầu thế giới.
-      </p>
+      <h1 class="hero-title">Tìm Xe Nhanh Chóng</h1>
+      <p class="hero-subtitle">Tổng hợp xe từ nhiều nguồn uy tín – Tìm kiếm dễ dàng, so sánh nhanh</p>
 
       <div class="hero-search-bar">
-        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input id="search-input" type="search" placeholder="Tìm kiếm theo hãng, dòng xe hoặc từ khóa..." />
+        <input id="search-input" type="search" placeholder="Nhập tên xe, hãng xe..." />
+        <button class="search-btn" type="button">Tìm</button>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="quick-actions">
+        <button class="quick-btn" data-filter="new">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+            </polygon>
+          </svg>
+          Xe Mới
+        </button>
+        <button class="quick-btn" data-filter="used">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          Xe Cũ
+        </button>
+        <button class="quick-btn" data-filter="hot">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2c.5 0 1 .5 1 1v2c0 .5-.5 1-1 1s-1-.5-1-1V3c0-.5.5-1 1-1z"></path>
+            <path d="M12 18c.5 0 1 .5 1 1v2c0 .5-.5 1-1 1s-1-.5-1-1v-2c0-.5.5-1 1-1z"></path>
+            <circle cx="12" cy="12" r="5"></circle>
+          </svg>
+          Giá Tốt
+        </button>
       </div>
     </div>
   </header>
 
   <main class="main-container">
-    <aside class="filters-sidebar">
+    <aside class="filters-sidebar" id="filters-sidebar">
       <h2 class="filter-title">Bộ Lọc</h2>
 
       <div class="filter-group">
@@ -131,6 +147,92 @@
         Áp Dụng Lọc
       </button>
     </aside>
+
+    <section class="traffic-fine-section" id="traffic-fine-section" style="display: none;">
+      <div class="fine-check-container">
+        <div class="fine-check-header">
+          <svg class="fine-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <h2 class="fine-check-title">Kiểm Tra Phạt Nguội</h2>
+          <p class="fine-check-description">Tra cứu trực tiếp từ trang chính thức của CSGT</p>
+        </div>
+
+        <!-- Option to choose between methods -->
+        <div class="fine-method-selector">
+          <button id="method-iframe-btn" class="method-btn active">
+            Tra cứu trực tiếp
+          </button>
+          <button id="method-manual-btn" class="method-btn">
+            Nhập thủ công
+          </button>
+        </div>
+
+        <!-- Iframe Method (Default) -->
+        <div id="iframe-method" class="fine-method-content">
+          <div class="iframe-container"></div>
+          <iframe src="https://www.csgt.vn/tra-cuu-phuong-tien-vi-pham.html" title="Tra cứu phạt nguội CSGT">
+          </iframe>
+        </div>
+        <p class="iframe-note">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          Bạn đang tra cứu trực tiếp trên trang chính thức của CSGT Việt Nam
+        </p>
+      </div>
+
+      <!-- Manual Method (Hidden by default) -->
+      <div id="manual-method" class="fine-method-content" style="display: none;">
+        <div class="fine-check-header">
+          <p class="fine-check-description">Nhập biển số xe để tra cứu thông tin vi phạm giao thông</p>
+        </div>
+
+        <div class="fine-check-form">
+          <div class="fine-input-group">
+            <input type="text" id="license-plate-input" class="fine-input"
+              placeholder="Ví dụ: 29E-130.91 hoặc 50A-12345" maxlength="15" />
+
+            <!-- CAPTCHA Section -->
+            <div class="fine-captcha-container" id="fine-captcha-container" style="display: none;">
+              <div class="fine-captcha-wrapper">
+                <img id="captcha-image" class="fine-captcha-image" src="" alt="CAPTCHA" />
+                <button type="button" id="reload-captcha-btn" class="reload-captcha-btn" title="Tải lại CAPTCHA">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="23 4 23 10 17 10"></polyline>
+                    <polyline points="1 20 1 14 7 14"></polyline>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                  </svg>
+                </button>
+              </div>
+              <input type="text" id="captcha-input" class="fine-input" placeholder="Nhập mã xác nhận" maxlength="10" />
+            </div>
+
+            <button id="check-fine-btn" class="check-fine-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              Tra Cứu
+            </button>
+          </div>
+          <p class="fine-input-hint">Định dạng xe máy: 29E-130.91 | Ô tô: 50A-12345</p>
+        </div>
+
+        <div id="fine-result" class="fine-result" style="display: none;"></div>
+        <div id="fine-loading" class="fine-loading" style="display: none;">
+          <div class="spinner"></div>
+          <p>Đang tra cứu...</p>
+        </div>
+      </div>
+      <!-- End Manual Method -->
+      </div>
+    </section>
 
     <div class="results-area">
       <div class="results-header">

@@ -3,7 +3,12 @@
     "allow": [
       "Bash(ls:*)",
       "Bash(npm start)",
-      "Skill(frontend-design)"
+      "Skill(frontend-design)",
+      "Bash(curl:*)",
+      "Bash(python3:*)",
+      "Bash(lsof:*)",
+      "Bash(node -c:*)",
+      "Bash(pkill:*)"
     ],
     "deny": [],
     "ask": []

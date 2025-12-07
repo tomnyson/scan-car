@@ -7,6 +7,7 @@ const helmet = require('helmet');
 const { fetchXeLuotToanTrungCars, fetchXeLuotToanTrungCarDetail } = require('./scrapers/xeluottoantrung');
 const { fetchOtoAnhLuongCars, fetchOtoAnhLuongCarDetail } = require('./scrapers/otoanhluong');
 const { fetchBonbanhCars, fetchBonbanhCarDetail } = require('./scrapers/bonbanh');
+const { checkTrafficFine } = require('./scrapers/trafficfine');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -253,6 +254,62 @@ app.get('/api/cars/detail', async (req, res) => {
   } catch (error) {
     console.error('Không thể tải chi tiết xe:', error);
     return res.status(500).json({ error: 'Không thể lấy chi tiết xe. Vui lòng thử lại sau.' });
+  }
+});
+
+app.post('/api/check-fine', async (req, res) => {
+  const { licensePlate, captcha } = req.body;
+
+  if (!licensePlate) {
+    return res.status(400).json({
+      success: false,
+      error: 'Vui lòng nhập biển số xe'
+    });
+  }
+
+  try {
+    const result = await checkTrafficFine(licensePlate, captcha);
+    return res.json(result);
+  } catch (error) {
+    console.error('Lỗi kiểm tra phạt nguội:', error);
+    return res.status(400).json({
+      success: false,
+      error: error.message || 'Không thể kiểm tra phạt nguội. Vui lòng thử lại sau.'
+    });
+  }
+});
+
+// Endpoint để lấy CAPTCHA từ CSGT
+app.get('/api/captcha', (_, res) => {
+  try {
+    const https = require('https');
+
+    // Đúng URL CAPTCHA của CSGT
+    const captchaUrl = 'https://www.csgt.vn/lib/captcha/captcha.class.php?' + Date.now();
+
+    const options = {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Referer': 'https://www.csgt.vn/tra-cuu-phuong-tien-vi-pham.html',
+        'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8'
+      }
+    };
+
+    const request = https.get(captchaUrl, options, (response) => {
+      res.setHeader('Content-Type', response.headers['content-type'] || 'image/png');
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+      response.pipe(res);
+    });
+
+    request.on('error', (error) => {
+      console.error('Lỗi lấy captcha:', error);
+      res.status(500).json({ error: 'Không thể lấy captcha' });
+    });
+  } catch (error) {
+    console.error('Lỗi lấy captcha:', error);
+    res.status(500).json({ error: 'Không thể lấy captcha' });
   }
 });
 
