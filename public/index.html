@@ -33,6 +33,7 @@
         <ul class="nav-list">
           <li class="nav-item"><a href="#" class="nav-link active" data-view="cars">Tìm Xe</a></li>
           <li class="nav-item"><a href="#" class="nav-link" data-view="traffic-fine">Tra Phạt Nguội</a></li>
+          <li class="nav-item"><a href="#" class="nav-link" data-view="camera-warning">Camera Phạt Nguội</a></li>
         </ul>
       </div>
 
@@ -270,6 +271,25 @@
         </div>
       </div>
       <!-- End Manual Method -->
+    </section>
+
+    <section class="camera-warning-section" id="camera-warning-section" style="display: none;">
+      <div class="camera-warning-container">
+        <div class="camera-warning-header">
+          <svg class="camera-warning-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+            <circle cx="12" cy="13" r="4" />
+          </svg>
+          <h2 class="camera-warning-title">Cảnh Báo Camera Phạt Nguội (BMT)</h2>
+          <p class="camera-warning-description">Danh sách các vị trí giao lộ có camera để bạn lưu ý khi di chuyển.</p>
+        </div>
+
+        <div class="camera-warning-search">
+          <input id="camera-search-input" class="filter-input" type="search" placeholder="Tìm theo tên giao lộ..." />
+        </div>
+
+        <ul class="camera-warning-list" id="camera-warning-list"></ul>
       </div>
     </section>
 

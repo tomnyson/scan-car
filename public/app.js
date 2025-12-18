@@ -152,6 +152,33 @@ const formatDate = (value) => {
   }
 };
 
+const applyImageFallback = (img) => {
+  if (!img || img.nodeName !== 'IMG') return;
+  const fallback = img.dataset?.fallback || '';
+  if (!fallback) return;
+  if (img.dataset.fallbackBound === 'true') return;
+  img.dataset.fallbackBound = 'true';
+
+  const ensureFallback = () => {
+    const current = img.getAttribute('src') || '';
+    if (current === fallback) return;
+    img.setAttribute('src', fallback);
+  };
+
+  img.addEventListener('error', () => {
+    ensureFallback();
+  });
+
+  if (img.complete && img.naturalWidth === 0) {
+    ensureFallback();
+  }
+};
+
+const applyImageFallbacks = (root) => {
+  if (!root) return;
+  root.querySelectorAll?.('img[data-fallback]')?.forEach((img) => applyImageFallback(img));
+};
+
 const extractFirstInteger = (value) => {
   if (!value) return null;
   const match = String(value).match(/(\d{1,2})/);
@@ -897,7 +924,6 @@ const renderCars = () => {
               alt="${escapeAttr(car.title)}"
               loading="lazy"
               data-fallback="${escapeAttr(placeholderImage)}"
-              onerror="this.onerror=null;this.src=this.dataset.fallback;"
             />
             <button class="car-image-nav prev" onclick="event.stopPropagation()">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -924,6 +950,7 @@ const renderCars = () => {
     .join('');
 
   els.carGrid.innerHTML = cardHtml;
+  applyImageFallbacks(els.carGrid);
 
   // Render pagination
   renderPagination(totalPages, totalItems);
@@ -1114,7 +1141,6 @@ const buildGalleryHtml = (detail) => {
             alt="${escapeHtml(`${detail.title || 'Ảnh xe'} ${index + 2}`)}"
             loading="lazy"
             data-fallback="${escapeAttr(placeholderImage)}"
-            onerror="this.onerror=null;this.src=this.dataset.fallback;"
           />
         </button>
       `
@@ -1143,7 +1169,6 @@ const buildGalleryHtml = (detail) => {
           alt="${escapeHtml(detail.title || 'Ảnh xe')}"
           data-detail-main
           data-fallback="${escapeAttr(placeholderImage)}"
-          onerror="this.onerror=null;this.src=this.dataset.fallback;"
         />
       </div>
       ${thumbs.length ? `<div class="detail-gallery-thumbs">${thumbHtml}</div>` : ''}
@@ -1209,6 +1234,7 @@ const renderDetailModal = () => {
     ${sectionsHtml}
     ${descriptionHtml}
   `;
+  applyImageFallbacks(els.detailModalContent);
 };
 
 const closeDetailModal = () => {
@@ -1283,7 +1309,7 @@ const applyPayload = (payload) => {
   if (!payload) return;
   state.data = (payload.data || []).map((car) => ({
     ...car,
-    seatCount: extractSeatCount(car),
+    seatCount: Number.isFinite(Number(car?.seatCount)) ? Number(car.seatCount) : extractSeatCount(car),
     yearValue: extractYearValue(car)
   }));
   state.sources = payload.sources || [];
@@ -1682,6 +1708,74 @@ const trafficFineEls = {
   manualMethod: document.getElementById('manual-method')
 };
 
+const cameraWarningEls = {
+  section: document.getElementById('camera-warning-section'),
+  list: document.getElementById('camera-warning-list'),
+  searchInput: document.getElementById('camera-search-input')
+};
+
+const CAMERA_WARNING_LOCATIONS = [
+  'Ngã tư Y Ngông - Giải Phóng',
+  'Ngã tư Y Moan - Đồng Khởi',
+  'Ngã tư Trần Nhật Duật - Nguyễn Khuyến',
+  'Ngã tư Nguyễn Hữu Thấu giao với hẻm 44 và 117 Nguyễn Hữu Thấu',
+  'Ngã tư Nguyễn Thị Minh Khai – Xô Viết Nghệ Tĩnh',
+  'Ngã tư Nguyễn Thị Minh Khai – Phạm Ngũ Lão',
+  'Ngã tư Trần Phú – Trần Bình Trọng',
+  'Ngã tư Y Jút – Nơ Trang Lơng',
+  'Ngã tư Đinh Tiên Hoàng – Nguyễn Tất Thành',
+  'Ngã tư Bà Triệu – Hùng Vương',
+  'Ngã tư Bà Triệu – Nguyễn Công Trứ',
+  'Ngã ba Y Wang – Lê Duẩn',
+  'Ngã ba Duy Hòa',
+  'Ngã tư Phan Huy – Đường tránh tây',
+  'Ngã ba đầu đường vào khu công nghiệp Hòa Phú',
+  'Ngã tư Lâm Viên – Ea Kao',
+  'Ngã tư đường Phạm Ngũ Lão – đường 10/3',
+  'Ngã tư thôn 4 – Hòa Xuân'
+];
+
+const buildMapsSearchUrl = (query) => {
+  const full = `${query}, Buôn Ma Thuột`;
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(full)}`;
+};
+
+const normalizeSearchText = (value = '') =>
+  String(value)
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+const renderCameraWarnings = () => {
+  if (!cameraWarningEls.list) return;
+  cameraWarningEls.list.innerHTML = CAMERA_WARNING_LOCATIONS
+    .map((location) => {
+      const mapsUrl = buildMapsSearchUrl(location);
+      return `
+        <li class="camera-warning-item" data-camera-item="true" data-camera-text="${escapeAttr(normalizeSearchText(location))}">
+          <a class="camera-warning-link" href="${escapeAttr(mapsUrl)}" target="_blank" rel="noopener noreferrer">
+            <span class="camera-warning-dot" aria-hidden="true"></span>
+            <span class="camera-warning-name">${escapeHtml(location)}</span>
+            <span class="camera-warning-action">Mở bản đồ</span>
+          </a>
+        </li>
+      `;
+    })
+    .join('');
+};
+
+const filterCameraWarnings = (term = '') => {
+  if (!cameraWarningEls.list) return;
+  const normalizedTerm = normalizeSearchText(term);
+  cameraWarningEls.list.querySelectorAll('[data-camera-item="true"]').forEach((item) => {
+    const text = item.getAttribute('data-camera-text') || '';
+    const visible = !normalizedTerm || text.includes(normalizedTerm);
+    item.style.display = visible ? '' : 'none';
+  });
+};
+
 // Method switching buttons
 if (trafficFineEls.methodIframeBtn && trafficFineEls.methodManualBtn) {
   trafficFineEls.methodIframeBtn.addEventListener('click', () => {
@@ -1745,17 +1839,23 @@ document.querySelectorAll('.nav-link').forEach(link => {
   link.addEventListener('click', (e) => {
     e.preventDefault();
     const view = link.getAttribute('data-view');
+    document.querySelectorAll('.nav-link').forEach((node) => node.classList.remove('active'));
+    link.classList.add('active');
 
     if (view === 'traffic-fine') {
       // Show traffic fine section, hide cars section
       trafficFineEls.section.style.display = 'block';
       trafficFineEls.filtersSidebar.style.display = 'none';
       trafficFineEls.resultsArea.style.display = 'none';
+      if (cameraWarningEls.section) {
+        cameraWarningEls.section.style.display = 'none';
+      }
 
       // Add traffic-fine class to main container
       const mainContainer = document.querySelector('.main-container');
       if (mainContainer) {
         mainContainer.classList.add('traffic-fine');
+        mainContainer.classList.remove('camera-warning');
       }
 
       // Clear previous results
@@ -1765,9 +1865,28 @@ document.querySelectorAll('.nav-link').forEach(link => {
       }
 
       // Don't load CAPTCHA by default - user will click manual method if needed
+    } else if (view === 'camera-warning') {
+      if (cameraWarningEls.section) {
+        cameraWarningEls.section.style.display = 'block';
+      }
+      trafficFineEls.section.style.display = 'none';
+      trafficFineEls.filtersSidebar.style.display = 'none';
+      trafficFineEls.resultsArea.style.display = 'none';
+
+      const mainContainer = document.querySelector('.main-container');
+      if (mainContainer) {
+        mainContainer.classList.add('camera-warning');
+        mainContainer.classList.remove('traffic-fine');
+      }
+
+      renderCameraWarnings();
+      filterCameraWarnings(cameraWarningEls.searchInput?.value || '');
     } else {
       // Show cars section, hide traffic fine section
       trafficFineEls.section.style.display = 'none';
+      if (cameraWarningEls.section) {
+        cameraWarningEls.section.style.display = 'none';
+      }
       trafficFineEls.filtersSidebar.style.display = 'block';
       trafficFineEls.resultsArea.style.display = 'block';
 
@@ -1775,10 +1894,19 @@ document.querySelectorAll('.nav-link').forEach(link => {
       const mainContainer = document.querySelector('.main-container');
       if (mainContainer) {
         mainContainer.classList.remove('traffic-fine');
+        mainContainer.classList.remove('camera-warning');
       }
     }
   });
 });
+
+if (cameraWarningEls.searchInput) {
+  cameraWarningEls.searchInput.addEventListener('input', (e) => {
+    filterCameraWarnings(e.target.value || '');
+  });
+}
+
+renderCameraWarnings();
 
 // Format license plate input
 if (trafficFineEls.licensePlateInput) {

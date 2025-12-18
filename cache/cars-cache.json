@@ -141,35 +141,6 @@
       "brandSlug": "chevrolet"
     },
     {
-      "id": "bonbanh-6519443",
-      "source": "bonbanh",
-      "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Phúc Dương",
-      "title": "Daewoo Gentra SX 1.5 MT - 2010",
-      "priceText": "120 Triệu",
-      "thumbnail": "https://s.bonbanh.com/uploads/users/93005/car/6519443/m_1762733024.586.jpg",
-      "url": "https://otophucduong.bonbanh.com/chi-tiet-xe/id,6519443/",
-      "attributes": [
-        {
-          "label": "Salon",
-          "value": "Ô tô Phúc Dương"
-        },
-        {
-          "label": "Địa chỉ",
-          "value": "292 Lê Duẩn, TP Buôn Ma Thuột, Đăk Lăk"
-        },
-        {
-          "label": "Tổng quan",
-          "value": "Xe lắp ráp trong nước, màu trắng,máy xăng, số tay, đã đi 146,000 km"
-        },
-        {
-          "label": "Thông tin thêm",
-          "value": "Daewoo Gentra SX 1.5 MT\n- 2010\nXe lắp ráp trong nước, màu trắng,máy xăng, số tay, đã đi 146,000 km\nÔ TÔ PHÚC DƯƠNG BÁN XE DAEWOO GENTRA 2010 - MÀU TRẮNG - ĐI 146.000KM.\nXe gia đình chính tên chính chủ mua mới chạy từ đầu, bảo hành chính hãng.\nNội thất màu kem, ghế da cao cấp, màn hình cảm ứng kết nối internet wifi 5G, camera ze hồng ngoại. Xe gia đình chạy ít, nay lên đời xe mới bán lại.\nAi có nhu cầu coi xe ưng ý ngay.\nÔ tô Phúc Dương"
-        }
-      ],
-      "brand": "",
-      "brandSlug": ""
-    },
-    {
       "id": "bonbanh-6546322",
       "source": "bonbanh",
       "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Hà Thy",
@@ -387,10 +358,15 @@
         {
           "label": "Kiểu dáng",
           "value": "Pickup"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
         }
       ],
       "brand": "Ford",
-      "brandSlug": "ford"
+      "brandSlug": "ford",
+      "seatCount": 5
     },
     {
       "id": "otoanhluong-115721",
@@ -420,10 +396,15 @@
         {
           "label": "Kiểu dáng",
           "value": "Pickup"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
         }
       ],
       "brand": "Ford",
-      "brandSlug": "ford"
+      "brandSlug": "ford",
+      "seatCount": 5
     },
     {
       "id": "otoanhluong-115678",
@@ -453,10 +434,15 @@
         {
           "label": "Kiểu dáng",
           "value": "Pickup"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
         }
       ],
       "brand": "Ford",
-      "brandSlug": "ford"
+      "brandSlug": "ford",
+      "seatCount": 5
     },
     {
       "id": "otoanhluong-115629",
@@ -486,10 +472,15 @@
         {
           "label": "Kiểu dáng",
           "value": "Pickup"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
         }
       ],
       "brand": "Ford",
-      "brandSlug": "ford"
+      "brandSlug": "ford",
+      "seatCount": 5
     },
     {
       "id": "bonbanh-6489860",
@@ -550,6 +541,35 @@
       "brandSlug": "ford"
     },
     {
+      "id": "bonbanh-6555793",
+      "source": "bonbanh",
+      "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Anh Lượng",
+      "title": "Ford Ranger Raptor 2.0L 4x4 AT - 2024",
+      "priceText": "1 Tỷ 160 Tr",
+      "thumbnail": "https://s.bonbanh.com/uploads/users/62462/car/6555793/m_1764730587.200.jpg",
+      "url": "https://otoanhluong.bonbanh.com/chi-tiet-xe/id,6555793/",
+      "attributes": [
+        {
+          "label": "Salon",
+          "value": "Ô tô Anh Lượng"
+        },
+        {
+          "label": "Địa chỉ",
+          "value": "234-244 Lê Duẩn, TP Buôn Ma Thuột, Đăk Lăk"
+        },
+        {
+          "label": "Tổng quan",
+          "value": "Xe nhập khẩu, màu xám,máy dầu, số tự động, đã đi 31,000 km"
+        },
+        {
+          "label": "Thông tin thêm",
+          "value": "Ford Ranger Raptor 2.0L 4x4 AT\n- 2024\nXe nhập khẩu, màu xám,máy dầu, số tự động, đã đi 31,000 km\nLoại xe: Ford Ranger Raptor\nLoại xe: Ford Raptor\n- Màu: Xám\n- Sản xuất: 2024\n- Odo: 31.000 km\n* Phụ kiện\n- nắp thùng kéo\n- thanh vai “ cantech”\n- lót sàn\n- tấm chắn bùn ARB\n7 chế độ lái\n- Cụm công tắc PK\n- Cần số e-Shifter\n- Phanh tay điện tử\n- Sạc không dây\n- Ghế trước chỉnh điện 10 hướng\n- Điều hòa tự động 2 vùng\n- Camera 360\nHỗ trợ đỗ xe tự động\n- Kiểm soát áp suất lốp\n- 7 túi khí\n- Cảnh báo va chạm và hỗ trợ phanh khẩn cấp, Kiểm soát hành trình thích ...\nÔ tô Anh Lượng"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
       "id": "bonbanh-6520445",
       "source": "bonbanh",
       "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Anh Lượng",
@@ -573,35 +593,6 @@
         {
           "label": "Thông tin thêm",
           "value": "Ford Ranger Raptor 2.0L 4x4 AT\n- 2024\nXe nhập khẩu, màu trắng,máy dầu, số tự động, đã đi 12,000 km\nFORD RANGER RAPTOR 2024 – SIÊU PHẨM OFFROAD ĐẲNG CẤP\n• Màu: Trắng\n• Sản xuất: 2024\n• Odo: 12.000 km\nPhụ kiện kèm theo:\n• Nắp thùng cơ cao cấp\n• Thanh vai Option 4x4\n• Lót sàn da sang trọng\n• Camera hành trình\n⚙️ Chức năng nổi bật:\n• Động cơ Bi-Turbo 2.0L mạnh mẽ\n• Hộp số tự động 10 cấp\n• Hệ dẫn động 4 bánh toàn thời gian (4x4)\n• 7 chế độ địa hình (Normal – Sport – Baja – Mud – Sand – Rock – Tow/Haul)\n• Màn hình trung tâm 12 inch – hỗ trợ Apple ...\nÔ tô Anh Lượng"
-        }
-      ],
-      "brand": "Ford",
-      "brandSlug": "ford"
-    },
-    {
-      "id": "bonbanh-6571606",
-      "source": "bonbanh",
-      "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Anh Lượng",
-      "title": "Ford Ranger Raptor 2.0L 4x4 AT - 2024",
-      "priceText": "1 Tỷ 235 Tr",
-      "thumbnail": "https://s.bonbanh.com/uploads/users/62462/car/6571606/m_1765533331.797.jpg",
-      "url": "https://otoanhluong.bonbanh.com/chi-tiet-xe/id,6571606/",
-      "attributes": [
-        {
-          "label": "Salon",
-          "value": "Ô tô Anh Lượng"
-        },
-        {
-          "label": "Địa chỉ",
-          "value": "234-244 Lê Duẩn, TP Buôn Ma Thuột, Đăk Lăk"
-        },
-        {
-          "label": "Tổng quan",
-          "value": "Xe nhập khẩu, màu đen,máy dầu, số tự động, đã đi 23,000 km"
-        },
-        {
-          "label": "Thông tin thêm",
-          "value": "Ford Ranger Raptor 2.0L 4x4 AT\n- 2024\nXe nhập khẩu, màu đen,máy dầu, số tự động, đã đi 23,000 km\nNhững ai đam mê xe độ không thể bỏ qua em raptor quá đẹp\nLoại xe: Ford Raptor\n- Màu: đen\n- Sản xuất: 2024\n- Odo: 23.000km\n* Phụ kiện\n- nắp thùng điện opTion 4x4 : 22tr\n- thanh vai HAMER : 17tr\n- bệ bước HAMER : 15tr\n- cảng trước HAMER AM111 : 28tr\n- cảng sau HAMER : 22tr\n- vè chắn bùn ARB : 1,2tr\n- 4 lò so KING : 6,7tr\n- mâm HARTES : 50tr\n- lốp ATLANDER Roverclaw m/t 2 : 24tr\n- ốp nắp capo , ốp nắp thùng : 4,5tr\n- ghế sau trượt điện : 7,5tr\n- cam hành trình vietmap ts 2k : 2tr\ntổng 200tr tiền ...\nÔ tô Anh Lượng"
         }
       ],
       "brand": "Ford",
@@ -899,10 +890,15 @@
         {
           "label": "Kiểu dáng",
           "value": "Pickup"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
         }
       ],
       "brand": "Ford",
-      "brandSlug": "ford"
+      "brandSlug": "ford",
+      "seatCount": 5
     },
     {
       "id": "otoanhluong-115745",
@@ -932,6 +928,69 @@
         {
           "label": "Kiểu dáng",
           "value": "Pickup"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford",
+      "seatCount": 5
+    },
+    {
+      "id": "bonbanh-6563496",
+      "source": "bonbanh",
+      "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Anh Lượng",
+      "title": "Ford Ranger XLS 2.0L 4x2 AT - 2023",
+      "priceText": "635 Triệu",
+      "thumbnail": "https://s.bonbanh.com/uploads/users/62462/car/6563496/m_1765151010.238.jpg",
+      "url": "https://otoanhluong.bonbanh.com/chi-tiet-xe/id,6563496/",
+      "attributes": [
+        {
+          "label": "Salon",
+          "value": "Ô tô Anh Lượng"
+        },
+        {
+          "label": "Địa chỉ",
+          "value": "234-244 Lê Duẩn, TP Buôn Ma Thuột, Đăk Lăk"
+        },
+        {
+          "label": "Tổng quan",
+          "value": "Xe lắp ráp trong nước, màu cam,máy dầu, số tự động, đã đi 26,000 km"
+        },
+        {
+          "label": "Thông tin thêm",
+          "value": "Ford Ranger XLS 2.0L 4x2 AT\n- 2023\nXe lắp ráp trong nước, màu cam,máy dầu, số tự động, đã đi 26,000 km\n- Loại xe: Ranger XLS 4x2\n- Sản xuất : 2023\n- Màu : Cam\n- Odo : 26.000km\n*Phụ kiện\n- Phim cách nhiệt\n- Nắp thùng thấp\n- Cam cập lề\n- Cam hành trình\nXe còn BHDS tới 03/04/2026\n- An toàn ABS, EDB, kiểm soát lật xe+trọng tải, Cruise - Lim Control, khởi hành ngang dốc\n- 6 túi khí\n- Hệ thống Sync 4A, màn hình cảm ứng 10 \". Kết nối Carplay, Androi Auto\n- Màn hình công tơ mét 8 \"\n- Ô Tô Anh Lượng cam kết xe không tai nạn, không tông đụng, không ngập nước\n- Ô Tô Anh Lượng chịu trách nhiệm ...\nÔ tô Anh Lượng"
+        }
+      ],
+      "brand": "Ford",
+      "brandSlug": "ford"
+    },
+    {
+      "id": "bonbanh-6573075",
+      "source": "bonbanh",
+      "sourceName": "Bonbanh (Đắk Lắk) - Salon Ô tô Trọng Điền",
+      "title": "Ford Ranger XLS 2.0L 4x2 AT - 2023",
+      "priceText": "630 Triệu",
+      "thumbnail": "https://s.bonbanh.com/uploads/users/167569/car/6573075/m_1765618055.141.jpg",
+      "url": "https://ototrongdien.bonbanh.com/chi-tiet-xe/id,6573075/",
+      "attributes": [
+        {
+          "label": "Salon",
+          "value": "Salon Ô tô Trọng Điền"
+        },
+        {
+          "label": "Địa chỉ",
+          "value": "570 Nguyễn Văn Cừ, TP Buôn Ma Thuột, Đăk Lăk"
+        },
+        {
+          "label": "Tổng quan",
+          "value": "Xe lắp ráp trong nước, màu xám,máy dầu, số tự động, đã đi 74,140 km"
+        },
+        {
+          "label": "Thông tin thêm",
+          "value": "Ford Ranger XLS 2.0L 4x2 AT\n- 2023\nXe lắp ráp trong nước, màu xám,máy dầu, số tự động, đã đi 74,140 km\nSalon ô tô Trọng Điền bán xe ford ranger xls sx 2023 số tự động 1 cầu xe đẹp không lỗi nhỏ\nHỗ trợ trả góp ngân hàng lãi suất ưu đãi\nSalon Ô tô Trọng Điền"
         }
       ],
       "brand": "Ford",
@@ -990,35 +1049,6 @@
         {
           "label": "Thông tin thêm",
           "value": "Ford Ranger XLS 2.0L 4x2 AT\n- 2023\nXe lắp ráp trong nước, màu đen,máy dầu, số tự động, đã đi 50,000 km\nFord Ranger XLS 4x2 2023 – Bán tải đỉnh tầm tiền!\n• Xe lướt cực đẹp, máy móc zin, nội thất sạch như mới\n• Động cơ mạnh mẽ, tiết kiệm nhiên liệu\n• Trang bị đầy đủ: màn hình, camera, cruise control, hỗ trợ đổ đèo, giới hạn tốc độ, đèn auto\n• Đăng kiểm dài, vào việc ngay\nLiên hệ ngay để xem xe thực tế – giá tốt nhất thị trường!\nÔ tô Diệm Thảo"
-        }
-      ],
-      "brand": "Ford",
-      "brandSlug": "ford"
-    },
-    {
-      "id": "bonbanh-6573075",
-      "source": "bonbanh",
-      "sourceName": "Bonbanh (Đắk Lắk) - Salon Ô tô Trọng Điền",
-      "title": "Ford Ranger XLS 2.0L 4x2 AT - 2023",
-      "priceText": "630 Triệu",
-      "thumbnail": "https://s.bonbanh.com/uploads/users/167569/car/6573075/m_1765618055.141.jpg",
-      "url": "https://ototrongdien.bonbanh.com/chi-tiet-xe/id,6573075/",
-      "attributes": [
-        {
-          "label": "Salon",
-          "value": "Salon Ô tô Trọng Điền"
-        },
-        {
-          "label": "Địa chỉ",
-          "value": "570 Nguyễn Văn Cừ, TP Buôn Ma Thuột, Đăk Lăk"
-        },
-        {
-          "label": "Tổng quan",
-          "value": "Xe lắp ráp trong nước, màu xám,máy dầu, số tự động, đã đi 74,140 km"
-        },
-        {
-          "label": "Thông tin thêm",
-          "value": "Ford Ranger XLS 2.0L 4x2 AT\n- 2023\nXe lắp ráp trong nước, màu xám,máy dầu, số tự động, đã đi 74,140 km\nSalon ô tô Trọng Điền bán xe ford ranger xls sx 2023 số tự động 1 cầu xe đẹp không lỗi nhỏ\nHỗ trợ trả góp ngân hàng lãi suất ưu đãi\nSalon Ô tô Trọng Điền"
         }
       ],
       "brand": "Ford",
@@ -1390,39 +1420,15 @@
         {
           "label": "Kiểu dáng",
           "value": "Pickup"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
         }
       ],
       "brand": "Ford",
-      "brandSlug": "ford"
-    },
-    {
-      "id": "bonbanh-6571575",
-      "source": "bonbanh",
-      "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Anh Lượng",
-      "title": "Ford Ranger XLT 2.0L 4x4 AT - 2022",
-      "priceText": "700 Triệu",
-      "thumbnail": "https://s.bonbanh.com/uploads/users/62462/car/6571575/m_1765532751.578.jpg",
-      "url": "https://otoanhluong.bonbanh.com/chi-tiet-xe/id,6571575/",
-      "attributes": [
-        {
-          "label": "Salon",
-          "value": "Ô tô Anh Lượng"
-        },
-        {
-          "label": "Địa chỉ",
-          "value": "234-244 Lê Duẩn, TP Buôn Ma Thuột, Đăk Lăk"
-        },
-        {
-          "label": "Tổng quan",
-          "value": "Xe lắp ráp trong nước, màu cam,máy dầu, số tự động, đã đi 44,000 km"
-        },
-        {
-          "label": "Thông tin thêm",
-          "value": "Ford Ranger XLT 2.0L 4x4 AT\n- 2022\nXe lắp ráp trong nước, màu cam,máy dầu, số tự động, đã đi 44,000 km\nMạnh mẽ và quyết đoán, phiên bản Ranger XLT là một điển hình đậm chất thiết kế Built Ford Tough toàn cầu\n- Loại xe: Ranger XLT 4x4\n- Sản xuất : 2022\n- Màu : đỏ cam\n- Odo : 44.000km\n*Phụ kiện\n- Phim cách nhiệt\n- thanh vai wildtrak\n- cảm biến trước ,sau\n- hệ thống giải trí SYNC®4\n- Hệ thống Camera 360° - Nâng cấp tầm nhìn\n- Màn Hình Off-Road\n- Sạc Không Dây\n- Ô Tô Anh Lượng cam kết xe không tai nạn, không tông đụng, không ngập nước\n- Ô Tô Anh Lượng chịu trách nhiệm về ...\nÔ tô Anh Lượng"
-        }
-      ],
-      "brand": "Ford",
-      "brandSlug": "ford"
+      "brandSlug": "ford",
+      "seatCount": 5
     },
     {
       "id": "bonbanh-6529368",
@@ -1555,6 +1561,40 @@
         {
           "label": "Kiểu dáng",
           "value": "Van"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "19"
+        }
+      ],
+      "brand": "",
+      "brandSlug": "",
+      "seatCount": 19
+    },
+    {
+      "id": "bonbanh-6543726",
+      "source": "bonbanh",
+      "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Anh Lượng",
+      "title": "Gaz Gazelle Next Cityline 2.8 MT - 2018",
+      "priceText": "380 Triệu",
+      "thumbnail": "https://s.bonbanh.com/uploads/users/62462/car/6543726/m_1764055295.413.jpg",
+      "url": "https://otoanhluong.bonbanh.com/chi-tiet-xe/id,6543726/",
+      "attributes": [
+        {
+          "label": "Salon",
+          "value": "Ô tô Anh Lượng"
+        },
+        {
+          "label": "Địa chỉ",
+          "value": "234-244 Lê Duẩn, TP Buôn Ma Thuột, Đăk Lăk"
+        },
+        {
+          "label": "Tổng quan",
+          "value": "Xe nhập khẩu, màu trắng,máy dầu, số tay, đã đi 15,000 km"
+        },
+        {
+          "label": "Thông tin thêm",
+          "value": "Gaz Gazelle Next Cityline 2.8 MT\n- 2018\nXe nhập khẩu, màu trắng,máy dầu, số tay, đã đi 15,000 km\nGAZ GAZELLE NEXT 2.8 MT – DẦU – 19 CHỖ\nSản xuất 2018 – Nhập Nga nguyên chiếc\n⚙️ Máy dầu mạnh mẽ, tiết kiệm nhiên liệu\nGaz Gazelle next 2.8 MT dầu 4x2\n- 19 chỗ\n- Sản xuất 2018, nhập nga\n- màu trắng\n- odo 15.000km\n- phụ kiện\n- cam trước sau\n✓ Xe còn mới, chạy cực êm – phù hợp chạy du lịch, đưa đón học sinh hoặc công ty.\nTrang bị & an toàn:\n• Phanh ABS chống bó cứng\n• Phân bổ lực phanh điện tử EBD\n• Túi khí an toàn cho người lái\n• Hệ thống treo sau lá nhíp ...\nÔ tô Anh Lượng"
         }
       ],
       "brand": "",
@@ -1907,43 +1947,6 @@
       "brandSlug": "honda"
     },
     {
-      "id": "xeluottoantrung-4487",
-      "source": "xeluottoantrung",
-      "sourceName": "Xe Lướt Toàn Trung",
-      "title": "Honda CRV L 2022 81.000km",
-      "priceText": "847 Triệu",
-      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7328112620583fb7a792e41b1f80a9023f54fddfdf303-9466.jpg",
-      "url": "https://xeluottoantrung.com/honda-crv-l-2022-81000km",
-      "attributes": [
-        {
-          "label": "Km",
-          "value": "81.000 km"
-        },
-        {
-          "label": "Số chỗ",
-          "value": "7 chỗ"
-        },
-        {
-          "label": "Hộp số",
-          "value": "Số tự động"
-        },
-        {
-          "label": "Nhiên liệu",
-          "value": "Xăng"
-        },
-        {
-          "label": "Biển số",
-          "value": "2022"
-        },
-        {
-          "label": "Chi nhánh",
-          "value": "Showroom Toàn Trung 9"
-        }
-      ],
-      "brand": "Honda",
-      "brandSlug": "honda"
-    },
-    {
       "id": "xeluottoantrung-4482",
       "source": "xeluottoantrung",
       "sourceName": "Xe Lướt Toàn Trung",
@@ -2226,7 +2229,7 @@
       "sourceName": "Xe Lướt Toàn Trung",
       "title": "Hyundai Accent ATH 2024",
       "priceText": "480 Triệu",
-      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7315631619839ab13cde15bf1b1d4eee8bc2651c69544-5272.jpg",
+      "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z733860012054181ba3a546e7ef57a8e01be697ab20057-9822.jpg",
       "url": "https://xeluottoantrung.com/hyundai-accent-ath-2024",
       "attributes": [
         {
@@ -2322,6 +2325,40 @@
         {
           "label": "Kiểu dáng",
           "value": "SUV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
+        }
+      ],
+      "brand": "Hyundai",
+      "brandSlug": "hyundai",
+      "seatCount": 5
+    },
+    {
+      "id": "bonbanh-6573220",
+      "source": "bonbanh",
+      "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Anh Lượng",
+      "title": "Hyundai Creta Đặc biệt 1.5 AT - 2025",
+      "priceText": "630 Triệu",
+      "thumbnail": "https://s.bonbanh.com/uploads/users/62462/car/6573220/m_1765625109.599.jpg",
+      "url": "https://otoanhluong.bonbanh.com/chi-tiet-xe/id,6573220/",
+      "attributes": [
+        {
+          "label": "Salon",
+          "value": "Ô tô Anh Lượng"
+        },
+        {
+          "label": "Địa chỉ",
+          "value": "234-244 Lê Duẩn, TP Buôn Ma Thuột, Đăk Lăk"
+        },
+        {
+          "label": "Tổng quan",
+          "value": "Xe lắp ráp trong nước, màu đỏ,máy xăng, số tự động, đã đi 20,000 km"
+        },
+        {
+          "label": "Thông tin thêm",
+          "value": "Hyundai Creta Đặc biệt 1.5 AT\n- 2025\nXe lắp ráp trong nước, màu đỏ,máy xăng, số tự động, đã đi 20,000 km\nBán Xe Huyndai Creta 2025 đặc biệt\nLoại xe: Creta 1.5 Đặc Biệt\nSản xuất: 2025\nMàu: đỏ\nOdo: 20.000km\nPhụ kiện:\n- Phim cách nhiệt, lót sàn , thảm che taplo , cam hành trình , bọc vô lăng\n- Động cơ SmartStream G1.5 sản sinh công suất cực đại 115 mã lực tại 6000v/p và đạt momen xoắn cực đại 144Nm tại 4500v/p.\n- Đèn chiếu sáng, cụm đèn hậu được sử dụng LED .\n- Vành hợp kim 17inch với 2 tone màu.\n- Màn hình giải trí 10.25inch.\n- Cảm biến áp suất lốp tại 4 bánh xe.\n- Ô Tô ...\nÔ tô Anh Lượng"
         }
       ],
       "brand": "Hyundai",
@@ -2537,39 +2574,15 @@
         {
           "label": "Kiểu dáng",
           "value": "Sedan"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
         }
       ],
       "brand": "Hyundai",
-      "brandSlug": "hyundai"
-    },
-    {
-      "id": "bonbanh-6571567",
-      "source": "bonbanh",
-      "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Anh Lượng",
-      "title": "Hyundai i10 1.2 AT - 2022",
-      "priceText": "370 Triệu",
-      "thumbnail": "https://s.bonbanh.com/uploads/users/62462/car/6571567/m_1765532533.133.jpg",
-      "url": "https://otoanhluong.bonbanh.com/chi-tiet-xe/id,6571567/",
-      "attributes": [
-        {
-          "label": "Salon",
-          "value": "Ô tô Anh Lượng"
-        },
-        {
-          "label": "Địa chỉ",
-          "value": "234-244 Lê Duẩn, TP Buôn Ma Thuột, Đăk Lăk"
-        },
-        {
-          "label": "Tổng quan",
-          "value": "Xe lắp ráp trong nước, màu trắng,máy xăng, số tự động, đã đi 29,000 km"
-        },
-        {
-          "label": "Thông tin thêm",
-          "value": "Hyundai i10 1.2 AT\n- 2022\nXe lắp ráp trong nước, màu trắng,máy xăng, số tự động, đã đi 29,000 km\nLoại xe: HyunDai I10 1.2AT sedan\nLoại xe: Hyundai I10 sedan\nSản xuất: 2022\nMàu: Trắng\nOdo: 29.000 km\nPhụ kiện:\n- Phim cách nhiệt, lót sàn\n- Ghế da\n- Bọc trần\n- Ô Tô Anh Lượng cam kết xe không tai nạn, không tông đụng, không ngập nước\n- Ô Tô Anh Lượng chịu trách nhiệm về chất lượng xe cho khách hàng\nÔTô Anh Lượng Chuyên xe Lướt\nĐịa chỉ : 234-244 Lê duẫn- Tp.BMT - T.Đăk Lăk\nÔ tô Anh Lượng"
-        }
-      ],
-      "brand": "Hyundai",
-      "brandSlug": "hyundai"
+      "brandSlug": "hyundai",
+      "seatCount": 5
     },
     {
       "id": "bonbanh-6552662",
@@ -2698,6 +2711,35 @@
         {
           "label": "Thông tin thêm",
           "value": "Hyundai Kona Đặc Biệt 2.0 AT\n- 2021\nXe lắp ráp trong nước, màu trắng,máy xăng, số tự động, đã đi 60,000 km\nÔ tô Phúc Đại bán xe Hyundai kona số tự động sản xuất 2021 chính chủ xe còn rất đẹp ngoại thất sáng bóng không tì vết nội thất ghế da cao cấp sang trọng chỗ ngồi rộng rãi thoáng mát màn hình nghe nhạc xem phim trên YouTube dẫn đường định vị thông minh điều hòa với lạnh mát rượi như mùa đông băng giá máy móc êm ái gầm bệ chắc nịch e2 Phúc Đại hỗ trợ ngân hàng nếu Quý khách cần mua xe trả góp thủ tục đơn giản nhanh gọn\nÔ Tô Phúc Đại"
+        }
+      ],
+      "brand": "Hyundai",
+      "brandSlug": "hyundai"
+    },
+    {
+      "id": "bonbanh-6507966",
+      "source": "bonbanh",
+      "sourceName": "Bonbanh (Đắk Lắk) - Ô Tô Phúc Đại",
+      "title": "Hyundai Kona Tiêu Chuẩn 2.0 AT - 2020",
+      "priceText": "485 Triệu",
+      "thumbnail": "https://s.bonbanh.com/uploads/users/303194/car/6507966/m_1762094445.938.jpg",
+      "url": "https://otophucdai.bonbanh.com/chi-tiet-xe/id,6507966/",
+      "attributes": [
+        {
+          "label": "Salon",
+          "value": "Ô Tô Phúc Đại"
+        },
+        {
+          "label": "Địa chỉ",
+          "value": "363 đường Lê Duẩn, phường Eakao, Tỉnh Đăk Lăk"
+        },
+        {
+          "label": "Tổng quan",
+          "value": "Xe lắp ráp trong nước, màu trắng,máy xăng, số tự động, đã đi 66,000 km"
+        },
+        {
+          "label": "Thông tin thêm",
+          "value": "Hyundai Kona Tiêu Chuẩn 2.0 AT\n- 2020\nXe lắp ráp trong nước, màu trắng,máy xăng, số tự động, đã đi 66,000 km\nÔ tô Phúc Đại bán xe Hyundai kona số tự động sản xuất 2020 chính chủ xe còn rất đẹp ngoại thất sáng bóng không tì vết nội thất ghế da cao cấp sang trọng chỗ ngồi rộng rãi thoáng mát màn hình camera lùi cảm biến cực nét nghe nhạc xem phim trên YouTube dẫn đường định vị thông minh điều hòa máy lạnh mát rượi như mùa đông băng giá máy móc êm ái gầm bệ chắc nịch Phúc Đại hỗ trợ ngân hàng nếu Quý khách cần mua xe trả góp thủ tục đơn giản nhanh gọn\nÔ Tô Phúc Đại"
         }
       ],
       "brand": "Hyundai",
@@ -2979,10 +3021,15 @@
         {
           "label": "Kiểu dáng",
           "value": "SUV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
         }
       ],
       "brand": "Hyundai",
-      "brandSlug": "hyundai"
+      "brandSlug": "hyundai",
+      "seatCount": 5
     },
     {
       "id": "bonbanh-6573916",
@@ -3080,6 +3127,35 @@
       "brandSlug": "hyundai"
     },
     {
+      "id": "bonbanh-6538769",
+      "source": "bonbanh",
+      "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Phúc Dương",
+      "title": "Isuzu MU-X 3.0 4X2 AT - 2018",
+      "priceText": "580 Triệu",
+      "thumbnail": "https://s.bonbanh.com/uploads/users/93005/car/6538769/m_1763777710.117.jpg",
+      "url": "https://otophucduong.bonbanh.com/chi-tiet-xe/id,6538769/",
+      "attributes": [
+        {
+          "label": "Salon",
+          "value": "Ô tô Phúc Dương"
+        },
+        {
+          "label": "Địa chỉ",
+          "value": "292 Lê Duẩn, TP Buôn Ma Thuột, Đăk Lăk"
+        },
+        {
+          "label": "Tổng quan",
+          "value": "Xe nhập khẩu, màu trắng,máy dầu, số tự động, đã đi 86,000 km"
+        },
+        {
+          "label": "Thông tin thêm",
+          "value": "Isuzu MU-X 3.0 4X2 AT\n- 2018\nXe nhập khẩu, màu trắng,máy dầu, số tự động, đã đi 86,000 km\nÔ TÔ PHÚC DƯƠNG BÁN XE ISUZU MU-X 2018 - MÀU TRẮNG - ĐI 86.000KM.\nMáy dầu, turbo, nhập khẩu nguyên chiếc, gia đình mua mới chạy từ đầu. Bảo hành chính hãng, nội thất màu kem, ghế da cao cấp. Màn hình cảm ứng kết nối internet wifi 5G, camera ze hồng ngoại. Máy dầu, turbo, nhập khẩu nguyên chiếc chay mạnh mẽ tiết kiệm nguyên liệu. Xe gia đình chính tên chính chủ chạy ít còn như mới.\nAi có nhu cầu coi xe ưng ý ngay.\nHỗ trợ vay vốn ngân hàng lên đến 50% giá trị xe.\nÔ tô Phúc Dương"
+        }
+      ],
+      "brand": "Isuzu",
+      "brandSlug": "isuzu"
+    },
+    {
       "id": "otoanhluong-115668",
       "source": "otoanhluong",
       "sourceName": "Anh Lượng Auto",
@@ -3107,10 +3183,15 @@
         {
           "label": "Kiểu dáng",
           "value": "SUV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "7"
         }
       ],
       "brand": "Isuzu",
-      "brandSlug": "isuzu"
+      "brandSlug": "isuzu",
+      "seatCount": 7
     },
     {
       "id": "bonbanh-6513827",
@@ -3206,39 +3287,15 @@
         {
           "label": "Kiểu dáng",
           "value": "Sedan"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
         }
       ],
       "brand": "Kia",
-      "brandSlug": "kia"
-    },
-    {
-      "id": "bonbanh-6565659",
-      "source": "bonbanh",
-      "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Anh Lượng",
-      "title": "Kia Cerato 1.6 AT - 2017",
-      "priceText": "400 Triệu",
-      "thumbnail": "https://s.bonbanh.com/uploads/users/62462/car/6565659/m_1765253477.680.jpg",
-      "url": "https://otoanhluong.bonbanh.com/chi-tiet-xe/id,6565659/",
-      "attributes": [
-        {
-          "label": "Salon",
-          "value": "Ô tô Anh Lượng"
-        },
-        {
-          "label": "Địa chỉ",
-          "value": "234-244 Lê Duẩn, TP Buôn Ma Thuột, Đăk Lăk"
-        },
-        {
-          "label": "Tổng quan",
-          "value": "Xe lắp ráp trong nước, màu trắng,máy xăng, số tự động, đã đi 25,600 km"
-        },
-        {
-          "label": "Thông tin thêm",
-          "value": "Kia Cerato 1.6 AT\n- 2017\nXe lắp ráp trong nước, màu trắng,máy xăng, số tự động, đã đi 25,600 km\n- Loại xe: Cerato 1.6AT\n- Sản xuất: 2017\n- Màu: Trắng\n- Chạy: 25.600km\n- ký bán)\n* Phụ kiện :\n+ Phim cách nhiệt\n+ Cam hành trình\nÔ Tô Anh Lượng cam kết xe không tai nạn, không tông đụng, không ngập nước\n- Ô Tô Anh Lượng chịu trách nhiệm về chất lượng xe cho khách hàng\nÔTô Anh Lượng Chuyên xe Lướt\nĐịa chỉ : 234-244 Lê duẫn- Tp.BMT - T.Đăk Lăk\nÔ tô Anh Lượng"
-        }
-      ],
-      "brand": "Kia",
-      "brandSlug": "kia"
+      "brandSlug": "kia",
+      "seatCount": 5
     },
     {
       "id": "otoanhluong-115706",
@@ -3268,10 +3325,15 @@
         {
           "label": "Kiểu dáng",
           "value": "Sedan"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
         }
       ],
       "brand": "Kia",
-      "brandSlug": "kia"
+      "brandSlug": "kia",
+      "seatCount": 5
     },
     {
       "id": "bonbanh-6500903",
@@ -3458,10 +3520,15 @@
         {
           "label": "Kiểu dáng",
           "value": "Sedan"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
         }
       ],
       "brand": "Kia",
-      "brandSlug": "kia"
+      "brandSlug": "kia",
+      "seatCount": 5
     },
     {
       "id": "bonbanh-6577343",
@@ -3784,10 +3851,15 @@
         {
           "label": "Kiểu dáng",
           "value": "SUV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
         }
       ],
       "brand": "Kia",
-      "brandSlug": "kia"
+      "brandSlug": "kia",
+      "seatCount": 5
     },
     {
       "id": "bonbanh-6454234",
@@ -3846,10 +3918,15 @@
         {
           "label": "Kiểu dáng",
           "value": "SUV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
         }
       ],
       "brand": "Kia",
-      "brandSlug": "kia"
+      "brandSlug": "kia",
+      "seatCount": 5
     },
     {
       "id": "bonbanh-6526338",
@@ -4209,6 +4286,40 @@
         {
           "label": "Kiểu dáng",
           "value": "Sedan"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
+        }
+      ],
+      "brand": "Mazda",
+      "brandSlug": "mazda",
+      "seatCount": 5
+    },
+    {
+      "id": "bonbanh-6559951",
+      "source": "bonbanh",
+      "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Anh Lượng",
+      "title": "Mazda 3 1.5 AT - 2017",
+      "priceText": "395 Triệu",
+      "thumbnail": "https://s.bonbanh.com/uploads/users/62462/car/6559951/m_1764925292.292.jpg",
+      "url": "https://otoanhluong.bonbanh.com/chi-tiet-xe/id,6559951/",
+      "attributes": [
+        {
+          "label": "Salon",
+          "value": "Ô tô Anh Lượng"
+        },
+        {
+          "label": "Địa chỉ",
+          "value": "234-244 Lê Duẩn, TP Buôn Ma Thuột, Đăk Lăk"
+        },
+        {
+          "label": "Tổng quan",
+          "value": "Xe lắp ráp trong nước, màu cát,máy xăng, số tự động, đã đi 52,000 km"
+        },
+        {
+          "label": "Thông tin thêm",
+          "value": "Mazda 3 1.5 AT\n- 2017\nXe lắp ráp trong nước, màu cát,máy xăng, số tự động, đã đi 52,000 km\nMazda 3 1.5AT – 2017\nMàu: Vàng\nOdo: 52.700 km\nPhụ kiện theo xe:\n• Dán phim cách nhiệt\n• Bọc sàn da\n• Màn hình Android + Camera hành trình\n• Cảm biến va chạm trước/sau\n• Cảm biến áp suất lốp\nCam kết từ Ô Tô Anh Lượng:\n✓ Xe không tai nạn – không tông đụng\n✓ Không ngập nước – không tua km\n✓ Chịu trách nhiệm về chất lượng xe cho khách hàng\nÔ Tô Anh Lượng – Chuyên Xe Lướt Uy Tín – Minh Bạch – Chất Lượng\nÔ tô Anh Lượng"
         }
       ],
       "brand": "Mazda",
@@ -4242,39 +4353,15 @@
         {
           "label": "Kiểu dáng",
           "value": "Sedan"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
         }
       ],
       "brand": "Mazda",
-      "brandSlug": "mazda"
-    },
-    {
-      "id": "bonbanh-6571534",
-      "source": "bonbanh",
-      "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Anh Lượng",
-      "title": "Mazda 3 1.5L Luxury - 2022",
-      "priceText": "550 Triệu",
-      "thumbnail": "https://s.bonbanh.com/uploads/users/62462/car/6571534/m_1765531799.396.jpg",
-      "url": "https://otoanhluong.bonbanh.com/chi-tiet-xe/id,6571534/",
-      "attributes": [
-        {
-          "label": "Salon",
-          "value": "Ô tô Anh Lượng"
-        },
-        {
-          "label": "Địa chỉ",
-          "value": "234-244 Lê Duẩn, TP Buôn Ma Thuột, Đăk Lăk"
-        },
-        {
-          "label": "Tổng quan",
-          "value": "Xe lắp ráp trong nước, màu đỏ,máy xăng, số tự động, đã đi 23,000 km"
-        },
-        {
-          "label": "Thông tin thêm",
-          "value": "Mazda 3 1.5L Luxury\n- 2022\nXe lắp ráp trong nước, màu đỏ,máy xăng, số tự động, đã đi 23,000 km\nMazda 3 luxury 2022 đẹp quá\n- Loại xe: Mazda 3 1.5 Luxury\n- Sản xuất: 2022\n- Màu: đen\n- Chạy:23.000km\nphụ kiện:\nPhim cách nhiệt\nlót sàn da\n- Xe trang bị gồm: lẫy chuyển số trên vô lăng, Màn hình giải trí cảm ứng 7 inch, Nút xoay điều khiển trung tâm Mazda Connect, Gương chiếu hậu chống chói tự động, Phanh tay điện tử, Điều hòa tự động,......\n- Ô Tô Anh Lượng cam kết xe không tai nạn, không tông đụng, không ngập nước\n- Ô Tô Anh Lượng chịu trách nhiệm về chất lượng xe ...\nÔ tô Anh Lượng"
-        }
-      ],
-      "brand": "Mazda",
-      "brandSlug": "mazda"
+      "brandSlug": "mazda",
+      "seatCount": 5
     },
     {
       "id": "bonbanh-6506930",
@@ -4568,10 +4655,15 @@
         {
           "label": "Kiểu dáng",
           "value": "Sedan"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
         }
       ],
       "brand": "Mercedes-Benz",
-      "brandSlug": "mercedes-benz"
+      "brandSlug": "mercedes-benz",
+      "seatCount": 5
     },
     {
       "id": "bonbanh-6573921",
@@ -4644,7 +4736,7 @@
       "source": "xeluottoantrung",
       "sourceName": "Xe Lướt Toàn Trung",
       "title": "Mercedes GLC300 4Matic 2023",
-      "priceText": "2 Tỷ 259 Triệu",
+      "priceText": "2 Tỷ 199 Triệu",
       "thumbnail": "https://xeluottoantrung.com/thumbs/400x230x1/upload/product/z7308833164544391745a83664d0b4cf5bdafd4c7336f3-1830.jpg",
       "url": "https://xeluottoantrung.com/mercedes-glc300-4matic-2023",
       "attributes": [
@@ -4836,39 +4928,15 @@
         {
           "label": "Kiểu dáng",
           "value": "SUV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "7"
         }
       ],
       "brand": "Mitsubishi",
-      "brandSlug": "mitsubishi"
-    },
-    {
-      "id": "bonbanh-6482130",
-      "source": "bonbanh",
-      "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Anh Lượng",
-      "title": "Mitsubishi Pajero Sport 2.4D 4x2 AT - 2019",
-      "priceText": "710 Triệu",
-      "thumbnail": "https://s.bonbanh.com/uploads/users/62462/car/6482130/m_1760661293.730.jpg",
-      "url": "https://otoanhluong.bonbanh.com/chi-tiet-xe/id,6482130/",
-      "attributes": [
-        {
-          "label": "Salon",
-          "value": "Ô tô Anh Lượng"
-        },
-        {
-          "label": "Địa chỉ",
-          "value": "234-244 Lê Duẩn, TP Buôn Ma Thuột, Đăk Lăk"
-        },
-        {
-          "label": "Tổng quan",
-          "value": "Xe nhập khẩu, màu đỏ,máy dầu, số tự động, đã đi 74,000 km"
-        },
-        {
-          "label": "Thông tin thêm",
-          "value": "Mitsubishi Pajero Sport 2.4D 4x2 AT\n- 2019\nXe nhập khẩu, màu đỏ,máy dầu, số tự động, đã đi 74,000 km\nMitsubishi Pajero Sport 2019\n- Loại xe: Mitsubishi Pajero 2.4D AT 4x2\n- Sản xuất: 2019\n- BKS: 47A-312.17\n- Màu: Đỏ\n- Chạy: 74.200km\n- Giá: bao rút\n*Phụ kiện:\n- Phim cách nhiệt\n- trang bị: hộp số tự động 8 cấp, ệ thống thông tin giải trí DVD với kết nối AUX/ USB/ Bluetooth với màn hình cảm ứng, điều hòa tự động hai vùng độc lập, nút bấm khởi động, cửa sổ trời, phanh tay điện tử.\n- Hệ thống phanh ABS/EBD/BA\n- Hệ thống cân bằng điện tử ASC\n- Bộ 07 túi khí (phiên bản cao ...\nÔ tô Anh Lượng"
-        }
-      ],
-      "brand": "Mitsubishi",
-      "brandSlug": "mitsubishi"
+      "brandSlug": "mitsubishi",
+      "seatCount": 7
     },
     {
       "id": "otoanhluong-115704",
@@ -4894,39 +4962,15 @@
         {
           "label": "Kiểu dáng",
           "value": "SUV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "7"
         }
       ],
       "brand": "Mitsubishi",
-      "brandSlug": "mitsubishi"
-    },
-    {
-      "id": "bonbanh-6540230",
-      "source": "bonbanh",
-      "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Anh Lượng",
-      "title": "Mitsubishi Pajero Sport D 4x4 MT - 2014",
-      "priceText": "430 Triệu",
-      "thumbnail": "https://s.bonbanh.com/uploads/users/62462/car/6540230/m_1763863374.704.jpg",
-      "url": "https://otoanhluong.bonbanh.com/chi-tiet-xe/id,6540230/",
-      "attributes": [
-        {
-          "label": "Salon",
-          "value": "Ô tô Anh Lượng"
-        },
-        {
-          "label": "Địa chỉ",
-          "value": "234-244 Lê Duẩn, TP Buôn Ma Thuột, Đăk Lăk"
-        },
-        {
-          "label": "Tổng quan",
-          "value": "Xe lắp ráp trong nước, màu đen,máy dầu, số tay, đã đi 43,700 km"
-        },
-        {
-          "label": "Thông tin thêm",
-          "value": "Mitsubishi Pajero Sport D 4x4 MT\n- 2014\nXe lắp ráp trong nước, màu đen,máy dầu, số tay, đã đi 43,700 km\n- Loại xe: Mitsubishi Pajero 2.5D MT 4x4 máy dầu\n- Sản xuất: 2014\n- Màu: Đen\n- Chạy: 43.700km\n*Phụ kiện:\n- Phim cách nhiệt\n- Cam hành trình\n- Màn hình Androi\n- Bọc trần nilon\nÔ Tô Anh Lượng cam kết xe không tai nạn, không tông đụng, không ngập nước\n- Ô Tô Anh Lượng chịu trách nhiệm về chất lượng xe cho khách hàng\nÔTô Anh Lượng Chuyên xe Lướt\nĐịa chỉ : 234-244 Lê duẫn- Tp.BMT - T.Đăk Lăk\nÔ tô Anh Lượng"
-        }
-      ],
-      "brand": "Mitsubishi",
-      "brandSlug": "mitsubishi"
+      "brandSlug": "mitsubishi",
+      "seatCount": 7
     },
     {
       "id": "bonbanh-6545515",
@@ -5375,35 +5419,6 @@
       "brandSlug": "mitsubishi"
     },
     {
-      "id": "bonbanh-6482087",
-      "source": "bonbanh",
-      "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Phúc Dương",
-      "title": "Mitsubishi Xpander Premium 1.5 AT - 2022",
-      "priceText": "570 Triệu",
-      "thumbnail": "https://s.bonbanh.com/uploads/users/93005/car/6482087/m_1760650637.731.jpg",
-      "url": "https://otophucduong.bonbanh.com/chi-tiet-xe/id,6482087/",
-      "attributes": [
-        {
-          "label": "Salon",
-          "value": "Ô tô Phúc Dương"
-        },
-        {
-          "label": "Địa chỉ",
-          "value": "292 Lê Duẩn, TP Buôn Ma Thuột, Đăk Lăk"
-        },
-        {
-          "label": "Tổng quan",
-          "value": "Xe nhập khẩu, màu bạc,máy xăng, số tự động, đã đi 66,000 km"
-        },
-        {
-          "label": "Thông tin thêm",
-          "value": "Mitsubishi Xpander Premium 1.5 AT\n- 2022\nXe nhập khẩu, màu bạc,máy xăng, số tự động, đã đi 66,000 km\nÔ TÔ PHÚC DƯƠNG BÁN XE MITSUBISHI XPANDER 2022 - MÀU BẠC - ĐI 66.000KM.\nXe gia đình mua mới chạy từ đầu, bảo hành chính hãng.\nBản full cao cấp nhất, màn hình cảm ứng, kết nối internet wifi, camera ze hồng ngoại. Xe gia đình chạy ít giữ gìn cẩn thận còn như mới.\nAi có nhu cầu coi xe ưng ý ngay.\nHỗ trợ vay vốn ngân hàng lên đến 60% giá trị xe.\nÔ tô Phúc Dương"
-        }
-      ],
-      "brand": "Mitsubishi",
-      "brandSlug": "mitsubishi"
-    },
-    {
       "id": "bonbanh-6564514",
       "source": "bonbanh",
       "sourceName": "Bonbanh (Đắk Lắk) - Salon Ô tô Trọng Điền",
@@ -5724,6 +5739,40 @@
         {
           "label": "Kiểu dáng",
           "value": "SUV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "7"
+        }
+      ],
+      "brand": "Suzuki",
+      "brandSlug": "suzuki",
+      "seatCount": 7
+    },
+    {
+      "id": "bonbanh-6559946",
+      "source": "bonbanh",
+      "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Anh Lượng",
+      "title": "Suzuki Ertiga Hybrid 1.5 AT - 2022",
+      "priceText": "465 Triệu",
+      "thumbnail": "https://s.bonbanh.com/uploads/users/62462/car/6559946/m_1764925125.281.jpg",
+      "url": "https://otoanhluong.bonbanh.com/chi-tiet-xe/id,6559946/",
+      "attributes": [
+        {
+          "label": "Salon",
+          "value": "Ô tô Anh Lượng"
+        },
+        {
+          "label": "Địa chỉ",
+          "value": "234-244 Lê Duẩn, TP Buôn Ma Thuột, Đăk Lăk"
+        },
+        {
+          "label": "Tổng quan",
+          "value": "Xe nhập khẩu, màu trắng,xe hybrid, số tự động, đã đi 39,000 km"
+        },
+        {
+          "label": "Thông tin thêm",
+          "value": "Suzuki Ertiga Hybrid 1.5 AT\n- 2022\nXe nhập khẩu, màu trắng,xe hybrid, số tự động, đã đi 39,000 km\nSuzuki Ertiga 1.5AT Hybrid – 2022\nMàu: Trắng\nOdo: 39.000 km\nPhụ kiện theo xe:\n• Film cách nhiệt\n• Camera hành trình\nÔ Tô Anh Lượng cam kết:\n• Xe không tai nạn, không tông đụng, không ngập nước\n• Chịu trách nhiệm về chất lượng xe cho khách hàng\nÔ Tô ANH LƯỢNG – CHUYÊN XE LƯỚT CHẤT LƯỢNG\nĐịa chỉ: 234–244 Lê Duẩn, TP. Buôn Ma Thuột, T. Đắk Lắk\nÔ Tô Anh Lượng – Chuyên Xe Lướt Uy Tín – Minh Bạch – Chất Lượng\nÔ tô Anh Lượng"
         }
       ],
       "brand": "Suzuki",
@@ -6142,6 +6191,35 @@
       "brandSlug": "toyota"
     },
     {
+      "id": "bonbanh-6372499",
+      "source": "bonbanh",
+      "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Phúc Dương",
+      "title": "Toyota Corolla altis 1.8G MT - 2015",
+      "priceText": "360 Triệu",
+      "thumbnail": "https://s.bonbanh.com/uploads/users/93005/car/6372499/m_1754529074.570.jpg",
+      "url": "https://otophucduong.bonbanh.com/chi-tiet-xe/id,6372499/",
+      "attributes": [
+        {
+          "label": "Salon",
+          "value": "Ô tô Phúc Dương"
+        },
+        {
+          "label": "Địa chỉ",
+          "value": "292 Lê Duẩn, TP Buôn Ma Thuột, Đăk Lăk"
+        },
+        {
+          "label": "Tổng quan",
+          "value": "Xe lắp ráp trong nước, màu trắng,máy xăng, số tay, đã đi 116,000 km"
+        },
+        {
+          "label": "Thông tin thêm",
+          "value": "Toyota Corolla altis 1.8G MT\n- 2015\nXe lắp ráp trong nước, màu trắng,máy xăng, số tay, đã đi 116,000 km\nÔ TÔ PHÚC DƯƠNG BÁN XE TOYOTA COROLLA ALTIS 2015 - MÀU TRẮNG - ĐI 116.000KM.\nXe gia đình chính tên chính chủ mua mới chạy từ đầu, bảo hành chính hãng.\nNội thất màu kem, ghế da cao cấp, màn hình cảm ứng kết nối internet wifi 5G, camera ze hồng ngoại. Xe gia đình chạy ít còn như mới.\nAi có nhu cầu coi xe ưng ý ngay.\nÔ tô Phúc Dương"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota"
+    },
+    {
       "id": "bonbanh-6480919",
       "source": "bonbanh",
       "sourceName": "Bonbanh (Đắk Lắk) - Salon Ô Tô Ngân Nguyên",
@@ -6508,10 +6586,15 @@
         {
           "label": "Kiểu dáng",
           "value": "SUV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "8"
         }
       ],
       "brand": "Toyota",
-      "brandSlug": "toyota"
+      "brandSlug": "toyota",
+      "seatCount": 8
     },
     {
       "id": "bonbanh-6550898",
@@ -6595,35 +6678,6 @@
         {
           "label": "Thông tin thêm",
           "value": "Toyota Innova 2.0E\n- 2019\nXe lắp ráp trong nước, màu xám,máy xăng, số tay, đã đi 91,000 km\nÔ TÔ PHÚC DƯƠNG BÁN XE TOYOTA INNOVA 2019 - MÀU XÁM - ĐI 91.000KM.\nXe gia đình chính tên chính chủ mua mới chạy từ đầu bảo hành chính hãng.\nNội thất 2 màu, ghế da cao cấp, màn hình cảm ứng kết nối internet wifi 5G, camera ze hồng ngoại, đồ chơi theo xe gia đình đã ráp đầy đủ.\nAi có nhu cầu coi xe ưng ý ngay.\nHỗ trợ vay vốn ngân hàng lên đến 60% giá trị xe.\nÔ tô Phúc Dương"
-        }
-      ],
-      "brand": "Toyota",
-      "brandSlug": "toyota"
-    },
-    {
-      "id": "bonbanh-6575201",
-      "source": "bonbanh",
-      "sourceName": "Bonbanh (Đắk Lắk) - Ô Tô Phúc Đại",
-      "title": "Toyota Innova 2.0E - 2019",
-      "priceText": "410 Triệu",
-      "thumbnail": "https://s.bonbanh.com/uploads/users/303194/car/6575201/m_1765769123.675.jpg",
-      "url": "https://otophucdai.bonbanh.com/chi-tiet-xe/id,6575201/",
-      "attributes": [
-        {
-          "label": "Salon",
-          "value": "Ô Tô Phúc Đại"
-        },
-        {
-          "label": "Địa chỉ",
-          "value": "363 đường Lê Duẩn, phường Eakao, Tỉnh Đăk Lăk"
-        },
-        {
-          "label": "Tổng quan",
-          "value": "Xe lắp ráp trong nước, màu ghi,máy xăng, số tay, đã đi 46,000 km"
-        },
-        {
-          "label": "Thông tin thêm",
-          "value": "Toyota Innova 2.0E\n- 2019\nXe lắp ráp trong nước, màu ghi,máy xăng, số tay, đã đi 46,000 km\nÔ tô Phúc Đại Bán Toyota Innova E số sàn sản xuất 2019 chính chủ xe còn rất đẹp ngoại thất sáng bóng không tì vết nội thất ghế nỉ zin Theo xe cao cấp sang trọng chỗ ngồi rộng rãi thoáng mát màn hình camera ze lùi cảm biến cực nét nghe nhạc xem phim trên YouTube dẫn đường định vị thông minh điều hòa máy lạnh mát rượi như mùa đông băng giá máy móc êm ái gầm bệ chắc nịch Phúc Đại hỗ trợ ngân hàng nếu Quý khách cần mua xe trả góp thủ tục đơn giản nhanh gọn\nÔ Tô Phúc Đại"
         }
       ],
       "brand": "Toyota",
@@ -6723,6 +6777,40 @@
         {
           "label": "Kiểu dáng",
           "value": "Van"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "7"
+        }
+      ],
+      "brand": "Toyota",
+      "brandSlug": "toyota",
+      "seatCount": 7
+    },
+    {
+      "id": "bonbanh-6522458",
+      "source": "bonbanh",
+      "sourceName": "Bonbanh (Đắk Lắk) - Ô tô Anh Lượng",
+      "title": "Toyota Sienna LE 3.5 - 2009",
+      "priceText": "540 Triệu",
+      "thumbnail": "https://s.bonbanh.com/uploads/users/62462/car/6522458/m_1762865007.299.jpg",
+      "url": "https://otoanhluong.bonbanh.com/chi-tiet-xe/id,6522458/",
+      "attributes": [
+        {
+          "label": "Salon",
+          "value": "Ô tô Anh Lượng"
+        },
+        {
+          "label": "Địa chỉ",
+          "value": "234-244 Lê Duẩn, TP Buôn Ma Thuột, Đăk Lăk"
+        },
+        {
+          "label": "Tổng quan",
+          "value": "Xe nhập khẩu, màu bạc,máy xăng, số tự động, đã đi 179,000 km"
+        },
+        {
+          "label": "Thông tin thêm",
+          "value": "Toyota Sienna LE 3.5\n- 2009\nXe nhập khẩu, màu bạc,máy xăng, số tự động, đã đi 179,000 km\nTOYOTA SIENNA 2009 – NHẬP MỸ, SIÊU RỘNG, SIÊU BỀN\nBản LE 3.5 AT Xăng – 4x2\nMàu bạc sang trọng – Odo 111.000 mile\nPhụ kiện kèm theo:\n• Màn hình Android\n• Bọc ghế da cao cấp\n• Lót sàn da sang trọng\n• Phim cách nhiệt toàn xe\n• Đèn bi LED siêu sáng\nToyota Sienna – lựa chọn hoàn hảo cho gia đình lớn hoặc doanh nghiệp.\nKhông gian cực rộng, vận hành êm ái, động cơ V6 mạnh mẽ, siêu bền bỉ chuẩn xe Mỹ\nÔ Tô Anh Lượng cam kết xe không tai nạn, không tông đụng, ...\nÔ tô Anh Lượng"
         }
       ],
       "brand": "Toyota",
@@ -6925,10 +7013,15 @@
         {
           "label": "Kiểu dáng",
           "value": "Sedan"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
         }
       ],
       "brand": "Toyota",
-      "brandSlug": "toyota"
+      "brandSlug": "toyota",
+      "seatCount": 5
     },
     {
       "id": "bonbanh-6578363",
@@ -7737,17 +7830,22 @@
         {
           "label": "Kiểu dáng",
           "value": "SUV"
+        },
+        {
+          "label": "Số chỗ ngồi",
+          "value": "5"
         }
       ],
       "brand": "Volkswagen",
-      "brandSlug": "volkswagen"
+      "brandSlug": "volkswagen",
+      "seatCount": 5
     }
   ],
   "sources": [
     {
       "id": "xeluottoantrung",
       "name": "Xe Lướt Toàn Trung",
-      "count": 94,
+      "count": 93,
       "status": "ok"
     },
     {
@@ -7764,5 +7862,5 @@
     }
   ],
   "errors": [],
-  "fetchedAt": 1766023577522
+  "fetchedAt": 1766028405144
 }

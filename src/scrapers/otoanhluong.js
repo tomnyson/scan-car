@@ -13,6 +13,8 @@ const FORM_HEADERS = {
   'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
 };
 const SOURCE_NAME = 'Anh Lượng Auto';
+const DETAIL_TIMEOUT_MS = Number(process.env.OTOANHLUONG_DETAIL_TIMEOUT_MS || 8000);
+const DETAIL_CONCURRENCY = Math.max(1, Number(process.env.OTOANHLUONG_DETAIL_CONCURRENCY || 6));
 
 const ICON_LABEL_MAP = {
   'fa-calendar-alt': 'Năm sản xuất',
@@ -37,6 +39,83 @@ const absoluteUrl = (value = '') => {
     return value;
   }
 };
+
+async function fetchWithTimeout(url, options, timeoutMs) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+function extractSeatCountFromHtml(html = '') {
+  if (!html) return null;
+  const $ = cheerio.load(html);
+  let seatText = '';
+  $('.al-info-car li').each((_, li) => {
+    const node = $(li);
+    const label = cleanText(node.find('label').text().replace(/:$/, '')).toLowerCase();
+    const value = cleanText(node.find('span').text());
+    if (!label || !value) return;
+    if (label.includes('số chỗ')) {
+      seatText = value;
+    }
+  });
+  if (!seatText) return null;
+  const match = seatText.match(/(\d{1,2})/);
+  if (!match) return null;
+  const count = Number(match[1]);
+  if (!Number.isFinite(count) || count < 2 || count > 60) return null;
+  return count;
+}
+
+async function fetchSeatCount(detailUrl) {
+  try {
+    const response = await fetchWithTimeout(detailUrl, { headers: REQUEST_HEADERS }, DETAIL_TIMEOUT_MS);
+    if (!response.ok) return null;
+    const html = await response.text();
+    return extractSeatCountFromHtml(html);
+  } catch (error) {
+    return null;
+  }
+}
+
+async function enrichSeatCounts(cars = []) {
+  const queue = cars.filter((car) => car?.url && !Number.isFinite(Number(car.seatCount)));
+  if (!queue.length) return;
+
+  const cache = new Map();
+  let cursor = 0;
+
+  const worker = async () => {
+    while (cursor < queue.length) {
+      const index = cursor;
+      cursor += 1;
+      const car = queue[index];
+      const url = car.url;
+      if (!url) continue;
+      if (cache.has(url)) {
+        const cached = cache.get(url);
+        if (cached) car.seatCount = cached;
+        continue;
+      }
+      const seatCount = await fetchSeatCount(url);
+      cache.set(url, seatCount);
+      if (seatCount) {
+        car.seatCount = seatCount;
+        car.attributes = Array.isArray(car.attributes) ? car.attributes : [];
+        const hasSeatAttr = car.attributes.some((attr) => String(attr?.label || '').toLowerCase().includes('số chỗ'));
+        if (!hasSeatAttr) {
+          car.attributes.push({ label: 'Số chỗ ngồi', value: String(seatCount) });
+        }
+      }
+    }
+  };
+
+  await Promise.all(Array.from({ length: Math.min(DETAIL_CONCURRENCY, queue.length) }, () => worker()));
+}
 
 function deriveLabel(iconClass = '') {
   const key = iconClass.split(' ').find((token) => token.startsWith('fa-'));
@@ -142,6 +221,7 @@ async function fetchOtoAnhLuongCars() {
   });
 
   await loadAdditionalCars({ seen, collection: cars, target: totalCount });
+  await enrichSeatCounts(cars);
 
   return cars;
 }
