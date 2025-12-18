@@ -5,10 +5,13 @@ const state = {
     keyword: '',
     selectedSources: new Set(),
     selectedBrands: new Set(),
+    selectedSeatBuckets: new Set(),
     priceMin: null,
     priceMax: null,
     odoMin: null,
-    odoMax: null
+    odoMax: null,
+    yearMin: null,
+    yearMax: null
   },
   sortBy: 'newest',
   viewMode: 'grid',
@@ -16,6 +19,11 @@ const state = {
   isLoading: false,
   errors: [],
   brandOptions: [],
+  seatOptions: [],
+  yearBounds: {
+    min: 1990,
+    max: new Date().getFullYear()
+  },
   brandDropdownOpen: false,
   autoReloadTimerId: null,
   // Pagination
@@ -63,10 +71,15 @@ const els = {
   odoMax: document.getElementById('odo-max'),
   odoMinDisplay: document.getElementById('odo-min-display'),
   odoMaxDisplay: document.getElementById('odo-max-display'),
-  odoRangeProgress: document.getElementById('odo-range-progress')
+  odoRangeProgress: document.getElementById('odo-range-progress'),
+  yearMin: document.getElementById('year-min'),
+  yearMax: document.getElementById('year-max'),
+  yearMinDisplay: document.getElementById('year-min-display'),
+  yearMaxDisplay: document.getElementById('year-max-display'),
+  seatFilters: document.getElementById('seat-filters')
 };
 
-const placeholderImage = 'https://placehold.co/600x400?text=No+Image';
+const placeholderImage = '/image/placeholder-car.svg';
 const CACHE_KEY = 'scanCar:data';
 const CACHE_TTL_MS = 2 * 60 * 60 * 1000; // 2 hours
 const AUTO_RELOAD_INTERVAL_MS = CACHE_TTL_MS;
@@ -137,6 +150,70 @@ const formatDate = (value) => {
   } catch (error) {
     return value;
   }
+};
+
+const extractFirstInteger = (value) => {
+  if (!value) return null;
+  const match = String(value).match(/(\d{1,2})/);
+  if (!match) return null;
+  const number = Number(match[1]);
+  return Number.isFinite(number) ? number : null;
+};
+
+const extractSeatCount = (car) => {
+  if (!car) return null;
+
+  const candidates = [];
+  if (car.title) candidates.push(car.title);
+
+  (car.attributes || []).forEach((attr) => {
+    if (!attr) return;
+    const label = String(attr.label || '');
+    const value = String(attr.value || '');
+    candidates.push(`${label} ${value}`);
+
+    const normalizedLabel = label.toLowerCase();
+    if (normalizedLabel.includes('chỗ') || normalizedLabel.includes('cho') || normalizedLabel.includes('seat') || normalizedLabel.includes('ghế')) {
+      const fromValue = extractFirstInteger(value);
+      if (fromValue !== null) {
+        candidates.push(`${fromValue} chỗ`);
+      }
+    }
+  });
+
+  const combined = candidates.join(' ');
+  const match =
+    combined.match(/(\d{1,2})\s*(?:ch[ỗoô]|cho|seat|seats|gh[eế])/i) ||
+    combined.match(/(?:ch[ỗoô]|cho|seat|seats|gh[eế])\s*[:\\-]?\\s*(\d{1,2})/i);
+  const parsed = match ? Number(match[1]) : null;
+  if (!Number.isFinite(parsed)) return null;
+  if (parsed < 2 || parsed > 60) return null;
+  return parsed;
+};
+
+const extractYearValue = (car) => {
+  if (!car) return null;
+  const currentYear = new Date().getFullYear();
+  const candidates = [];
+
+  if (car.title) candidates.push(car.title);
+  (car.attributes || []).forEach((attr) => {
+    if (!attr) return;
+    const label = String(attr.label || '').toLowerCase();
+    const value = String(attr.value || '');
+    candidates.push(`${attr.label || ''} ${value}`);
+    if (label.includes('năm') || label.includes('year')) {
+      candidates.push(value);
+    }
+  });
+
+  const combined = candidates.join(' ');
+  const match = combined.match(/\b(19\d{2}|20\d{2})\b/);
+  if (!match) return null;
+  const year = Number(match[1]);
+  if (!Number.isFinite(year)) return null;
+  if (year < 1980 || year > currentYear + 1) return null;
+  return year;
 };
 
 // Extract price in millions from price text
@@ -382,14 +459,141 @@ const renderBrandFilters = () => {
   renderBrandTags();
 };
 
+const updateSeatOptions = () => {
+  const counts = new Map();
+
+  state.data.forEach((car) => {
+    const seatCount = Number(car?.seatCount);
+    if (!Number.isFinite(seatCount) || seatCount <= 0) return;
+    const bucket = seatCount >= 10 ? 10 : seatCount;
+    counts.set(bucket, (counts.get(bucket) || 0) + 1);
+  });
+
+  state.seatOptions = [...counts.entries()]
+    .map(([value, count]) => ({ value, count }))
+    .sort((a, b) => a.value - b.value);
+};
+
+const renderSeatFilters = () => {
+  if (!els.seatFilters) return;
+  updateSeatOptions();
+  const selected = state.filters.selectedSeatBuckets;
+  const available = new Set(state.seatOptions.map((option) => option.value));
+  [...selected].forEach((value) => {
+    if (!available.has(value)) {
+      selected.delete(value);
+    }
+  });
+
+  els.seatFilters.innerHTML = '';
+  if (!state.seatOptions.length) {
+    els.seatFilters.innerHTML = '<div class="muted">Chưa có dữ liệu số chỗ.</div>';
+    return;
+  }
+
+  state.seatOptions.forEach((option) => {
+    const wrapper = document.createElement('label');
+    wrapper.className = 'source-checkbox-label';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.value = String(option.value);
+    checkbox.checked = selected.has(option.value);
+    checkbox.addEventListener('change', (event) => {
+      const bucketValue = Number(event.target.value);
+      if (!Number.isFinite(bucketValue)) {
+        return;
+      }
+      if (event.target.checked) {
+        selected.add(bucketValue);
+      } else {
+        selected.delete(bucketValue);
+      }
+      state.currentPage = 1;
+      renderCars();
+    });
+
+    const text = document.createElement('span');
+    const label = option.value === 10 ? '10+ chỗ' : `${option.value} chỗ`;
+    text.textContent = `${label} (${option.count})`;
+
+    wrapper.appendChild(checkbox);
+    wrapper.appendChild(text);
+    els.seatFilters.appendChild(wrapper);
+  });
+};
+
+const updateYearBounds = () => {
+  const currentYear = new Date().getFullYear();
+  const defaultMin = 1990;
+  const defaultMax = currentYear;
+
+  const years = state.data
+    .map((car) => Number(car?.yearValue))
+    .filter((value) => Number.isFinite(value));
+
+  if (!years.length) {
+    state.yearBounds = { min: defaultMin, max: defaultMax };
+    return;
+  }
+
+  const minYear = Math.max(1980, Math.min(...years));
+  const maxYear = Math.min(currentYear + 1, Math.max(...years));
+  state.yearBounds = {
+    min: Number.isFinite(minYear) ? minYear : defaultMin,
+    max: Number.isFinite(maxYear) ? maxYear : defaultMax
+  };
+};
+
+const updateYearDisplay = () => {
+  if (!els.yearMin || !els.yearMax) return;
+  const min = parseInt(els.yearMin.value, 10);
+  const max = parseInt(els.yearMax.value, 10);
+  if (els.yearMinDisplay) {
+    els.yearMinDisplay.textContent = Number.isFinite(min) ? String(min) : '---';
+  }
+  if (els.yearMaxDisplay) {
+    els.yearMaxDisplay.textContent = Number.isFinite(max) ? String(max) : '---';
+  }
+};
+
+const renderYearFilters = () => {
+  if (!els.yearMin || !els.yearMax) return;
+  updateYearBounds();
+
+  const boundsMin = state.yearBounds.min;
+  const boundsMax = state.yearBounds.max;
+
+  els.yearMin.min = String(boundsMin);
+  els.yearMin.max = String(boundsMax);
+  els.yearMax.min = String(boundsMin);
+  els.yearMax.max = String(boundsMax);
+
+  const currentMin = state.filters.yearMin ?? boundsMin;
+  const currentMax = state.filters.yearMax ?? boundsMax;
+
+  els.yearMin.value = String(Math.min(Math.max(currentMin, boundsMin), boundsMax));
+  els.yearMax.value = String(Math.min(Math.max(currentMax, boundsMin), boundsMax));
+
+  updateYearDisplay();
+
+  const normalizedMin = parseInt(els.yearMin.value, 10);
+  const normalizedMax = parseInt(els.yearMax.value, 10);
+  state.filters.yearMin = Number.isFinite(normalizedMin) && normalizedMin > boundsMin ? normalizedMin : null;
+  state.filters.yearMax = Number.isFinite(normalizedMax) && normalizedMax < boundsMax ? normalizedMax : null;
+};
+
 const filterCars = () => {
   const keyword = state.filters.keyword.toLowerCase();
   const selected = state.filters.selectedSources;
   const selectedBrands = state.filters.selectedBrands;
+  const selectedSeatBuckets = state.filters.selectedSeatBuckets;
   const priceMin = state.filters.priceMin;
   const priceMax = state.filters.priceMax;
   const odoMin = state.filters.odoMin;
   const odoMax = state.filters.odoMax;
+  const yearMin = state.filters.yearMin;
+  const yearMax = state.filters.yearMax;
 
   return state.data.filter((car) => {
     // Source filter
@@ -439,6 +643,33 @@ const filterCars = () => {
         if (odoMax !== null && odoMax < 200000 && carOdo > odoMax) {
           return false;
         }
+      }
+    }
+
+    // Seat count filter
+    if (selectedSeatBuckets.size) {
+      const seatCount = Number.isFinite(Number(car.seatCount)) ? Number(car.seatCount) : null;
+      if (seatCount === null) {
+        return false;
+      }
+      const matched = [...selectedSeatBuckets].some((bucket) => {
+        if (bucket === 10) return seatCount >= 10;
+        return seatCount === bucket;
+      });
+      if (!matched) return false;
+    }
+
+    // Year range filter
+    if (yearMin !== null || yearMax !== null) {
+      const yearValue = Number.isFinite(Number(car.yearValue)) ? Number(car.yearValue) : null;
+      if (yearValue === null) {
+        return false;
+      }
+      if (yearMin !== null && yearValue < yearMin) {
+        return false;
+      }
+      if (yearMax !== null && yearValue > yearMax) {
+        return false;
       }
     }
 
@@ -559,6 +790,13 @@ const renderCars = () => {
         }
       });
 
+      if (!specs.seats && Number.isFinite(Number(car.seatCount))) {
+        specs.seats = `${Number(car.seatCount)} chỗ`;
+      }
+      if (!specs.year && Number.isFinite(Number(car.yearValue))) {
+        specs.year = String(Number(car.yearValue));
+      }
+
       // Source badge
       const sourceLower = (car.source || '').toLowerCase();
       let sourceName = car.sourceName || car.source || '';
@@ -654,7 +892,13 @@ const renderCars = () => {
       return `
         <div class="car-card" onclick="document.querySelector('.detail-btn[data-car-id=\\'${escapeAttr(car.id)}\\']').click()">
           <div class="car-card-image">
-            <img src="${escapeAttr(car.thumbnail || 'https://via.placeholder.com/400x250?text=No+Image')}" alt="${escapeAttr(car.title)}" loading="lazy" />
+            <img
+              src="${escapeAttr(car.thumbnail || placeholderImage)}"
+              alt="${escapeAttr(car.title)}"
+              loading="lazy"
+              data-fallback="${escapeAttr(placeholderImage)}"
+              onerror="this.onerror=null;this.src=this.dataset.fallback;"
+            />
             <button class="car-image-nav prev" onclick="event.stopPropagation()">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="15 18 9 12 15 6"></polyline>
@@ -865,7 +1109,13 @@ const buildGalleryHtml = (detail) => {
       (src, index) => `
         <button type="button" data-detail-thumb="true" data-src="${escapeAttr(src)}" class="${index === 0 ? 'active' : ''
         }" aria-label="Ảnh ${index + 2}">
-          <img src="${escapeAttr(src)}" alt="${escapeHtml(`${detail.title || 'Ảnh xe'} ${index + 2}`)}" />
+          <img
+            src="${escapeAttr(src)}"
+            alt="${escapeHtml(`${detail.title || 'Ảnh xe'} ${index + 2}`)}"
+            loading="lazy"
+            data-fallback="${escapeAttr(placeholderImage)}"
+            onerror="this.onerror=null;this.src=this.dataset.fallback;"
+          />
         </button>
       `
     )
@@ -888,7 +1138,13 @@ const buildGalleryHtml = (detail) => {
     <div class="detail-gallery">
       <div class="detail-gallery-main">
         ${arrowsHtml}
-        <img src="${escapeAttr(main)}" alt="${escapeHtml(detail.title || 'Ảnh xe')}" data-detail-main />
+        <img
+          src="${escapeAttr(main)}"
+          alt="${escapeHtml(detail.title || 'Ảnh xe')}"
+          data-detail-main
+          data-fallback="${escapeAttr(placeholderImage)}"
+          onerror="this.onerror=null;this.src=this.dataset.fallback;"
+        />
       </div>
       ${thumbs.length ? `<div class="detail-gallery-thumbs">${thumbHtml}</div>` : ''}
     </div>
@@ -1025,13 +1281,19 @@ const openDetailModal = (car) => {
 
 const applyPayload = (payload) => {
   if (!payload) return;
-  state.data = payload.data || [];
+  state.data = (payload.data || []).map((car) => ({
+    ...car,
+    seatCount: extractSeatCount(car),
+    yearValue: extractYearValue(car)
+  }));
   state.sources = payload.sources || [];
   state.errors = payload.errors || [];
   state.updatedAt = payload.updatedAt || null;
 
   renderSourceFilters();
   renderBrandFilters();
+  renderSeatFilters();
+  renderYearFilters();
   renderStatus();
   renderCars();
 };
@@ -1147,6 +1409,40 @@ if (els.odoMin && els.odoMax) {
   els.odoMax.addEventListener('input', handleOdoChange);
   // Initialize display
   updateOdoDisplay();
+}
+
+// Year range slider
+const handleYearChange = () => {
+  if (!els.yearMin || !els.yearMax) return;
+  const boundsMin = state.yearBounds.min;
+  const boundsMax = state.yearBounds.max;
+
+  let min = parseInt(els.yearMin.value, 10);
+  let max = parseInt(els.yearMax.value, 10);
+
+  if (!Number.isFinite(min)) min = boundsMin;
+  if (!Number.isFinite(max)) max = boundsMax;
+
+  if (min > max) {
+    const temp = min;
+    min = max;
+    max = temp;
+    els.yearMin.value = String(min);
+    els.yearMax.value = String(max);
+  }
+
+  updateYearDisplay();
+
+  state.filters.yearMin = min > boundsMin ? min : null;
+  state.filters.yearMax = max < boundsMax ? max : null;
+  state.currentPage = 1;
+  renderCars();
+};
+
+if (els.yearMin && els.yearMax) {
+  els.yearMin.addEventListener('input', handleYearChange);
+  els.yearMax.addEventListener('input', handleYearChange);
+  renderYearFilters();
 }
 
 // Sort select
@@ -1314,14 +1610,22 @@ if (resetFiltersBtn) {
     state.filters.keyword = '';
     state.filters.selectedSources.clear();
     state.filters.selectedBrands.clear();
+    state.filters.selectedSeatBuckets.clear();
     state.filters.priceMin = null;
     state.filters.priceMax = null;
+    state.filters.yearMin = null;
+    state.filters.yearMax = null;
 
     // Reset UI inputs
     els.searchInput.value = '';
     els.priceMin.value = '';
     els.priceMax.value = '';
     els.brandSearchInput.value = '';
+    if (els.yearMin && els.yearMax) {
+      els.yearMin.value = String(state.yearBounds.min);
+      els.yearMax.value = String(state.yearBounds.max);
+      updateYearDisplay();
+    }
 
     // Reset checkboxes
     document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
@@ -1329,6 +1633,8 @@ if (resetFiltersBtn) {
     document.querySelectorAll('.dropdown-option').forEach(el => el.classList.remove('selected'));
 
     renderBrandTags();
+    renderSeatFilters();
+    renderYearFilters();
     renderCars();
   });
 }

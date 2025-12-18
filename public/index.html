@@ -161,17 +161,22 @@
       </div>
 
       <div class="filter-group">
+        <label class="filter-label">Số Chỗ Ngồi</label>
+        <div id="seat-filters" class="source-checkboxes"></div>
+      </div>
+
+      <div class="filter-group">
         <label class="filter-label">Năm Sản Xuất</label>
-        <select class="filter-select">
-          <option>Tất cả</option>
-          <option>2024</option>
-          <option>2023</option>
-          <option>2022</option>
-          <option>2021</option>
-          <option>2020</option>
-          <option>2019</option>
-          <option>2018</option>
-        </select>
+        <div class="odo-range-container">
+          <div class="odo-range-values">
+            <span id="year-min-display" class="odo-value-badge">---</span>
+            <span id="year-max-display" class="odo-value-badge">---</span>
+          </div>
+          <div class="odo-range-slider">
+            <input type="range" class="form-range" id="year-min" min="1990" max="2030" value="1990" step="1" />
+            <input type="range" class="form-range" id="year-max" min="1990" max="2030" value="2030" step="1" />
+          </div>
+        </div>
       </div>
 
       <button class="apply-filters-btn" id="apply-filters-btn">
