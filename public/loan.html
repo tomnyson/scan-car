@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tính trả góp | Car BMT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" type="image/svg+xml" href="./image/logo.svg" />
+</head>
+
+<body class="new-cars-page">
+  <nav class="app-header">
+    <div class="header-container">
+      <a href="/" class="app-logo">
+        <img class="app-logo-img" src="./image/logo.svg" alt="Car BMT" />
+      </a>
+
+      <div class="main-nav" id="main-nav">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="/" class="nav-link">Tìm Xe</a></li>
+          <li class="nav-item"><a href="/new-cars.html" class="nav-link">Giá Xe Mới</a></li>
+          <li class="nav-item"><a href="/loan.html" class="nav-link active">Tính Trả Góp</a></li>
+          <li class="nav-item"><a href="/#traffic-fine" class="nav-link">Tra Phạt Nguội</a></li>
+          <li class="nav-item"><a href="/#camera-warning" class="nav-link">Camera Phạt Nguội</a></li>
+        </ul>
+      </div>
+
+      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <header class="new-cars-header">
+    <div class="new-cars-header__inner">
+      <div class="new-cars-heading">
+        <p class="eyebrow">Tính trả góp</p>
+        <h1>Bảng tính vay mua xe</h1>
+        <div class="meta-row">
+          <span class="meta-chip">Ước tính nhanh, không lưu dữ liệu</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="new-cars-main">
+    <section class="loan-card">
+      <div class="loan-card__form">
+        <div class="loan-row">
+          <div class="loan-step">1</div>
+          <div class="loan-row__body">
+            <div class="loan-row__top">
+              <span class="loan-label">Số tiền vay là</span>
+              <span class="loan-value"><span id="loan-amount-display">0</span> VND</span>
+            </div>
+            <div class="loan-slider">
+              <div class="loan-slider__min">1 triệu</div>
+              <input id="loan-amount" type="range" min="1000000" max="20000000000" step="1000000" value="500000000" />
+              <div class="loan-slider__max">20 tỷ</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="loan-row">
+          <div class="loan-step">2</div>
+          <div class="loan-row__body">
+            <div class="loan-row__top">
+              <span class="loan-label">Lãi suất</span>
+              <span class="loan-value"><span id="loan-rate-display">0</span> %</span>
+            </div>
+            <div class="loan-slider">
+              <div class="loan-slider__min">1%</div>
+              <input id="loan-rate" type="range" min="1" max="20" step="0.1" value="10" />
+              <div class="loan-slider__max">20%</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="loan-row">
+          <div class="loan-step">3</div>
+          <div class="loan-row__body">
+            <div class="loan-row__top">
+              <span class="loan-label">Thời gian vay</span>
+              <span class="loan-value"><span id="loan-term-display">0</span> tháng</span>
+            </div>
+            <div class="loan-slider">
+              <div class="loan-slider__min">1 tháng</div>
+              <input id="loan-term" type="range" min="1" max="300" step="1" value="84" />
+              <div class="loan-slider__max">300 tháng</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="loan-row">
+          <div class="loan-step">4</div>
+          <div class="loan-row__body">
+            <span class="loan-label">Phương pháp tính</span>
+            <div class="loan-methods">
+              <label class="loan-method">
+                <input type="radio" name="loan-method" value="declining" checked />
+                <span>Gốc cố định, lãi giảm dần</span>
+              </label>
+              <label class="loan-method">
+                <input type="radio" name="loan-method" value="flat" />
+                <span>Gốc, lãi chia đều hàng tháng</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="loan-card__result">
+        <div class="loan-result-item">
+          <p>Số tiền trả tháng đầu</p>
+          <strong id="loan-first-month">0 VND</strong>
+        </div>
+        <div class="loan-result-item">
+          <p>Tổng lãi phải trả</p>
+          <strong id="loan-total-interest">0 VND</strong>
+        </div>
+        <div class="loan-result-item">
+          <p>Tổng số tiền gốc và lãi phải trả</p>
+          <strong id="loan-total-payment">0 VND</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="loan-visual">
+      <div class="loan-chart-card">
+        <h3 class="section-title">Kết quả lãi vay</h3>
+        <div id="loan-chart" class="loan-chart"></div>
+      </div>
+      <div class="loan-table-card">
+        <div class="loan-table-head">
+          <h3 class="section-title">Bảng trả góp</h3>
+          <div class="loan-pagination" id="loan-pagination"></div>
+        </div>
+        <div class="loan-table-wrapper">
+          <table class="loan-table">
+            <thead>
+              <tr>
+                <th>Kỳ hạn</th>
+                <th>Lãi phải trả</th>
+                <th>Gốc phải trả</th>
+                <th>Số tiền phải trả</th>
+                <th>Số tiền còn lại</th>
+              </tr>
+            </thead>
+            <tbody id="loan-schedule-body">
+              <tr>
+                <td colspan="5" class="empty">Chưa có dữ liệu</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/loan.js"></script>
+</body>
+
+</html>

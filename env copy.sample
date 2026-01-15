@@ -1,0 +1,9 @@
+PORT=3000
+CACHE_TTL_MS=7200000
+
+# MongoDB (ưu tiên theo thứ tự: MONGO_URL, MONGODB_URI, DATABASE_URL)
+MONGO_URL=mongodb://localhost:27017/scan_car
+MONGO_DB=scan_car
+MONGO_COLLECTION=cars
+
+# Cron (đang cố định 03:00 mỗi ngày trong mã; chỉnh trong src/server.js nếu cần)

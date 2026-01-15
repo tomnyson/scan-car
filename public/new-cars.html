@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bảng giá xe mới | Car BMT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" type="image/svg+xml" href="./image/logo.svg" />
+</head>
+
+<body class="new-cars-page">
+  <nav class="app-header">
+    <div class="header-container">
+      <a href="/" class="app-logo">
+        <img class="app-logo-img" src="./image/logo.svg" alt="Car BMT" />
+      </a>
+
+      <div class="main-nav" id="main-nav">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="/" class="nav-link">Tìm Xe</a></li>
+          <li class="nav-item"><a href="/new-cars.html" class="nav-link active">Giá Xe Mới</a></li>
+          <li class="nav-item"><a href="/loan.html" class="nav-link">Tính Trả Góp</a></li>
+          <li class="nav-item"><a href="/#traffic-fine" class="nav-link">Tra Phạt Nguội</a></li>
+          <li class="nav-item"><a href="/#camera-warning" class="nav-link">Camera Phạt Nguội</a></li>
+        </ul>
+      </div>
+
+      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <header class="new-cars-header">
+    <div class="new-cars-header__inner">
+      <div class="new-cars-heading">
+        <p class="eyebrow">VnExpress V-Car</p>
+        <h1>Bảng giá xe mới</h1>
+        <div class="meta-row">
+          <span id="updated-at" class="meta-chip">Cập nhật: --</span>
+          <span id="car-count" class="meta-chip">-- xe</span>
+        </div>
+      </div>
+
+      <div class="new-cars-controls">
+        <div class="select-field">
+          <select id="brand-select">
+            <option value="all">Tất cả hãng</option>
+          </select>
+        </div>
+
+        <div class="search-field">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input id="keyword-input" type="search" placeholder="Tên dòng xe cần tìm..." />
+        </div>
+
+        <button id="filter-toggle" class="filter-button" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="4" y1="21" x2="4" y2="14"></line>
+            <line x1="4" y1="10" x2="4" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12" y2="3"></line>
+            <line x1="20" y1="21" x2="20" y2="16"></line>
+            <line x1="20" y1="12" x2="20" y2="3"></line>
+            <line x1="1" y1="14" x2="7" y2="14"></line>
+            <line x1="9" y1="8" x2="15" y2="8"></line>
+            <line x1="17" y1="16" x2="23" y2="16"></line>
+          </svg>
+          <span>Lọc</span>
+        </button>
+
+        <button id="refresh-data" class="ghost-button" type="button">Làm mới</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="new-cars-main">
+    <section class="new-cars-card">
+      <div class="new-cars-card__header">
+        <div class="pill pill-ink">Bảng giá xe</div>
+        <div id="status-text" class="status-text">Đang tải dữ liệu...</div>
+      </div>
+
+      <div class="table-shell">
+        <table class="new-cars-table">
+          <thead>
+            <tr>
+              <th>Hãng xe</th>
+              <th>Dòng xe</th>
+              <th>Phiên bản</th>
+            <th>Phân khúc</th>
+            <th class="price-col">Giá niêm yết</th>
+            <th class="note-col">Đàm phán</th>
+            <th class="action-col">Trả góp</th>
+          </tr>
+          </thead>
+          <tbody id="price-table-body">
+            <tr>
+              <td colspan="6" class="empty">Đang tải dữ liệu...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div class="filter-panel" id="filter-panel">
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-tab="models" type="button">Dòng xe</button>
+      <button class="filter-tab" data-tab="price" type="button">Giá niêm yết</button>
+    </div>
+
+    <div class="filter-content" data-tab-content="models">
+      <div class="search-field inline">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input id="model-search" type="search" placeholder="Tên dòng xe cần tìm..." />
+      </div>
+
+      <div class="model-list" id="model-list"></div>
+    </div>
+
+    <div class="filter-content hidden" data-tab-content="price">
+      <div class="price-grid">
+        <div class="select-field">
+          <label for="price-min">Giá từ (triệu)</label>
+          <input type="number" id="price-min" min="0" step="10" placeholder="Ví dụ 500" />
+        </div>
+        <div class="select-field">
+          <label for="price-max">Đến (triệu)</label>
+          <input type="number" id="price-max" min="0" step="10" placeholder="Ví dụ 1500" />
+        </div>
+      </div>
+      <p class="muted">Để trống nếu không giới hạn.</p>
+    </div>
+
+    <div class="filter-actions">
+      <button id="clear-filters" class="ghost-button" type="button">Đặt lại</button>
+      <button id="apply-filters" class="primary-button" type="button">Áp dụng</button>
+    </div>
+  </div>
+  <div class="filter-backdrop hidden" id="filter-backdrop"></div>
+
+  <script src="/new-cars.js"></script>
+</body>
+
+</html>

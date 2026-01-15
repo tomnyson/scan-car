@@ -33,6 +33,7 @@ const state = {
     isOpen: false,
     isLoading: false,
     carId: null,
+    baseCar: null,
     data: null,
     error: ''
   }
@@ -243,6 +244,44 @@ const extractYearValue = (car) => {
   return year;
 };
 
+const stripDiacritics = (value = '') =>
+  value
+    .toString()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+
+const escapeRegExp = (value = '') => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+const buildModelKey = (car) => {
+  if (!car || !car.title) return '';
+  const brand = stripDiacritics(car.brand || '').toLowerCase();
+  let working = stripDiacritics(car.title || '').toLowerCase();
+
+  if (brand) {
+    working = working.replace(new RegExp(`\\b${escapeRegExp(brand)}\\b`, 'gi'), ' ');
+  }
+
+  working = working
+    .replace(/\b(19|20)\d{2}\b/g, ' ')
+    .replace(/\bđak\w*\b/gi, ' ')
+    .replace(/\bdak\w*\b/gi, ' ')
+    .replace(/\bbuon ma thuot\b/gi, ' ');
+
+  const stopwords = new Set(['xe', 'oto', 'oto', 'auto', 'ban', 'bán', 'cu', 'cũ', 'moi', 'mới', 'gia', 'gia:', 'gia-']);
+  const tokens = working
+    .replace(/[^a-z0-9.]+/g, ' ')
+    .split(' ')
+    .map((token) => token.trim())
+    .filter(Boolean)
+    .filter((token) => !stopwords.has(token));
+
+  if (!tokens.length) return '';
+
+  const modelPart = tokens.slice(0, 6).join('-');
+  const brandPart = (car.brandSlug || '').toLowerCase();
+  return brandPart ? `${brandPart}__${modelPart}` : modelPart;
+};
+
 // Extract price in millions from price text
 const extractPrice = (priceText) => {
   if (!priceText) return null;
@@ -265,6 +304,16 @@ const extractPrice = (priceText) => {
   }
 
   return null;
+};
+
+const formatPriceMillions = (value) => {
+  if (!Number.isFinite(value)) return 'Liên hệ';
+  if (value >= 1000) {
+    const billions = value / 1000;
+    const decimals = billions % 1 === 0 || billions >= 10 ? 0 : 1;
+    return `${billions.toFixed(decimals)} tỷ`;
+  }
+  return `${Number(value).toLocaleString('vi-VN')} triệu`;
 };
 
 const setLoading = (flag, { silent = false } = {}) => {
@@ -1107,6 +1156,184 @@ const buildDescriptionBlock = (description = '') => {
   `;
 };
 
+const deriveModelLabel = (car) => {
+  if (!car) return '';
+  const title = car.title || '';
+  const brand = car.brand || '';
+  if (!brand) return title;
+  const cleaned = title.replace(new RegExp(`^${escapeRegExp(brand)}\\s+`, 'i'), '').trim();
+  return cleaned || title;
+};
+
+const collectComparableCars = (baseCar) => {
+  if (!baseCar || !baseCar.modelKey) return [];
+  return state.data
+    .filter((car) => car.modelKey && car.modelKey === baseCar.modelKey)
+    .map((car) => ({
+      car,
+      price: extractPrice(car.priceText),
+      isCurrent: car.id === baseCar.id
+    }))
+    .filter((item) => item.price !== null)
+    .sort((a, b) => a.price - b.price);
+};
+
+  const buildPriceCompareSection = (baseCar) => {
+  const comparables = collectComparableCars(baseCar);
+  if (!comparables.length) return '';
+
+  const prices = comparables.map((item) => item.price);
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
+  const avgPrice = prices.reduce((sum, val) => sum + val, 0) / prices.length;
+  const sourceCount = new Set(comparables.map((item) => item.car.source || '')).size;
+  const modelLabel = deriveModelLabel(baseCar);
+  const current = comparables.find((item) => item.isCurrent);
+  const topComparables = comparables.slice(0, 6);
+
+  const buildChart = () => {
+    if (minPrice === maxPrice) return '';
+    const padX = 24;
+    const padY = 16;
+    const width = 380;
+    const height = 160;
+    const scaleY = (price) => {
+      if (maxPrice === minPrice) return height / 2;
+      const ratio = (price - minPrice) / (maxPrice - minPrice);
+      return height - padY - ratio * (height - padY * 2);
+    };
+    const step = comparables.length > 1 ? (width - padX * 2) / (comparables.length - 1) : 0;
+    const points = comparables
+      .slice()
+      .sort((a, b) => a.price - b.price)
+      .map((item, index) => {
+        const x = padX + index * step;
+        const y = scaleY(item.price);
+        return { x, y, order: index, ...item };
+      });
+    const avgY = scaleY(avgPrice);
+
+    const linePath =
+      points.length === 1
+        ? `M ${points[0].x} ${points[0].y} L ${points[0].x + 0.1} ${points[0].y}`
+        : points.map((p, idx) => `${idx === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+
+    const dots = points
+      .map(
+        (p) => `
+          <g class="compare-dot" data-compare-dot="true" data-car-id="${escapeAttr(p.car.id)}" data-price="${escapeAttr(
+          formatPriceMillions(p.price)
+        )}" data-source="${escapeAttr(p.car.sourceName || p.car.source || '')}" data-title="${escapeAttr(
+          p.car.title || ''
+        )}" data-year="${escapeAttr(p.car.yearValue || '')}">
+            <circle cx="${p.x}" cy="${p.y}" r="8" class="${p.isCurrent ? 'dot-current' : p.price === minPrice ? 'dot-best' : ''}"></circle>
+          </g>
+        `
+      )
+      .join('');
+
+    return `
+      <div class="compare-chart">
+        <div class="compare-chart-header">
+          <div class="compare-chart-legend">
+            <span class="legend-dot best"></span> Giá thấp
+            <span class="legend-dot current"></span> Đang xem
+          </div>
+          <div class="compare-chart-scale">
+            <span>${escapeHtml(formatPriceMillions(minPrice))}</span>
+            <span>${escapeHtml(formatPriceMillions(maxPrice))}</span>
+          </div>
+        </div>
+        <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Biểu đồ giá">
+          <line x1="${padX}" y1="${height - padY}" x2="${padX}" y2="${padY}" class="compare-axis"></line>
+          <line x1="${padX}" y1="${avgY}" x2="${width - padX}" y2="${avgY}" class="compare-avg-line"></line>
+          <path d="${linePath}" class="compare-line"></path>
+          ${dots}
+        </svg>
+        <p class="compare-chart-note">Click vào chấm để xem chi tiết xe từ showroom tương ứng.</p>
+      </div>
+    `;
+  };
+
+  const cardsHtml = topComparables
+    .map(
+      (item) => `
+        <article class="compare-card ${item.isCurrent ? 'current' : ''} ${item.price === minPrice ? 'best' : ''}" data-compare-car-id="${escapeAttr(item.car.id)}">
+          <div class="compare-card-head">
+            <span class="compare-source">${escapeHtml(item.car.sourceName || item.car.source || 'Nguồn khác')}</span>
+            <div class="compare-pills">
+              ${item.price === minPrice ? '<span class="compare-tag best">Giá thấp</span>' : ''}
+              ${item.isCurrent ? '<span class="compare-tag current">Đang xem</span>' : ''}
+            </div>
+          </div>
+          <div class="compare-main">
+            <div class="compare-thumb">
+              <img src="${escapeAttr(item.car.thumbnail || placeholderImage)}" alt="${escapeHtml(item.car.title || 'Xe')}" loading="lazy" data-fallback="${escapeAttr(placeholderImage)}" />
+            </div>
+            <div class="compare-body">
+              <div class="compare-price-row">
+                <div class="compare-price">${escapeHtml(formatPriceMillions(item.price))}</div>
+                <div class="compare-diff ${item.price > avgPrice ? 'diff-up' : item.price < avgPrice ? 'diff-down' : 'diff-even'}">
+                  ${
+                    item.price > avgPrice
+                      ? `${escapeHtml(formatPriceMillions(item.price - avgPrice))} trên TB`
+                      : item.price < avgPrice
+                      ? `${escapeHtml(formatPriceMillions(avgPrice - item.price))} dưới TB`
+                      : 'Đúng giá TB'
+                  }
+                </div>
+              </div>
+              <p class="compare-title">${escapeHtml(item.car.title || '')}</p>
+            </div>
+          </div>
+          <div class="compare-actions">
+            <button type="button" class="compare-open-btn" data-compare-car-id="${escapeAttr(item.car.id)}">Xem</button>
+            ${
+              item.car.url
+                ? `<a class="compare-link" href="${escapeAttr(item.car.url)}" target="_blank" rel="noopener noreferrer">Nguồn</a>`
+                : ''
+            }
+          </div>
+        </article>
+      `
+    )
+    .join('');
+
+  return `
+    <section class="detail-section price-compare">
+      <div class="price-compare-header">
+        <div>
+          <p class="compare-eyebrow">So sánh giá</p>
+          <h3>${escapeHtml(modelLabel || 'Cùng mẫu xe')}</h3>
+          <p class="compare-meta">${comparables.length} tin / ${sourceCount} nguồn</p>
+        </div>
+      <div class="compare-stats">
+        <div class="compare-stat">
+          <span>Khoảng giá</span>
+          <strong>${escapeHtml(formatPriceMillions(minPrice))} - ${escapeHtml(formatPriceMillions(maxPrice))}</strong>
+        </div>
+          <div class="compare-stat">
+            <span>Trung bình</span>
+            <strong>${escapeHtml(formatPriceMillions(avgPrice))}</strong>
+          </div>
+          ${
+            current
+              ? `<div class="compare-stat">
+                  <span>Xe đang xem</span>
+                  <strong>${escapeHtml(formatPriceMillions(current.price))}</strong>
+                </div>`
+              : ''
+          }
+        </div>
+      </div>
+      ${buildChart()}
+      <div class="price-compare-grid">
+        ${cardsHtml}
+      </div>
+    </section>
+  `;
+};
+
 const buildDetailActions = (detail) => {
   const actions = [];
   if (detail.url) {
@@ -1114,6 +1341,7 @@ const buildDetailActions = (detail) => {
       `<a class="detail-link external-link" href="${escapeAttr(detail.url)}" target="_blank" rel="noopener noreferrer">Mở trang gốc</a>`
     );
   }
+  actions.push(`<a class="detail-link" href="/new-cars.html" target="_blank">Giá xe mới</a>`);
   const hotlineLink = detail.contact?.hotlineLink;
   if (hotlineLink) {
     const label = detail.contact?.hotline ? `Gọi ${escapeHtml(detail.contact.hotline)}` : 'Gọi hotline';
@@ -1216,10 +1444,12 @@ const renderDetailModal = () => {
     sourceMeta.push(`<p class="detail-source">Cập nhật: ${escapeHtml(formatDate(detail.scrapedAt))}</p>`);
   }
 
+  const baseCar = state.data.find((item) => item.id === state.detail.carId) || state.detail.baseCar;
   const summaryHtml = buildSummaryGrid(detail.summary);
   const sectionsHtml = buildSectionsHtml(detail.sections);
   const descriptionHtml = buildDescriptionBlock(detail.description);
   const galleryHtml = buildGalleryHtml(detail);
+  const compareHtml = buildPriceCompareSection(baseCar);
   const actionHtml = buildDetailActions(detail);
 
   els.detailModalContent.innerHTML = `
@@ -1230,6 +1460,7 @@ const renderDetailModal = () => {
       ${actionHtml}
     </div>
     ${galleryHtml}
+    ${compareHtml}
     ${summaryHtml}
     ${sectionsHtml}
     ${descriptionHtml}
@@ -1242,6 +1473,7 @@ const closeDetailModal = () => {
     isOpen: false,
     isLoading: false,
     carId: null,
+    baseCar: null,
     data: null,
     error: ''
   };
@@ -1296,6 +1528,7 @@ const openDetailModal = (car) => {
     isOpen: true,
     isLoading: true,
     carId: car?.id || null,
+    baseCar: car || null,
     data: null,
     error: ''
   };
@@ -1307,13 +1540,15 @@ const openDetailModal = (car) => {
 
 const applyPayload = (payload) => {
   if (!payload) return;
-  state.data = (payload.data || []).map((car) => ({
+  const filteredCars = (payload.data || []).filter((car) => car.source !== 'vcar');
+  state.data = filteredCars.map((car) => ({
     ...car,
     seatCount: Number.isFinite(Number(car?.seatCount)) ? Number(car.seatCount) : extractSeatCount(car),
-    yearValue: extractYearValue(car)
+    yearValue: extractYearValue(car),
+    modelKey: buildModelKey(car)
   }));
-  state.sources = payload.sources || [];
-  state.errors = payload.errors || [];
+  state.sources = (payload.sources || []).filter((source) => source.id !== 'vcar');
+  state.errors = (payload.errors || []).filter((error) => error.id !== 'vcar');
   state.updatedAt = payload.updatedAt || null;
 
   renderSourceFilters();
@@ -1548,7 +1783,40 @@ if (els.detailModalOverlay) {
 }
 
 if (els.detailModalContent) {
+  let compareTooltip = null;
+  let activeCompareDotId = null;
+  let compareHideTimer = null;
+  const ensureTooltip = () => {
+    if (compareTooltip) return compareTooltip;
+    compareTooltip = document.createElement('div');
+    compareTooltip.className = 'compare-tooltip';
+    compareTooltip.style.display = 'none';
+    document.body.appendChild(compareTooltip);
+    return compareTooltip;
+  };
+
   els.detailModalContent.addEventListener('click', (event) => {
+    const compareBtn = event.target.closest('[data-compare-car-id]');
+    if (compareBtn) {
+      event.preventDefault();
+      const targetId = compareBtn.getAttribute('data-compare-car-id');
+      const targetCar = state.data.find((item) => item.id === targetId);
+      if (targetCar) {
+        openDetailModal(targetCar);
+      }
+      return;
+    }
+
+    const compareDot = event.target.closest('[data-compare-dot]');
+    if (compareDot) {
+      const targetId = compareDot.getAttribute('data-car-id');
+      const targetCar = state.data.find((item) => item.id === targetId);
+      if (targetCar) {
+        openDetailModal(targetCar);
+      }
+      return;
+    }
+
     // Handle thumbnail click
     const thumb = event.target.closest('[data-detail-thumb]');
     if (thumb) {
@@ -1598,6 +1866,57 @@ if (els.detailModalContent) {
       }
     }
   });
+
+  const showCompareTooltip = (dot) => {
+    clearTimeout(compareHideTimer);
+    const carId = dot.getAttribute('data-car-id') || '';
+    if (activeCompareDotId === carId && compareTooltip?.style.display === 'block') {
+      return;
+    }
+    const tooltip = ensureTooltip();
+    const price = dot.getAttribute('data-price') || '';
+    const source = dot.getAttribute('data-source') || '';
+    const title = dot.getAttribute('data-title') || '';
+    const year = dot.getAttribute('data-year') || '';
+    tooltip.innerHTML = `<div class="tooltip-title">${escapeHtml(source || 'Nguồn')}</div><div class="tooltip-price">${escapeHtml(
+      price
+    )}</div><div class="tooltip-sub">${escapeHtml(title)}</div>${year ? `<div class="tooltip-meta">${escapeHtml(year)}</div>` : ''}`;
+    const rect = dot.getBoundingClientRect();
+    const offsetX = 12;
+    const offsetY = 12;
+    tooltip.style.left = `${rect.left + window.scrollX + offsetX}px`;
+    tooltip.style.top = `${rect.top + window.scrollY + offsetY}px`;
+    tooltip.style.display = 'block';
+    activeCompareDotId = carId;
+  };
+
+  const hideCompareTooltip = () => {
+    if (compareTooltip) {
+      compareTooltip.style.display = 'none';
+    }
+    activeCompareDotId = null;
+  };
+
+  els.detailModalContent.addEventListener(
+    'mouseenter',
+    (event) => {
+      const dot = event.target.closest('[data-compare-dot]');
+      if (!dot) return;
+      showCompareTooltip(dot);
+    },
+    true
+  );
+
+  els.detailModalContent.addEventListener(
+    'mouseleave',
+    (event) => {
+      const dot = event.target.closest('[data-compare-dot]');
+      if (!dot) return;
+      clearTimeout(compareHideTimer);
+      compareHideTimer = setTimeout(hideCompareTooltip, 120);
+    },
+    true
+  );
 }
 
 document.addEventListener('keydown', (event) => {
@@ -1712,6 +2031,11 @@ const cameraWarningEls = {
   section: document.getElementById('camera-warning-section'),
   list: document.getElementById('camera-warning-list'),
   searchInput: document.getElementById('camera-search-input')
+};
+
+const newCarPriceEls = {
+  section: document.getElementById('new-price-section'),
+  iframe: document.getElementById('new-price-iframe')
 };
 
 const CAMERA_WARNING_LOCATIONS = [
@@ -1837,14 +2161,43 @@ if (trafficFineEls.reloadCaptchaBtn) {
 // View switching
 document.querySelectorAll('.nav-link').forEach(link => {
   link.addEventListener('click', (e) => {
-    e.preventDefault();
     const view = link.getAttribute('data-view');
+    if (!view) {
+      return;
+    }
+    e.preventDefault();
     document.querySelectorAll('.nav-link').forEach((node) => node.classList.remove('active'));
     link.classList.add('active');
 
-    if (view === 'traffic-fine') {
+    if (view === 'new-car-prices') {
+      if (newCarPriceEls.section) {
+        newCarPriceEls.section.style.display = 'block';
+      }
+      trafficFineEls.section.style.display = 'none';
+      trafficFineEls.filtersSidebar.style.display = 'none';
+      trafficFineEls.resultsArea.style.display = 'none';
+      if (cameraWarningEls.section) {
+        cameraWarningEls.section.style.display = 'none';
+      }
+
+      const mainContainer = document.querySelector('.main-container');
+      if (mainContainer) {
+        mainContainer.classList.add('new-price');
+        mainContainer.classList.remove('traffic-fine');
+        mainContainer.classList.remove('camera-warning');
+      }
+
+      // Lazy-load iframe only when opened
+      if (newCarPriceEls.iframe && !newCarPriceEls.iframe.dataset.loaded) {
+        newCarPriceEls.iframe.src = newCarPriceEls.iframe.src || 'https://vnexpress.net/oto-xe-may/v-car';
+        newCarPriceEls.iframe.dataset.loaded = 'true';
+      }
+    } else if (view === 'traffic-fine') {
       // Show traffic fine section, hide cars section
       trafficFineEls.section.style.display = 'block';
+      if (newCarPriceEls.section) {
+        newCarPriceEls.section.style.display = 'none';
+      }
       trafficFineEls.filtersSidebar.style.display = 'none';
       trafficFineEls.resultsArea.style.display = 'none';
       if (cameraWarningEls.section) {
@@ -1869,6 +2222,9 @@ document.querySelectorAll('.nav-link').forEach(link => {
       if (cameraWarningEls.section) {
         cameraWarningEls.section.style.display = 'block';
       }
+      if (newCarPriceEls.section) {
+        newCarPriceEls.section.style.display = 'none';
+      }
       trafficFineEls.section.style.display = 'none';
       trafficFineEls.filtersSidebar.style.display = 'none';
       trafficFineEls.resultsArea.style.display = 'none';
@@ -1887,6 +2243,9 @@ document.querySelectorAll('.nav-link').forEach(link => {
       if (cameraWarningEls.section) {
         cameraWarningEls.section.style.display = 'none';
       }
+      if (newCarPriceEls.section) {
+        newCarPriceEls.section.style.display = 'none';
+      }
       trafficFineEls.filtersSidebar.style.display = 'block';
       trafficFineEls.resultsArea.style.display = 'block';
 
@@ -1895,6 +2254,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
       if (mainContainer) {
         mainContainer.classList.remove('traffic-fine');
         mainContainer.classList.remove('camera-warning');
+        mainContainer.classList.remove('new-price');
       }
     }
   });

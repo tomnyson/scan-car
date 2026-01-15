@@ -1,22 +1,31 @@
+require('dotenv').config();
 const path = require('path');
 const fs = require('fs');
 const fsPromises = fs.promises;
 const express = require('express');
 const compression = require('compression');
 const helmet = require('helmet');
+const cron = require('node-cron');
 const { fetchXeLuotToanTrungCars, fetchXeLuotToanTrungCarDetail } = require('./scrapers/xeluottoantrung');
 const { fetchOtoAnhLuongCars, fetchOtoAnhLuongCarDetail } = require('./scrapers/otoanhluong');
 const { fetchBonbanhCars, fetchBonbanhCarDetail } = require('./scrapers/bonbanh');
+const { fetchChototCars, fetchChototCarDetail } = require('./scrapers/chotot');
+const { fetchVCarPrices } = require('./scrapers/vcar');
 const { checkTrafficFine } = require('./scrapers/trafficfine');
+const { initMongo, saveSnapshot, saveNewCarSnapshot } = require('./mongo');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const CACHE_TTL_MS = Number(process.env.CACHE_TTL_MS || 2 * 60 * 60 * 1000);
+const CRON_SCHEDULE = process.env.CRON_SCHEDULE || '0 3 * * *';
+const CRON_TIMEZONE = process.env.CRON_TIMEZONE || 'Asia/Ho_Chi_Minh';
 const CACHE_FILE_PATH = path.join(__dirname, '../cache/cars-cache.json');
 const tasks = [
   { id: 'xeluottoantrung', name: 'Xe Lướt Toàn Trung', loader: fetchXeLuotToanTrungCars },
   { id: 'otoanhluong', name: 'Anh Lượng Auto', loader: fetchOtoAnhLuongCars },
-  { id: 'bonbanh', name: 'Bonbanh Đắk Lắk', loader: fetchBonbanhCars }
+  { id: 'bonbanh', name: 'Bonbanh Đắk Lắk', loader: fetchBonbanhCars },
+  { id: 'chotot', name: 'Chợ Tốt (BMT)', loader: fetchChototCars },
+  { id: 'vcar', name: 'VnExpress V-Car', loader: fetchVCarPrices }
 ];
 const SOURCE_CONFIG = {
   xeluottoantrung: {
@@ -30,12 +39,21 @@ const SOURCE_CONFIG = {
   bonbanh: {
     baseUrl: 'https://bonbanh.com/',
     hosts: ['bonbanh.com']
+  },
+  chotot: {
+    baseUrl: 'https://xe.chotot.com/',
+    hosts: ['xe.chotot.com', 'chotot.com', 'www.chotot.com']
+  },
+  vcar: {
+    baseUrl: 'https://vnexpress.net/oto-xe-may/v-car',
+    hosts: ['vnexpress.net', 'www.vnexpress.net']
   }
 };
 const detailFetchers = {
   xeluottoantrung: fetchXeLuotToanTrungCarDetail,
   otoanhluong: fetchOtoAnhLuongCarDetail,
-  bonbanh: fetchBonbanhCarDetail
+  bonbanh: fetchBonbanhCarDetail,
+  chotot: fetchChototCarDetail
 };
 const detailCache = new Map();
 
@@ -73,6 +91,7 @@ const persistCacheToDisk = async (snapshot) => {
 
 let cache = loadCacheFromDisk();
 const DETAIL_CACHE_TTL_MS = CACHE_TTL_MS;
+let mongoReady = false;
 
 const normalizeHost = (value = '') => value.trim().toLowerCase().replace(/^www\./, '');
 const matchesHost = (host, candidate) => host === candidate || host.endsWith(`.${candidate}`);
@@ -153,6 +172,11 @@ const startRefresh = async () => {
   const snapshot = await collectCars();
   cache = { ...snapshot, fetchedAt: Date.now() };
   await persistCacheToDisk(cache);
+  if (mongoReady) {
+    saveSnapshot(cache).catch((error) => {
+      console.error('Không lưu được snapshot Mongo:', error.message);
+    });
+  }
   return cache;
 };
 
@@ -201,6 +225,55 @@ app.get('/api/cars', async (req, res) => {
       return res.status(200).json(buildPayload(cache));
     }
     return res.status(500).json({ error: 'Không thể lấy dữ liệu xe. Vui lòng thử lại sau.' });
+  }
+});
+
+app.get('/api/new-cars', async (req, res) => {
+  const forceRefresh = req.query.refresh === 'true';
+  const now = Date.now();
+  const cachedVCar = cache.cars.filter((car) => car.source === 'vcar');
+  const hasCache = cachedVCar.length > 0;
+  const isFresh = hasCache && now - cache.fetchedAt < CACHE_TTL_MS;
+
+  if (!forceRefresh && isFresh) {
+    return res.json({
+      updatedAt: new Date(cache.fetchedAt).toISOString(),
+      count: cachedVCar.length,
+      data: cachedVCar,
+      cached: true
+    });
+  }
+
+  try {
+    const data = await fetchVCarPrices();
+    const snapshot = {
+      fetchedAt: Date.now(),
+      data: Array.isArray(data) ? data : [],
+      count: Array.isArray(data) ? data.length : 0,
+      source: 'vcar'
+    };
+    if (mongoReady) {
+      saveNewCarSnapshot(snapshot).catch((error) => {
+        console.warn('Không lưu được giá xe mới vào Mongo:', error.message);
+      });
+    }
+    return res.json({
+      updatedAt: new Date(snapshot.fetchedAt).toISOString(),
+      count: snapshot.count,
+      data: snapshot.data
+    });
+  } catch (error) {
+    console.error('Không thể tải giá xe mới:', error);
+    if (isFresh) {
+      return res.json({
+        updatedAt: new Date(cache.fetchedAt).toISOString(),
+        count: cachedVCar.length,
+        data: cachedVCar,
+        cached: true,
+        error: error.message || 'Không thể làm mới dữ liệu'
+      });
+    }
+    return res.status(500).json({ error: 'Không thể lấy giá xe mới. Vui lòng thử lại sau.' });
   }
 });
 
@@ -325,4 +398,32 @@ app.use((req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(`🚗  Scan Car server đang chạy tại http://localhost:${PORT}`);
+  initMongo()
+    .then((result) => {
+      mongoReady = result.ok;
+      if (!result.ok) {
+        console.warn('MongoDB không bật:', result.message);
+      } else {
+        console.log(result.message);
+      }
+    })
+    .catch((error) => {
+      mongoReady = false;
+      console.warn('Không thể kết nối Mongo:', error.message);
+    });
+
+  // Lịch chạy tự động mỗi ngày 03:00
+  if (cron.validate(CRON_SCHEDULE)) {
+    console.log(`[Cron] Đăng ký lịch "${CRON_SCHEDULE}" (TZ: ${CRON_TIMEZONE})`);
+    cron.schedule(
+      CRON_SCHEDULE,
+      () => {
+        console.log('[Cron] Đang làm mới dữ liệu...');
+        refreshCache().catch((error) => console.error('[Cron] Không làm mới được:', error.message));
+      },
+      { timezone: CRON_TIMEZONE }
+    );
+  } else {
+    console.warn(`[Cron] Biểu thức không hợp lệ: ${CRON_SCHEDULE}`);
+  }
 });
