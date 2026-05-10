@@ -1,6 +1,7 @@
 require('dotenv').config();
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
 const fsPromises = fs.promises;
 const express = require('express');
 const compression = require('compression');
@@ -499,12 +500,17 @@ app.delete('/api/user-cars/:id', async (req, res) => {
 
 // ========== FILE UPLOAD ==========
 const multer = require('multer');
-const UPLOAD_DIR = path.join(__dirname, '../public/uploads');
+const isVercel = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+const UPLOAD_DIR = isVercel
+  ? path.join(os.tmpdir(), 'scan-car-uploads')
+  : path.join(publicDir, 'uploads');
 
 // Ensure upload directory exists
 if (!fs.existsSync(UPLOAD_DIR)) {
   fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 }
+
+app.use('/uploads', express.static(UPLOAD_DIR, { maxAge: isVercel ? '5m' : '1h' }));
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, UPLOAD_DIR),
