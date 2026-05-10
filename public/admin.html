@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Quản Lý Xe Cộng Đồng</title>
+  <style>
+    :root {
+      --primary: #0b5b7c;
+      --primary-dark: #094a63;
+      --white: #ffffff;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-600: #4b5563;
+      --gray-800: #1f2937;
+      --success: #059669;
+      --error: #dc2626;
+      --warning: #d97706;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--gray-100);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: var(--primary-dark);
+      margin-bottom: 1.5rem;
+    }
+
+    .auth-form {
+      background: var(--white);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .auth-form input {
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      width: 200px;
+    }
+
+    .auth-form button {
+      padding: 0.75rem 1.5rem;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .tab-btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: var(--gray-200);
+      font-weight: 500;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .car-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .car-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: grid;
+      grid-template-columns: 150px 1fr auto;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .car-card.hidden {
+      opacity: 0.5;
+      border: 2px dashed var(--gray-200);
+    }
+
+    .car-card img {
+      width: 150px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: var(--gray-200);
+    }
+
+    .car-info h3 {
+      color: var(--gray-800);
+      margin-bottom: 0.5rem;
+    }
+
+    .car-info p {
+      color: var(--gray-600);
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .car-info .price {
+      color: var(--error);
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .car-specs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .spec-tag {
+      background: var(--gray-100);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      color: var(--gray-600);
+    }
+
+    .car-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .btn-approve {
+      background: var(--success);
+      color: var(--white);
+    }
+
+    .btn-reject {
+      background: var(--error);
+      color: var(--white);
+    }
+
+    .btn-hide {
+      background: var(--warning);
+      color: var(--white);
+    }
+
+    .btn-show {
+      background: var(--success);
+      color: var(--white);
+    }
+
+    .btn-edit {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--gray-600);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+    }
+
+    .badge-pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .badge-approved {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .badge-hidden {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+    .modal.open {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-header h2 {
+      color: var(--primary-dark);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--gray-600);
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+      color: var(--gray-800);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
+    }
+
+    .btn-save {
+      background: var(--success);
+      color: var(--white);
+      padding: 0.75rem 1.5rem;
+    }
+
+    .btn-cancel {
+      background: var(--gray-200);
+      color: var(--gray-800);
+      padding: 0.75rem 1.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>🚗 Quản Lý Xe Cộng Đồng</h1>
+    <div class="auth-form">
+      <input type="password" id="admin-key" placeholder="Admin Key" />
+      <button onclick="loadData()">Tải danh sách</button>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('pending')">Chờ duyệt</button>
+      <button class="tab-btn" onclick="switchTab('approved')">Đã duyệt</button>
+    </div>
+    <div id="car-list" class="car-list">
+      <div class="empty-state">Nhập Admin Key và click "Tải danh sách".</div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div id="edit-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>✏️ Chỉnh sửa tin đăng</h2>
+        <button class="modal-close" onclick="closeModal()">×</button>
+      </div>
+      <form id="edit-form">
+        <input type="hidden" id="edit-id" />
+        <div class="form-group">
+          <label>Tiêu đề</label>
+          <input type="text" id="edit-title" required />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Hãng xe</label>
+            <input type="text" id="edit-brand" />
+          </div>
+          <div class="form-group">
+            <label>Giá</label>
+            <input type="text" id="edit-price" placeholder="VD: 450 triệu" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Năm SX</label>
+            <input type="number" id="edit-year" />
+          </div>
+          <div class="form-group">
+            <label>Số km</label>
+            <input type="number" id="edit-mileage" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Số ghế</label>
+            <input type="number" id="edit-seats" />
+          </div>
+          <div class="form-group">
+            <label>SĐT liên hệ</label>
+            <input type="text" id="edit-phone" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Link ảnh đại diện</label>
+          <input type="url" id="edit-thumbnail" placeholder="https://..." />
+        </div>
+        <div class="form-group">
+          <label>Mô tả</label>
+          <textarea id="edit-description" rows="3"></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-cancel" onclick="closeModal()">Hủy</button>
+          <button type="submit" class="btn btn-save">💾 Lưu</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let adminKey = '';
+    let currentTab = 'pending';
+    const carList = document.getElementById('car-list');
+    const editModal = document.getElementById('edit-modal');
+    const editForm = document.getElementById('edit-form');
+
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.includes(tab === 'pending' ? 'Chờ' : 'Đã'));
+      });
+      loadData();
+    }
+
+    async function loadData() {
+      adminKey = document.getElementById('admin-key').value;
+      if (!adminKey) { alert('Vui lòng nhập Admin Key'); return; }
+      const endpoint = currentTab === 'pending' ? '/api/admin/pending-cars' : '/api/admin/approved-cars';
+      try {
+        const res = await fetch(`${endpoint}?key=${adminKey}`);
+        const data = await res.json();
+        if (!data.success) throw new Error(data.error);
+        if (data.count === 0) {
+          carList.innerHTML = `<div class="empty-state">🎉 Không có tin ${currentTab === 'pending' ? 'chờ duyệt' : 'đã duyệt'}!</div>`;
+          return;
+        }
+        carList.innerHTML = data.data.map(car => renderCarCard(car)).join('');
+      } catch (error) {
+        carList.innerHTML = `<div class="empty-state" style="color:red;">Lỗi: ${error.message}</div>`;
+      }
+    }
+
+    function renderCarCard(car) {
+      const isHidden = car.hidden === true;
+      const isPending = currentTab === 'pending';
+      let badgeHtml, actionsHtml;
+      if (isPending) {
+        badgeHtml = '<span class="badge badge-pending">Chờ duyệt</span>';
+        actionsHtml = `
+          <button class="btn btn-edit" onclick="openEdit('${car.id}')">✏️ Sửa</button>
+          <button class="btn btn-approve" onclick="approveCar('${car.id}')">✓ Duyệt</button>
+          <button class="btn btn-reject" onclick="rejectCar('${car.id}')">✕ Từ chối</button>
+        `;
+      } else {
+        badgeHtml = isHidden ? '<span class="badge badge-hidden">Đang ẩn</span>' : '<span class="badge badge-approved">Đang hiện</span>';
+        actionsHtml = `
+          <button class="btn btn-edit" onclick="openEdit('${car.id}')">✏️ Sửa</button>
+          ${isHidden 
+            ? `<button class="btn btn-show" onclick="toggleCar('${car.id}', false)">👁 Hiện</button>`
+            : `<button class="btn btn-hide" onclick="toggleCar('${car.id}', true)">🙈 Ẩn</button>`}
+        `;
+      }
+      return `
+        <div class="car-card ${isHidden ? 'hidden' : ''}" id="car-${car.id}">
+          <img src="${car.thumbnail || car.images?.[0] || '/image/placeholder.png'}" alt="${car.title}" />
+          <div class="car-info">
+            <h3>${car.title}</h3>
+            <p class="price">${car.priceText}</p>
+            <p><strong>Hãng:</strong> ${car.brand || 'N/A'} | <strong>SĐT:</strong> ${car.phone}</p>
+            <div class="car-specs">
+              ${car.specs?.fuel ? `<span class="spec-tag">${car.specs.fuel}</span>` : ''}
+              ${car.specs?.transmission ? `<span class="spec-tag">${car.specs.transmission}</span>` : ''}
+              ${car.yearValue ? `<span class="spec-tag">${car.yearValue}</span>` : ''}
+            </div>
+          </div>
+          <div class="car-actions">${badgeHtml}${actionsHtml}</div>
+        </div>
+      `;
+    }
+
+    async function openEdit(id) {
+      try {
+        const res = await fetch(`/api/admin/car/${id}?key=${adminKey}`);
+        const data = await res.json();
+        if (!data.success) throw new Error(data.error);
+        const car = data.data;
+        document.getElementById('edit-id').value = car.id;
+        document.getElementById('edit-title').value = car.title || '';
+        document.getElementById('edit-brand').value = car.brand || '';
+        document.getElementById('edit-price').value = car.priceText || '';
+        document.getElementById('edit-year').value = car.yearValue || '';
+        document.getElementById('edit-mileage').value = car.mileage || '';
+        document.getElementById('edit-seats').value = car.seatCount || '';
+        document.getElementById('edit-phone').value = car.phone || '';
+        document.getElementById('edit-thumbnail').value = car.thumbnail || car.images?.[0] || '';
+        document.getElementById('edit-description').value = car.description || '';
+        editModal.classList.add('open');
+      } catch (err) { alert('Lỗi: ' + err.message); }
+    }
+
+    function closeModal() { editModal.classList.remove('open'); }
+
+    editForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('edit-id').value;
+      const updates = {
+        title: document.getElementById('edit-title').value,
+        brand: document.getElementById('edit-brand').value,
+        priceText: document.getElementById('edit-price').value,
+        yearValue: parseInt(document.getElementById('edit-year').value) || null,
+        mileage: parseInt(document.getElementById('edit-mileage').value) || null,
+        seatCount: parseInt(document.getElementById('edit-seats').value) || null,
+        phone: document.getElementById('edit-phone').value,
+        thumbnail: document.getElementById('edit-thumbnail').value,
+        description: document.getElementById('edit-description').value
+      };
+      try {
+        const res = await fetch(`/api/admin/car/${id}?key=${adminKey}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updates)
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert('Đã cập nhật thành công!');
+          closeModal();
+          loadData();
+        } else throw new Error(data.error);
+      } catch (err) { alert('Lỗi: ' + err.message); }
+    });
+
+    async function approveCar(id) {
+      if (!confirm('Duyệt tin này?')) return;
+      try {
+        const res = await fetch(`/api/admin/approve/${id}?key=${adminKey}`, { method: 'POST' });
+        const data = await res.json();
+        if (data.success) { document.getElementById(`car-${id}`).remove(); alert('Đã duyệt!'); }
+        else throw new Error(data.error);
+      } catch (err) { alert('Lỗi: ' + err.message); }
+    }
+
+    async function rejectCar(id) {
+      const reason = prompt('Lý do từ chối (tùy chọn):');
+      if (reason === null) return;
+      try {
+        const res = await fetch(`/api/admin/reject/${id}?key=${adminKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reason })
+        });
+        const data = await res.json();
+        if (data.success) { document.getElementById(`car-${id}`).remove(); alert('Đã từ chối!'); }
+        else throw new Error(data.error);
+      } catch (err) { alert('Lỗi: ' + err.message); }
+    }
+
+    async function toggleCar(id, hidden) {
+      try {
+        const res = await fetch(`/api/admin/toggle/${id}?key=${adminKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ hidden })
+        });
+        const data = await res.json();
+        if (data.success) { alert(hidden ? 'Đã ẩn!' : 'Đã hiện!'); loadData(); }
+        else throw new Error(data.error);
+      } catch (err) { alert('Lỗi: ' + err.message); }
+    }
+  </script>
+</body>
+
+</html>

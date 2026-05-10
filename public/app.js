@@ -830,7 +830,12 @@ const renderCars = () => {
   }
 
   if (!cars.length) {
-    els.carGrid.innerHTML = '<p class="muted">Không có dữ liệu phù hợp với bộ lọc hiện tại.</p>';
+    els.carGrid.innerHTML = `
+      <div class="empty-state">
+        <h3>Chưa tìm thấy xe phù hợp</h3>
+        <p>Thử bỏ bớt bộ lọc, mở rộng khoảng giá hoặc tìm bằng tên hãng xe.</p>
+      </div>
+    `;
     renderPagination(0, 0);
     return;
   }
@@ -984,6 +989,7 @@ const renderCars = () => {
                 <polyline points="9 18 15 12 9 6"></polyline>
               </svg>
             </button>
+            ${sourceName ? `<span class="car-source-badge">${escapeHtml(sourceName)}</span>` : ''}
           </div>
           <div class="car-card-content">
             <div class="car-price-banner">${escapeHtml(car.priceText || 'Liên hệ')}</div>
@@ -1178,7 +1184,7 @@ const collectComparableCars = (baseCar) => {
     .sort((a, b) => a.price - b.price);
 };
 
-  const buildPriceCompareSection = (baseCar) => {
+const buildPriceCompareSection = (baseCar) => {
   const comparables = collectComparableCars(baseCar);
   if (!comparables.length) return '';
 
@@ -1274,13 +1280,12 @@ const collectComparableCars = (baseCar) => {
               <div class="compare-price-row">
                 <div class="compare-price">${escapeHtml(formatPriceMillions(item.price))}</div>
                 <div class="compare-diff ${item.price > avgPrice ? 'diff-up' : item.price < avgPrice ? 'diff-down' : 'diff-even'}">
-                  ${
-                    item.price > avgPrice
-                      ? `${escapeHtml(formatPriceMillions(item.price - avgPrice))} trên TB`
-                      : item.price < avgPrice
-                      ? `${escapeHtml(formatPriceMillions(avgPrice - item.price))} dưới TB`
-                      : 'Đúng giá TB'
-                  }
+                  ${item.price > avgPrice
+          ? `${escapeHtml(formatPriceMillions(item.price - avgPrice))} trên TB`
+          : item.price < avgPrice
+            ? `${escapeHtml(formatPriceMillions(avgPrice - item.price))} dưới TB`
+            : 'Đúng giá TB'
+        }
                 </div>
               </div>
               <p class="compare-title">${escapeHtml(item.car.title || '')}</p>
@@ -1288,11 +1293,10 @@ const collectComparableCars = (baseCar) => {
           </div>
           <div class="compare-actions">
             <button type="button" class="compare-open-btn" data-compare-car-id="${escapeAttr(item.car.id)}">Xem</button>
-            ${
-              item.car.url
-                ? `<a class="compare-link" href="${escapeAttr(item.car.url)}" target="_blank" rel="noopener noreferrer">Nguồn</a>`
-                : ''
-            }
+            ${item.car.url
+          ? `<a class="compare-link" href="${escapeAttr(item.car.url)}" target="_blank" rel="noopener noreferrer">Nguồn</a>`
+          : ''
+        }
           </div>
         </article>
       `
@@ -1316,14 +1320,13 @@ const collectComparableCars = (baseCar) => {
             <span>Trung bình</span>
             <strong>${escapeHtml(formatPriceMillions(avgPrice))}</strong>
           </div>
-          ${
-            current
-              ? `<div class="compare-stat">
+          ${current
+      ? `<div class="compare-stat">
                   <span>Xe đang xem</span>
                   <strong>${escapeHtml(formatPriceMillions(current.price))}</strong>
                 </div>`
-              : ''
-          }
+      : ''
+    }
         </div>
       </div>
       ${buildChart()}
@@ -1481,8 +1484,56 @@ const closeDetailModal = () => {
 };
 
 const loadCarDetail = async (car) => {
-  if (!car.url) {
-    state.detail = { ...state.detail, isLoading: false, error: 'Xe này chưa có đường dẫn chi tiết.' };
+  // For community cars or cars without URL, show the car's existing data
+  if (!car.url || car.source === 'community') {
+    // Build sections from specs
+    const specsItems = [];
+    if (car.specs) {
+      const specLabels = {
+        fuel: 'Nhiên liệu',
+        transmission: 'Hộp số',
+        bodyType: 'Kiểu dáng',
+        drivetrain: 'Dẫn động',
+        origin: 'Xuất xứ',
+        exteriorColor: 'Màu ngoại thất',
+        engineCC: 'Động cơ',
+        version: 'Phiên bản'
+      };
+      Object.entries(car.specs).forEach(([key, value]) => {
+        if (value) specsItems.push({ label: specLabels[key] || key, value });
+      });
+    }
+
+    // Combine attributes and specs
+    const allAttributes = [...(car.attributes || []), ...specsItems];
+
+    // Build sections for display
+    const sections = allAttributes.length > 0 ? [{
+      title: 'Thông số xe',
+      items: allAttributes
+    }] : [];
+
+    // Build gallery from images
+    const gallery = car.images?.length > 0 ? car.images : (car.thumbnail ? [car.thumbnail] : []);
+
+    // Build contact info
+    const contact = car.phone ? {
+      hotline: car.phone,
+      hotlineLink: `tel:${car.phone.replace(/\s+/g, '')}`
+    } : {};
+
+    const communityDetail = {
+      title: car.title,
+      priceText: car.priceText || 'Liên hệ',
+      gallery,
+      sections,
+      description: car.description || '',
+      summary: allAttributes.slice(0, 6), // Top 6 attributes for summary
+      contact,
+      sourceName: car.sourceName || 'Cộng đồng'
+    };
+
+    state.detail = { ...state.detail, isLoading: false, data: communityDetail, error: '' };
     renderDetailModal();
     return;
   }
@@ -2228,15 +2279,35 @@ document.querySelectorAll('.nav-link').forEach(link => {
       trafficFineEls.section.style.display = 'none';
       trafficFineEls.filtersSidebar.style.display = 'none';
       trafficFineEls.resultsArea.style.display = 'none';
+      const sellCarSection = document.getElementById('sell-car-section');
+      if (sellCarSection) sellCarSection.style.display = 'none';
 
       const mainContainer = document.querySelector('.main-container');
       if (mainContainer) {
         mainContainer.classList.add('camera-warning');
         mainContainer.classList.remove('traffic-fine');
+        mainContainer.classList.remove('sell-car');
       }
 
       renderCameraWarnings();
       filterCameraWarnings(cameraWarningEls.searchInput?.value || '');
+    } else if (view === 'sell-car') {
+      // Show sell car section
+      const sellCarSection = document.getElementById('sell-car-section');
+      if (sellCarSection) sellCarSection.style.display = 'block';
+
+      trafficFineEls.section.style.display = 'none';
+      if (cameraWarningEls.section) cameraWarningEls.section.style.display = 'none';
+      if (newCarPriceEls.section) newCarPriceEls.section.style.display = 'none';
+      trafficFineEls.filtersSidebar.style.display = 'none';
+      trafficFineEls.resultsArea.style.display = 'none';
+
+      const mainContainer = document.querySelector('.main-container');
+      if (mainContainer) {
+        mainContainer.classList.add('sell-car');
+        mainContainer.classList.remove('traffic-fine');
+        mainContainer.classList.remove('camera-warning');
+      }
     } else {
       // Show cars section, hide traffic fine section
       trafficFineEls.section.style.display = 'none';
@@ -2246,6 +2317,9 @@ document.querySelectorAll('.nav-link').forEach(link => {
       if (newCarPriceEls.section) {
         newCarPriceEls.section.style.display = 'none';
       }
+      const sellCarSection = document.getElementById('sell-car-section');
+      if (sellCarSection) sellCarSection.style.display = 'none';
+
       trafficFineEls.filtersSidebar.style.display = 'block';
       trafficFineEls.resultsArea.style.display = 'block';
 
@@ -2255,6 +2329,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
         mainContainer.classList.remove('traffic-fine');
         mainContainer.classList.remove('camera-warning');
         mainContainer.classList.remove('new-price');
+        mainContainer.classList.remove('sell-car');
       }
     }
   });
@@ -2528,3 +2603,230 @@ document.addEventListener('keydown', (e) => {
     closeMobileFilters();
   }
 });
+
+// ========== SELL CAR FORM SUBMISSION ==========
+const sellCarForm = document.getElementById('sell-car-form');
+const sellCarMessage = document.getElementById('sell-car-message');
+const sellCarSubmitBtn = document.getElementById('sell-car-submit');
+const sellCarImagesInput = document.getElementById('sell-car-images');
+const imagePreview = document.getElementById('image-preview');
+const imageUrlInput = document.getElementById('sell-car-image-url');
+const addImageLinkBtn = document.getElementById('add-image-link-btn');
+
+// Image handling - supports both file uploads and URL links
+let selectedFiles = [];
+let imageLinks = [];
+
+// File upload change handler
+if (sellCarImagesInput) {
+  sellCarImagesInput.addEventListener('change', (e) => {
+    const files = Array.from(e.target.files);
+    const remaining = 10 - imageLinks.length;
+    selectedFiles = files.slice(0, remaining);
+    renderImagePreview();
+  });
+}
+
+// Add image link button handler
+if (addImageLinkBtn && imageUrlInput) {
+  addImageLinkBtn.addEventListener('click', () => {
+    const url = imageUrlInput.value.trim();
+    if (!url) {
+      alert('Vui lòng nhập link ảnh');
+      return;
+    }
+
+    // Accept any URL that looks like it could be an image
+    const isValidUrl = url.startsWith('http://') ||
+      url.startsWith('https://') ||
+      url.startsWith('data:image/') ||
+      url.startsWith('/');
+
+    if (!isValidUrl) {
+      alert('Link phải bắt đầu bằng http:// hoặc https://');
+      return;
+    }
+
+    if (imageLinks.length + selectedFiles.length >= 10) {
+      alert('Tối đa 10 ảnh');
+      return;
+    }
+
+    imageLinks.push(url);
+    imageUrlInput.value = '';
+    renderImagePreview();
+    console.log('Added image link:', url, 'Total:', imageLinks.length);
+  });
+
+  // Enter key to add link
+  imageUrlInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addImageLinkBtn.click();
+    }
+  });
+}
+
+function renderImagePreview() {
+  if (!imagePreview) return;
+  imagePreview.innerHTML = '';
+
+  // Render URL links first
+  imageLinks.forEach((url, index) => {
+    const item = document.createElement('div');
+    item.className = 'image-preview-item';
+    item.innerHTML = `
+      <img src="${url}" alt="Link ${index + 1}" onerror="this.src='/image/placeholder.png'" />
+      <button type="button" class="remove-btn" data-type="link" data-index="${index}">×</button>
+    `;
+    item.querySelector('.remove-btn').addEventListener('click', () => {
+      imageLinks.splice(index, 1);
+      renderImagePreview();
+    });
+    imagePreview.appendChild(item);
+  });
+
+  // Render uploaded files
+  selectedFiles.forEach((file, index) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const item = document.createElement('div');
+      item.className = 'image-preview-item';
+      item.innerHTML = `
+        <img src="${e.target.result}" alt="Upload ${index + 1}" />
+        <button type="button" class="remove-btn" data-type="file" data-index="${index}">×</button>
+      `;
+      item.querySelector('.remove-btn').addEventListener('click', () => {
+        selectedFiles.splice(index, 1);
+        renderImagePreview();
+      });
+      imagePreview.appendChild(item);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+if (sellCarForm) {
+  sellCarForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(sellCarForm);
+
+    // Disable button
+    if (sellCarSubmitBtn) {
+      sellCarSubmitBtn.disabled = true;
+      sellCarSubmitBtn.innerHTML = `
+        <svg class="spinner-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+        </svg>
+        Đang đăng...
+      `;
+    }
+
+    // Hide previous message
+    if (sellCarMessage) {
+      sellCarMessage.style.display = 'none';
+    }
+
+    try {
+      // Step 1: Upload files if any, then merge with direct links
+      let imageUrls = [...imageLinks]; // Start with direct links
+
+      if (selectedFiles.length > 0) {
+        const uploadData = new FormData();
+        selectedFiles.forEach(file => uploadData.append('images', file));
+
+        const uploadRes = await fetch('/api/upload', { method: 'POST', body: uploadData });
+        const uploadResult = await uploadRes.json();
+
+        if (uploadResult.success) {
+          imageUrls = [...imageUrls, ...uploadResult.urls]; // Append uploaded URLs
+        }
+      }
+
+      // Step 2: Submit car data with all specs
+      const data = {
+        title: formData.get('title'),
+        brand: formData.get('brand'),
+        year: formData.get('year'),
+        priceText: formData.get('priceText'),
+        mileage: formData.get('mileage'),
+        phone: formData.get('phone'),
+        description: formData.get('description'),
+        seats: formData.get('seats'),
+        fuel: formData.get('fuel'),
+        transmission: formData.get('transmission'),
+        drivetrain: formData.get('drivetrain'),
+        bodyType: formData.get('bodyType'),
+        origin: formData.get('origin'),
+        exteriorColor: formData.get('exteriorColor'),
+        version: formData.get('version'),
+        engineCC: formData.get('engineCC'),
+        images: imageUrls
+      };
+
+      const response = await fetch('/api/user-cars', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        if (sellCarMessage) {
+          sellCarMessage.innerHTML = `
+            <strong>✅ Đăng xe thành công!</strong><br/>
+            Tin của bạn đang chờ duyệt và sẽ xuất hiện trong mục <strong>Cộng đồng</strong> sau khi được duyệt.
+          `;
+          sellCarMessage.className = 'form-message success';
+          sellCarMessage.style.display = 'block';
+        }
+
+        // Reset form and preview
+        sellCarForm.reset();
+        selectedFiles = [];
+        imageLinks = [];
+        if (imagePreview) imagePreview.innerHTML = '';
+      } else {
+        throw new Error(result.error || 'Có lỗi xảy ra');
+      }
+    } catch (error) {
+      console.error('Error submitting car:', error);
+      if (sellCarMessage) {
+        sellCarMessage.textContent = `❌ ${error.message || 'Không thể đăng xe. Vui lòng thử lại.'}`;
+        sellCarMessage.className = 'form-message error';
+        sellCarMessage.style.display = 'block';
+      }
+    } finally {
+      if (sellCarSubmitBtn) {
+        sellCarSubmitBtn.disabled = false;
+        sellCarSubmitBtn.innerHTML = `
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          Đăng Xe
+        `;
+      }
+    }
+  });
+}
+
+// Add "community" source to the source filters if community cars exist
+const addCommunitySourceFilter = () => {
+  const communitySource = { id: 'community', name: 'Cộng đồng' };
+  const exists = state.sources.some(s => s.id === 'community');
+  if (!exists && state.data.some(car => car.source === 'community')) {
+    state.sources.push(communitySource);
+    renderSourceFilters();
+  }
+};
+
+// Call when data is loaded
+const originalRefreshData = window.refreshData || refreshData;
+if (typeof refreshData === 'function') {
+  window.refreshData = async (force) => {
+    await originalRefreshData(force);
+    addCommunitySourceFilter();
+  };
+}

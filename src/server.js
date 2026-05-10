@@ -12,7 +12,7 @@ const { fetchBonbanhCars, fetchBonbanhCarDetail } = require('./scrapers/bonbanh'
 const { fetchChototCars, fetchChototCarDetail } = require('./scrapers/chotot');
 const { fetchVCarPrices } = require('./scrapers/vcar');
 const { checkTrafficFine } = require('./scrapers/trafficfine');
-const { initMongo, saveSnapshot, saveNewCarSnapshot } = require('./mongo');
+const { initMongo, saveSnapshot, saveNewCarSnapshot, saveUserCar, getUserCars, deleteUserCar, getPendingUserCars, approveUserCar, rejectUserCar, toggleUserCarVisibility, updateUserCar } = require('./mongo');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -169,16 +169,28 @@ async function collectCars() {
 }
 
 const startRefresh = async () => {
+  console.log(`[Refresh] Starting data collection...`);
   const snapshot = await collectCars();
   cache = { ...snapshot, fetchedAt: Date.now() };
+
+  console.log(`[Refresh] Collected ${snapshot.cars.length} cars, saving to disk...`);
   await persistCacheToDisk(cache);
+
   if (mongoReady) {
-    saveSnapshot(cache).catch((error) => {
-      console.error('Không lưu được snapshot Mongo:', error.message);
-    });
+    console.log(`[Refresh] MongoDB ready, saving ${cache.cars.length} cars to database...`);
+    try {
+      await saveSnapshot(cache);
+      console.log(`[Refresh] Successfully saved to MongoDB`);
+    } catch (error) {
+      console.error('[Refresh] Không lưu được snapshot Mongo:', error.message);
+    }
+  } else {
+    console.warn('[Refresh] MongoDB not ready, skipping database save');
   }
+
   return cache;
 };
+
 
 let refreshPromise = null;
 const refreshCache = () => {
@@ -200,6 +212,39 @@ function buildPayload(snapshot, fallbackDate = Date.now()) {
   };
 }
 
+// Build payload with community cars included
+async function buildPayloadWithCommunity(snapshot, fallbackDate = Date.now()) {
+  // Get approved community cars from MongoDB
+  let communityCars = [];
+  try {
+    communityCars = await getUserCars({ status: 'approved' });
+  } catch (err) {
+    console.error('[API] Error fetching community cars:', err.message);
+  }
+
+  // Merge with scraped cars (avoid duplicates by id)
+  const existingIds = new Set(snapshot.cars.map(c => c.id));
+  const newCommunity = communityCars.filter(c => !existingIds.has(c.id));
+  const allCars = [...snapshot.cars, ...newCommunity];
+
+  // Add community source if there are community cars
+  let sources = [...(snapshot.sources || [])];
+  if (newCommunity.length > 0) {
+    const hasCommunitySrc = sources.some(s => s.id === 'community');
+    if (!hasCommunitySrc) {
+      sources.push({ id: 'community', name: 'Cộng đồng', count: newCommunity.length, status: 'ok' });
+    }
+  }
+
+  return {
+    updatedAt: new Date(snapshot.fetchedAt || fallbackDate).toISOString(),
+    count: allCars.length,
+    sources,
+    errors: snapshot.errors,
+    data: allCars
+  };
+}
+
 app.get('/api/cars', async (req, res) => {
   res.set('Cache-Control', 'no-store');
   const shouldRefresh = req.query.refresh === 'true';
@@ -213,16 +258,16 @@ app.get('/api/cars', async (req, res) => {
         console.error('Không thể làm mới cache nền:', error);
       });
     }
-    return res.json(buildPayload(cache));
+    return res.json(await buildPayloadWithCommunity(cache));
   }
 
   try {
     await refreshCache();
-    return res.json(buildPayload(cache));
+    return res.json(await buildPayloadWithCommunity(cache));
   } catch (error) {
     console.error('Không thể tải dữ liệu xe:', error);
     if (hasCache) {
-      return res.status(200).json(buildPayload(cache));
+      return res.status(200).json(await buildPayloadWithCommunity(cache));
     }
     return res.status(500).json({ error: 'Không thể lấy dữ liệu xe. Vui lòng thử lại sau.' });
   }
@@ -351,6 +396,292 @@ app.post('/api/check-fine', async (req, res) => {
     });
   }
 });
+
+// ========== USER CAR SUBMISSION ENDPOINTS ==========
+
+// POST /api/user-cars - Đăng xe mới
+app.post('/api/user-cars', async (req, res) => {
+  try {
+    const { title, brand, year, priceText, mileage, phone, description, thumbnail, images } = req.body;
+
+    // Validation
+    if (!title || !title.trim()) {
+      return res.status(400).json({ success: false, error: 'Vui lòng nhập tên xe' });
+    }
+    if (!phone || !phone.trim()) {
+      return res.status(400).json({ success: false, error: 'Vui lòng nhập số điện thoại liên hệ' });
+    }
+    if (!priceText || !priceText.trim()) {
+      return res.status(400).json({ success: false, error: 'Vui lòng nhập giá bán' });
+    }
+
+    // Phone validation (Vietnamese format)
+    const phoneClean = phone.replace(/\s+/g, '').replace(/[-.]/g, '');
+    if (!/^(0|\+84)[0-9]{9,10}$/.test(phoneClean)) {
+      return res.status(400).json({ success: false, error: 'Số điện thoại không hợp lệ' });
+    }
+
+    const carData = {
+      title: title.trim(),
+      brand: (brand || '').trim(),
+      year: year ? parseInt(year) : null,
+      priceText: priceText.trim(),
+      mileage: mileage ? parseInt(mileage) : null,
+      phone: phoneClean,
+      description: (description || '').trim(),
+      thumbnail: (thumbnail || '').trim(),
+      images: Array.isArray(images) ? images : []
+    };
+
+    const savedCar = await saveUserCar(carData);
+
+    return res.status(201).json({
+      success: true,
+      message: 'Đăng xe thành công!',
+      data: savedCar
+    });
+  } catch (error) {
+    console.error('Lỗi đăng xe:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Không thể đăng xe. Vui lòng thử lại sau.'
+    });
+  }
+});
+
+// GET /api/user-cars - Lấy danh sách xe đã đăng
+app.get('/api/user-cars', async (req, res) => {
+  try {
+    const { phone, limit } = req.query;
+    const options = {
+      phone: phone || undefined,
+      limit: limit ? parseInt(limit) : 100
+    };
+
+    const cars = await getUserCars(options);
+
+    return res.json({
+      success: true,
+      count: cars.length,
+      data: cars
+    });
+  } catch (error) {
+    console.error('Lỗi lấy danh sách xe người dùng:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Không thể lấy danh sách xe.'
+    });
+  }
+});
+
+// DELETE /api/user-cars/:id - Xóa xe đã đăng
+app.delete('/api/user-cars/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { phone } = req.body;
+
+    if (!phone) {
+      return res.status(400).json({ success: false, error: 'Vui lòng cung cấp số điện thoại để xác thực' });
+    }
+
+    const deleted = await deleteUserCar(id, phone);
+
+    if (deleted) {
+      return res.json({ success: true, message: 'Đã xóa xe thành công' });
+    } else {
+      return res.status(404).json({ success: false, error: 'Không tìm thấy xe hoặc số điện thoại không khớp' });
+    }
+  } catch (error) {
+    console.error('Lỗi xóa xe:', error);
+    return res.status(500).json({ success: false, error: 'Không thể xóa xe.' });
+  }
+});
+
+// ========== FILE UPLOAD ==========
+const multer = require('multer');
+const UPLOAD_DIR = path.join(__dirname, '../public/uploads');
+
+// Ensure upload directory exists
+if (!fs.existsSync(UPLOAD_DIR)) {
+  fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, UPLOAD_DIR),
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const uniqueName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}${ext}`;
+    cb(null, uniqueName);
+  }
+});
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max
+  fileFilter: (req, file, cb) => {
+    const allowed = /jpeg|jpg|png|gif|webp/;
+    const ext = path.extname(file.originalname).toLowerCase().replace('.', '');
+    if (allowed.test(ext) && allowed.test(file.mimetype.split('/')[1])) {
+      cb(null, true);
+    } else {
+      cb(new Error('Chỉ chấp nhận file hình ảnh (jpg, png, gif, webp)'));
+    }
+  }
+});
+
+// POST /api/upload - Upload multiple images
+app.post('/api/upload', upload.array('images', 10), (req, res) => {
+  try {
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ success: false, error: 'Không có file nào được upload' });
+    }
+
+    const urls = req.files.map(f => `/uploads/${f.filename}`);
+    return res.json({
+      success: true,
+      count: urls.length,
+      urls
+    });
+  } catch (error) {
+    console.error('Lỗi upload:', error);
+    return res.status(500).json({ success: false, error: error.message || 'Không thể upload file' });
+  }
+});
+
+// ========== ADMIN ENDPOINTS ==========
+const ADMIN_KEY = process.env.ADMIN_KEY || 'admin123'; // Simple auth key
+
+const adminAuth = (req, res, next) => {
+  const key = req.headers['x-admin-key'] || req.query.key;
+  if (key !== ADMIN_KEY) {
+    return res.status(401).json({ success: false, error: 'Unauthorized' });
+  }
+  next();
+};
+
+// GET /api/admin/pending-cars - Get pending cars for approval
+app.get('/api/admin/pending-cars', adminAuth, async (req, res) => {
+  try {
+    const cars = await getPendingUserCars();
+    return res.json({
+      success: true,
+      count: cars.length,
+      data: cars
+    });
+  } catch (error) {
+    console.error('Lỗi lấy tin chờ duyệt:', error);
+    return res.status(500).json({ success: false, error: 'Không thể lấy danh sách' });
+  }
+});
+
+// POST /api/admin/approve/:id - Approve a car
+app.post('/api/admin/approve/:id', adminAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const approved = await approveUserCar(id);
+
+    if (approved) {
+      return res.json({ success: true, message: 'Đã duyệt tin thành công' });
+    } else {
+      return res.status(404).json({ success: false, error: 'Không tìm thấy tin' });
+    }
+  } catch (error) {
+    console.error('Lỗi duyệt tin:', error);
+    return res.status(500).json({ success: false, error: 'Không thể duyệt tin' });
+  }
+});
+
+// POST /api/admin/reject/:id - Reject a car
+app.post('/api/admin/reject/:id', adminAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { reason } = req.body;
+    const rejected = await rejectUserCar(id, reason || '');
+
+    if (rejected) {
+      return res.json({ success: true, message: 'Đã từ chối tin' });
+    } else {
+      return res.status(404).json({ success: false, error: 'Không tìm thấy tin' });
+    }
+  } catch (error) {
+    console.error('Lỗi từ chối tin:', error);
+    return res.status(500).json({ success: false, error: 'Không thể từ chối tin' });
+  }
+});
+
+// GET /api/admin/approved-cars - Get all approved community cars
+app.get('/api/admin/approved-cars', adminAuth, async (req, res) => {
+  try {
+    const cars = await getUserCars({ status: 'approved' });
+    return res.json({
+      success: true,
+      count: cars.length,
+      data: cars
+    });
+  } catch (error) {
+    console.error('Lỗi lấy xe đã duyệt:', error);
+    return res.status(500).json({ success: false, error: 'Không thể lấy danh sách' });
+  }
+});
+
+// POST /api/admin/toggle/:id - Toggle hide/show a car
+app.post('/api/admin/toggle/:id', adminAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { hidden } = req.body;
+    const toggled = await toggleUserCarVisibility(id, hidden);
+
+    if (toggled) {
+      return res.json({
+        success: true,
+        message: hidden ? 'Đã ẩn tin' : 'Đã hiện tin',
+        hidden
+      });
+    } else {
+      return res.status(404).json({ success: false, error: 'Không tìm thấy tin hoặc tin chưa được duyệt' });
+    }
+  } catch (error) {
+    console.error('Lỗi toggle tin:', error);
+    return res.status(500).json({ success: false, error: 'Không thể thực hiện' });
+  }
+});
+
+// GET /api/admin/car/:id - Get single car for editing
+app.get('/api/admin/car/:id', adminAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const cars = await getUserCars({});
+    const car = cars.find(c => c.id === id);
+
+    if (car) {
+      return res.json({ success: true, data: car });
+    } else {
+      return res.status(404).json({ success: false, error: 'Không tìm thấy tin' });
+    }
+  } catch (error) {
+    console.error('Lỗi lấy tin:', error);
+    return res.status(500).json({ success: false, error: 'Không thể lấy tin' });
+  }
+});
+
+// PUT /api/admin/car/:id - Update a car
+app.put('/api/admin/car/:id', adminAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updates = req.body;
+    const updated = await updateUserCar(id, updates);
+
+    if (updated) {
+      return res.json({ success: true, message: 'Đã cập nhật thành công' });
+    } else {
+      return res.status(404).json({ success: false, error: 'Không tìm thấy tin' });
+    }
+  } catch (error) {
+    console.error('Lỗi cập nhật tin:', error);
+    return res.status(500).json({ success: false, error: 'Không thể cập nhật' });
+  }
+});
+
 
 // Endpoint để lấy CAPTCHA từ CSGT
 app.get('/api/captcha', (_, res) => {
