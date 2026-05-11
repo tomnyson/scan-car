@@ -341,20 +341,27 @@ body {
 }
 
 .hero-stats {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.55rem;
   margin-top: 0.9rem;
+  max-width: 690px;
 }
 
 .hero-stats span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: rgba(246, 250, 251, 0.9);
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 999px;
-  padding: 0.42rem 0.72rem;
+  min-height: 34px;
+  padding: 0.42rem 0.62rem;
   font-size: 0.78rem;
   font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .hero-visual {
@@ -479,19 +486,19 @@ body {
 
 /* Quick Action Buttons */
 .quick-actions {
-  display: flex;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.75rem;
   margin-top: -0.55rem;
-  max-width: 1120px;
+  max-width: 430px;
   margin-left: auto;
   margin-right: auto;
-  flex-wrap: wrap;
 }
 
 .quick-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.625rem 1rem;
   background: rgba(255, 255, 255, 0.1);
@@ -502,6 +509,7 @@ body {
   font-weight: 500;
   cursor: pointer;
   transition: all var(--transition-fast);
+  white-space: nowrap;
 }
 
 .quick-btn:hover {
@@ -1139,7 +1147,7 @@ body {
 
 .car-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -3570,11 +3578,12 @@ body.modal-open {
   .quick-actions {
     gap: 0.5rem;
     margin-top: 1rem;
+    max-width: 100%;
   }
 
   .quick-btn {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.8125rem;
+    padding: 0.5rem 0.62rem;
+    font-size: 0.78rem;
   }
 
   .main-container {
@@ -3582,7 +3591,7 @@ body.modal-open {
   }
 
   .car-grid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
   }
 
@@ -3655,10 +3664,28 @@ body.modal-open {
 
   .hero-stats {
     gap: 0.4rem;
+    max-width: 100%;
   }
 
   .hero-stats span {
-    font-size: 0.72rem;
+    min-height: 32px;
+    padding: 0.34rem 0.38rem;
+    font-size: 0.68rem;
+  }
+
+  .quick-actions {
+    gap: 0.4rem;
+  }
+
+  .quick-btn {
+    gap: 0.3rem;
+    padding: 0.48rem 0.38rem;
+    font-size: 0.68rem;
+  }
+
+  .quick-btn svg {
+    width: 14px;
+    height: 14px;
   }
 }
 
