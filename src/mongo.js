@@ -9,6 +9,13 @@ const COLLECTION = process.env.MONGO_COLLECTION || 'cars';
 const NEW_CAR_COLLECTION = process.env.MONGO_NEW_CAR_COLLECTION || 'new_car_prices';
 const SNAPSHOTS_COLLECTION = process.env.MONGO_SNAPSHOTS_COLLECTION || 'snapshots';
 const USER_CARS_COLLECTION = process.env.MONGO_USER_CARS_COLLECTION || 'user_cars';
+const SETTINGS_COLLECTION = process.env.MONGO_SETTINGS_COLLECTION || 'settings';
+
+const DEFAULT_SETTINGS = Object.freeze({
+  bonbanhMaxPages: 5,
+  bonbanhIncremental: true,
+  bonbanhEarlyStopStreak: 40
+});
 
 async function initMongo() {
   if (!MONGO_URL) {
@@ -181,6 +188,56 @@ async function getLatestSnapshot() {
   } catch (error) {
     console.error('[MongoDB] Error loading latest snapshot:', error.message);
     return null;
+  }
+}
+
+async function getSettings() {
+  if (!db) return { ...DEFAULT_SETTINGS };
+  try {
+    const doc = await db.collection(SETTINGS_COLLECTION).findOne({ _id: 'global' });
+    return { ...DEFAULT_SETTINGS, ...(doc || {}) };
+  } catch (error) {
+    console.error('[MongoDB] Error loading settings:', error.message);
+    return { ...DEFAULT_SETTINGS };
+  }
+}
+
+async function updateSettings(patch = {}) {
+  if (!db) throw new Error('Database not initialized');
+  const allowed = Object.keys(DEFAULT_SETTINGS);
+  const update = {};
+  for (const key of allowed) {
+    if (patch[key] === undefined) continue;
+    if (typeof DEFAULT_SETTINGS[key] === 'number') {
+      const num = Number(patch[key]);
+      if (Number.isFinite(num)) update[key] = num;
+    } else if (typeof DEFAULT_SETTINGS[key] === 'boolean') {
+      update[key] = Boolean(patch[key]);
+    } else {
+      update[key] = patch[key];
+    }
+  }
+  if (!Object.keys(update).length) return getSettings();
+  update.updatedAt = Date.now();
+  await db.collection(SETTINGS_COLLECTION).updateOne(
+    { _id: 'global' },
+    { $set: update, $setOnInsert: { createdAt: Date.now() } },
+    { upsert: true }
+  );
+  return getSettings();
+}
+
+async function getBonbanhExistingIds() {
+  if (!db) return new Set();
+  try {
+    const cursor = db.collection(COLLECTION)
+      .find({ source: 'bonbanh' }, { projection: { id: 1, _id: 0 } });
+    const ids = new Set();
+    await cursor.forEach((doc) => { if (doc.id) ids.add(doc.id); });
+    return ids;
+  } catch (error) {
+    console.error('[MongoDB] Error loading existing bonbanh ids:', error.message);
+    return new Set();
   }
 }
 
@@ -550,6 +607,9 @@ module.exports = {
   saveCars,
   saveSnapshot,
   getLatestSnapshot,
+  getSettings,
+  updateSettings,
+  getBonbanhExistingIds,
   saveNewCarSnapshot,
   getCars,
   getCarCount,

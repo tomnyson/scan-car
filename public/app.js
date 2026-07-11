@@ -1391,16 +1391,33 @@ const buildGalleryHtml = (detail) => {
     </button>
   ` : '';
 
+  const tiltToggleHtml = `
+    <button type="button" class="gallery-tilt-toggle" data-tilt-toggle aria-pressed="false" title="Chế độ xem 3D">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
+        <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"></path>
+        <path d="M12 12l8-4.5"></path>
+        <path d="M12 12v9"></path>
+        <path d="M12 12L4 7.5"></path>
+      </svg>
+      <span class="gallery-tilt-toggle__label">3D</span>
+    </button>
+    <div class="gallery-tilt-hint" data-tilt-hint hidden>Di chuột / kéo để xoay xe</div>
+  `;
+
   return `
     <div class="detail-gallery">
-      <div class="detail-gallery-main">
+      <div class="detail-gallery-main" data-tilt-container>
         ${arrowsHtml}
-        <img
-          src="${escapeAttr(main)}"
-          alt="${escapeHtml(detail.title || 'Ảnh xe')}"
-          data-detail-main
-          data-fallback="${escapeAttr(placeholderImage)}"
-        />
+        ${tiltToggleHtml}
+        <div class="detail-gallery-stage" data-tilt-stage>
+          <div class="detail-gallery-shine" data-tilt-shine aria-hidden="true"></div>
+          <img
+            src="${escapeAttr(main)}"
+            alt="${escapeHtml(detail.title || 'Ảnh xe')}"
+            data-detail-main
+            data-fallback="${escapeAttr(placeholderImage)}"
+          />
+        </div>
       </div>
       ${thumbs.length ? `<div class="detail-gallery-thumbs">${thumbHtml}</div>` : ''}
     </div>
@@ -1846,7 +1863,116 @@ if (els.detailModalContent) {
     return compareTooltip;
   };
 
+  // ========== 3D TILT VIEW ==========
+  const TILT_MAX_DEG = 14;
+  const TILT_HINT_MS = 2500;
+  let tiltState = null; // { container, stage, onMove, onLeave, onPointerDown, onPointerUp, hintTimer }
+
+  const detachTilt = () => {
+    if (!tiltState) return;
+    const { container, onMove, onLeave, onPointerDown, onPointerUp, hintTimer, hintEl } = tiltState;
+    container.removeEventListener('pointermove', onMove);
+    container.removeEventListener('pointerleave', onLeave);
+    container.removeEventListener('pointerdown', onPointerDown);
+    window.removeEventListener('pointerup', onPointerUp);
+    container.classList.remove('is-3d', 'is-3d-dragging');
+    container.style.removeProperty('--tilt-x');
+    container.style.removeProperty('--tilt-y');
+    container.style.removeProperty('--shine-x');
+    container.style.removeProperty('--shine-y');
+    if (hintTimer) clearTimeout(hintTimer);
+    if (hintEl) hintEl.hidden = true;
+    tiltState = null;
+  };
+
+  const attachTilt = (container) => {
+    if (!container || tiltState?.container === container) return;
+    detachTilt();
+
+    const hintEl = container.querySelector('[data-tilt-hint]');
+    let usingPointerDrag = false;
+
+    const applyFromPoint = (clientX, clientY) => {
+      const rect = container.getBoundingClientRect();
+      const px = (clientX - rect.left) / rect.width; // 0..1
+      const py = (clientY - rect.top) / rect.height;
+      const rotY = (px - 0.5) * 2 * TILT_MAX_DEG;   // horizontal → rotateY
+      const rotX = -(py - 0.5) * 2 * TILT_MAX_DEG;  // vertical → rotateX (inverted)
+      container.style.setProperty('--tilt-x', `${rotX.toFixed(2)}deg`);
+      container.style.setProperty('--tilt-y', `${rotY.toFixed(2)}deg`);
+      container.style.setProperty('--shine-x', `${(px * 100).toFixed(2)}%`);
+      container.style.setProperty('--shine-y', `${(py * 100).toFixed(2)}%`);
+    };
+
+    const onMove = (event) => {
+      if (event.pointerType === 'touch' && !usingPointerDrag) return;
+      applyFromPoint(event.clientX, event.clientY);
+    };
+
+    const onLeave = () => {
+      container.style.setProperty('--tilt-x', '0deg');
+      container.style.setProperty('--tilt-y', '0deg');
+      container.style.setProperty('--shine-x', '50%');
+      container.style.setProperty('--shine-y', '50%');
+    };
+
+    const onPointerDown = (event) => {
+      if (event.pointerType === 'touch') {
+        usingPointerDrag = true;
+        container.classList.add('is-3d-dragging');
+        applyFromPoint(event.clientX, event.clientY);
+      }
+    };
+
+    const onPointerUp = () => {
+      if (usingPointerDrag) {
+        usingPointerDrag = false;
+        container.classList.remove('is-3d-dragging');
+        onLeave();
+      }
+    };
+
+    container.addEventListener('pointermove', onMove);
+    container.addEventListener('pointerleave', onLeave);
+    container.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('pointerup', onPointerUp);
+    container.classList.add('is-3d');
+    onLeave(); // init at rest
+
+    let hintTimer = null;
+    if (hintEl) {
+      hintEl.hidden = false;
+      hintTimer = setTimeout(() => { hintEl.hidden = true; }, TILT_HINT_MS);
+    }
+
+    tiltState = { container, onMove, onLeave, onPointerDown, onPointerUp, hintTimer, hintEl };
+  };
+
+  // Detach tilt automatically if the gallery container is removed from the DOM
+  // (happens when the modal re-renders or closes).
+  new MutationObserver(() => {
+    if (tiltState && !tiltState.container.isConnected) {
+      detachTilt();
+    }
+  }).observe(els.detailModalContent, { childList: true, subtree: true });
+
   els.detailModalContent.addEventListener('click', (event) => {
+    // Handle 3D toggle button
+    const tiltBtn = event.target.closest('[data-tilt-toggle]');
+    if (tiltBtn) {
+      const container = tiltBtn.closest('[data-tilt-container]');
+      if (!container) return;
+      const currentlyOn = container.classList.contains('is-3d');
+      if (currentlyOn) {
+        detachTilt();
+        tiltBtn.setAttribute('aria-pressed', 'false');
+      } else {
+        attachTilt(container);
+        tiltBtn.setAttribute('aria-pressed', 'true');
+      }
+      return;
+    }
+
     const compareBtn = event.target.closest('[data-compare-car-id]');
     if (compareBtn) {
       event.preventDefault();

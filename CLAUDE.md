@@ -54,6 +54,14 @@ vercel.json              # Rewrites + Vercel Cron
   2. Đăng ký trong `tasks` và `SOURCE_CONFIG` ở `src/server.js`.
   3. Nếu có trang chi tiết, thêm vào `detailFetchers`.
 
+#### Bonbanh — crawl toàn site
+
+- Entry: `bonbanh.com/oto` (~1450 trang, ~29k tin active). Config qua `BONBANH_LIST_URL`.
+- Pagination detect qua `<link rel="next">`. Mỗi lần chạy crawl `BONBANH_MAX_PAGES` trang (mặc định 5) từ trang mới nhất.
+- Không thể crawl toàn bộ 1450 trang trong 1 Vercel invocation (60s max). Tin mới nhất được refresh hằng ngày; tin cũ hơn cần tăng `BONBANH_MAX_PAGES` khi tự host hoặc chạy manual.
+- Delay `BONBANH_PAGE_DELAY_MS` (mặc định 500ms + jitter) giữa các page — tôn trọng site nguồn.
+- Legacy `fetchBonbanhSalonCars()` (crawl salon Đắk Lắk) vẫn export nhưng không dùng mặc định.
+
 ### Cache
 
 - **Local**: file JSON `cache/cars-cache.json`, TTL từ env `CACHE_TTL_MS` (mặc định 2h).

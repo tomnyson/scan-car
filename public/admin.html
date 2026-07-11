@@ -69,6 +69,81 @@
       cursor: pointer;
     }
 
+    /* Scan config section */
+    .scan-config {
+      background: var(--white);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+    .scan-config h2 {
+      color: var(--primary-dark);
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .scan-config__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .scan-config .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gray-800);
+      margin-bottom: 0.35rem;
+    }
+    .scan-config .form-group input[type="number"] {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+    .scan-config .form-group small {
+      display: block;
+      color: var(--gray-600);
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+    }
+    .form-group--toggle label {
+      display: flex !important;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+    .form-group--toggle input {
+      width: auto !important;
+    }
+    .scan-config__actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: var(--white);
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-dark);
+    }
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+    .scan-status {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .scan-status.ok { background: #d1fae5; color: #065f46; }
+    .scan-status.err { background: #fee2e2; color: #991b1b; }
+    .scan-status.info { background: #dbeafe; color: #1e40af; }
+
     .tabs {
       display: flex;
       gap: 0.5rem;
@@ -325,6 +400,35 @@
       <input type="password" id="admin-key" placeholder="Admin Key" />
       <button onclick="loadData()">Tải danh sách</button>
     </div>
+
+    <!-- Scan config section -->
+    <section id="scan-config" class="scan-config" hidden>
+      <h2>⚙️ Cấu hình scan Bonbanh</h2>
+      <div class="scan-config__grid">
+        <div class="form-group">
+          <label for="cfg-max-pages">Số trang crawl mỗi lần</label>
+          <input type="number" id="cfg-max-pages" min="1" max="1500" step="1" />
+          <small>1450 trang = toàn bộ site. Vercel free ≤ 8. Local: 100+ OK.</small>
+        </div>
+        <div class="form-group">
+          <label for="cfg-early-stop">Ngưỡng dừng sớm (tin cũ liên tiếp)</label>
+          <input type="number" id="cfg-early-stop" min="10" max="500" step="5" />
+          <small>Chỉ áp dụng khi bật "Chỉ lấy tin mới".</small>
+        </div>
+        <div class="form-group form-group--toggle">
+          <label>
+            <input type="checkbox" id="cfg-incremental" />
+            Chỉ lấy tin mới (dừng khi gặp tin cũ)
+          </label>
+        </div>
+      </div>
+      <div class="scan-config__actions">
+        <button type="button" class="btn btn-save" onclick="saveScanSettings()">💾 Lưu cấu hình</button>
+        <button type="button" class="btn btn-primary" onclick="runScanNow()">▶ Chạy scan ngay</button>
+      </div>
+      <div id="scan-status" class="scan-status" hidden></div>
+    </section>
+
     <div class="tabs">
       <button class="tab-btn active" onclick="switchTab('pending')">Chờ duyệt</button>
       <button class="tab-btn" onclick="switchTab('approved')">Đã duyệt</button>
@@ -418,11 +522,97 @@
         if (!data.success) throw new Error(data.error);
         if (data.count === 0) {
           carList.innerHTML = `<div class="empty-state">🎉 Không có tin ${currentTab === 'pending' ? 'chờ duyệt' : 'đã duyệt'}!</div>`;
-          return;
+        } else {
+          carList.innerHTML = data.data.map(car => renderCarCard(car)).join('');
         }
-        carList.innerHTML = data.data.map(car => renderCarCard(car)).join('');
+        loadScanSettings();
       } catch (error) {
         carList.innerHTML = `<div class="empty-state" style="color:red;">Lỗi: ${error.message}</div>`;
+      }
+    }
+
+    // ========== Scan config ==========
+    const scanConfigEl = document.getElementById('scan-config');
+    const scanStatusEl = document.getElementById('scan-status');
+    const cfgMaxPagesEl = document.getElementById('cfg-max-pages');
+    const cfgEarlyStopEl = document.getElementById('cfg-early-stop');
+    const cfgIncrementalEl = document.getElementById('cfg-incremental');
+
+    function showScanStatus(msg, kind = 'info') {
+      scanStatusEl.hidden = false;
+      scanStatusEl.className = `scan-status ${kind}`;
+      scanStatusEl.textContent = msg;
+    }
+
+    async function loadScanSettings() {
+      if (!adminKey) return;
+      try {
+        const res = await fetch(`/api/admin/settings?key=${adminKey}`);
+        const data = await res.json();
+        if (!data.success) return;
+        cfgMaxPagesEl.value = data.data.bonbanhMaxPages ?? 5;
+        cfgEarlyStopEl.value = data.data.bonbanhEarlyStopStreak ?? 40;
+        cfgIncrementalEl.checked = data.data.bonbanhIncremental !== false;
+        scanConfigEl.hidden = false;
+      } catch (error) {
+        console.warn('Không lấy được settings:', error);
+      }
+    }
+
+    async function saveScanSettings() {
+      if (!adminKey) { alert('Cần Admin Key'); return; }
+      const btn = event?.target;
+      if (btn) btn.disabled = true;
+      try {
+        const res = await fetch(`/api/admin/settings?key=${adminKey}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            bonbanhMaxPages: Number(cfgMaxPagesEl.value),
+            bonbanhEarlyStopStreak: Number(cfgEarlyStopEl.value),
+            bonbanhIncremental: cfgIncrementalEl.checked
+          })
+        });
+        const data = await res.json();
+        if (!data.success) throw new Error(data.error);
+        showScanStatus('✅ Đã lưu cấu hình', 'ok');
+      } catch (error) {
+        showScanStatus(`❌ ${error.message}`, 'err');
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    async function runScanNow() {
+      if (!adminKey) { alert('Cần Admin Key'); return; }
+      const btn = event?.target;
+      if (btn) btn.disabled = true;
+      showScanStatus('⏳ Đang scan bonbanh…', 'info');
+      const t0 = Date.now();
+      try {
+        const res = await fetch(`/api/admin/scan/bonbanh?key=${adminKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            maxPages: Number(cfgMaxPagesEl.value),
+            earlyStopStreak: Number(cfgEarlyStopEl.value),
+            incremental: cfgIncrementalEl.checked
+          })
+        });
+        const data = await res.json();
+        if (!data.success) throw new Error(data.error);
+        const bb = data.bonbanh;
+        const reason = bb.meta?.stopReason || '—';
+        const pages = bb.meta?.pagesRead || 0;
+        const secs = (data.elapsedMs / 1000).toFixed(1);
+        showScanStatus(
+          `✅ Scan xong sau ${secs}s. Bonbanh: ${bb.count} xe (đọc ${pages} trang, dừng vì "${reason}"). Tổng cache: ${data.totalCars}.`,
+          'ok'
+        );
+      } catch (error) {
+        showScanStatus(`❌ ${error.message}`, 'err');
+      } finally {
+        if (btn) btn.disabled = false;
       }
     }
 

@@ -13,6 +13,13 @@ CRON_TIMEZONE=Asia/Ho_Chi_Minh
 # Admin key cho các endpoint /api/admin/*
 ADMIN_KEY=change-me
 
+# Bonbanh scraper — mỗi lần refresh chỉ crawl N trang đầu (tin mới nhất).
+# Bonbanh /oto có ~1450 trang, ~29k tin. Crawl toàn bộ trong 1 lần vượt Vercel 60s.
+# Local self-host: có thể để 100+; Vercel: khuyến nghị <=8.
+BONBANH_LIST_URL=https://bonbanh.com/oto
+BONBANH_MAX_PAGES=5
+BONBANH_PAGE_DELAY_MS=500
+
 # --- Chỉ dành cho Vercel ---
 # Vercel Cron sẽ gửi header Authorization: Bearer $CRON_SECRET tới /api/cron/refresh
 CRON_SECRET=change-me-random-long-string

@@ -12,7 +12,7 @@ const { fetchBonbanhCars, fetchBonbanhCarDetail } = require('./scrapers/bonbanh'
 const { fetchChototCars, fetchChototCarDetail } = require('./scrapers/chotot');
 const { fetchVCarPrices } = require('./scrapers/vcar');
 const { checkTrafficFine } = require('./scrapers/trafficfine');
-const { initMongo, saveSnapshot, getLatestSnapshot, saveNewCarSnapshot, saveUserCar, getUserCars, deleteUserCar, getPendingUserCars, approveUserCar, rejectUserCar, toggleUserCarVisibility, updateUserCar } = require('./mongo');
+const { initMongo, saveSnapshot, getLatestSnapshot, getSettings, updateSettings, getBonbanhExistingIds, saveNewCarSnapshot, saveUserCar, getUserCars, deleteUserCar, getPendingUserCars, approveUserCar, rejectUserCar, toggleUserCarVisibility, updateUserCar } = require('./mongo');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -193,8 +193,28 @@ app.use(express.json());
 const publicDir = path.join(__dirname, '../public');
 app.use(express.static(publicDir, { maxAge: '1h' }));
 
-async function collectCars() {
-  const settled = await Promise.allSettled(tasks.map((task) => task.loader()));
+async function buildLoaderOptions(taskId, override = {}) {
+  const settings = await getSettings().catch(() => ({}));
+  if (taskId !== 'bonbanh') return {};
+
+  const opts = {
+    maxPages: override.maxPages ?? settings.bonbanhMaxPages,
+    earlyStopStreak: override.earlyStopStreak ?? settings.bonbanhEarlyStopStreak
+  };
+  const incremental = override.incremental ?? settings.bonbanhIncremental;
+  if (incremental) {
+    opts.existingIds = await getBonbanhExistingIds().catch(() => new Set());
+  }
+  return opts;
+}
+
+async function collectCars(overrides = {}) {
+  const perTaskOptions = await Promise.all(
+    tasks.map((task) => buildLoaderOptions(task.id, overrides[task.id] || {}))
+  );
+  const settled = await Promise.allSettled(
+    tasks.map((task, index) => task.loader(perTaskOptions[index]))
+  );
   const cars = [];
   const sourceStates = [];
   const errors = [];
@@ -204,7 +224,9 @@ async function collectCars() {
     if (result.status === 'fulfilled') {
       const items = Array.isArray(result.value) ? result.value : [];
       cars.push(...items);
-      sourceStates.push({ id: meta.id, name: meta.name, count: items.length, status: 'ok' });
+      const state = { id: meta.id, name: meta.name, count: items.length, status: 'ok' };
+      if (items.meta) state.meta = items.meta;
+      sourceStates.push(state);
     } else {
       const message = result.reason?.message || 'Không lấy được dữ liệu';
       errors.push({ id: meta.id, message });
@@ -216,9 +238,9 @@ async function collectCars() {
   return { cars, sources: sourceStates, errors };
 }
 
-const startRefresh = async () => {
+const startRefresh = async (overrides = {}) => {
   console.log(`[Refresh] Starting data collection...`);
-  const snapshot = await collectCars();
+  const snapshot = await collectCars(overrides);
   cache = { ...snapshot, fetchedAt: Date.now() };
 
   console.log(`[Refresh] Collected ${snapshot.cars.length} cars, saving to disk...`);
@@ -241,7 +263,11 @@ const startRefresh = async () => {
 
 
 let refreshPromise = null;
-const refreshCache = () => {
+const refreshCache = (overrides) => {
+  // Với overrides (scan on-demand) → luôn chạy 1 job mới, không dedupe.
+  if (overrides && Object.keys(overrides).length) {
+    return startRefresh(overrides);
+  }
   if (!refreshPromise) {
     refreshPromise = startRefresh().finally(() => {
       refreshPromise = null;
@@ -746,6 +772,59 @@ app.get('/api/admin/car/:id', adminAuth, async (req, res) => {
   } catch (error) {
     console.error('Lỗi lấy tin:', error);
     return res.status(500).json({ success: false, error: 'Không thể lấy tin' });
+  }
+});
+
+// GET /api/admin/settings - Lấy cấu hình scan runtime
+app.get('/api/admin/settings', adminAuth, async (req, res) => {
+  try {
+    await ensureMongo();
+    const settings = await getSettings();
+    return res.json({ success: true, data: settings });
+  } catch (error) {
+    console.error('Lỗi lấy settings:', error);
+    return res.status(500).json({ success: false, error: 'Không thể lấy cấu hình' });
+  }
+});
+
+// PUT /api/admin/settings - Cập nhật cấu hình scan
+app.put('/api/admin/settings', adminAuth, async (req, res) => {
+  try {
+    await ensureMongo();
+    const updated = await updateSettings(req.body || {});
+    return res.json({ success: true, data: updated });
+  } catch (error) {
+    console.error('Lỗi lưu settings:', error);
+    return res.status(500).json({ success: false, error: error.message || 'Không thể lưu cấu hình' });
+  }
+});
+
+// POST /api/admin/scan/bonbanh - Trigger scan bonbanh on-demand với params tùy chọn
+app.post('/api/admin/scan/bonbanh', adminAuth, async (req, res) => {
+  const { maxPages, incremental, earlyStopStreak } = req.body || {};
+  const override = {};
+  if (maxPages !== undefined) override.maxPages = Number(maxPages);
+  if (incremental !== undefined) override.incremental = Boolean(incremental);
+  if (earlyStopStreak !== undefined) override.earlyStopStreak = Number(earlyStopStreak);
+
+  try {
+    await ensureMongo();
+    const t0 = Date.now();
+    const snapshot = await refreshCache({ bonbanh: override });
+    const source = snapshot.sources.find((s) => s.id === 'bonbanh') || {};
+    return res.json({
+      success: true,
+      elapsedMs: Date.now() - t0,
+      totalCars: snapshot.cars.length,
+      bonbanh: {
+        count: source.count || 0,
+        meta: source.meta || null,
+        error: (snapshot.errors || []).find((e) => e.id === 'bonbanh')?.message || null
+      }
+    });
+  } catch (error) {
+    console.error('Lỗi scan bonbanh:', error);
+    return res.status(500).json({ success: false, error: error.message || 'Không thể scan' });
   }
 });
 

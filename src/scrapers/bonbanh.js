@@ -2,13 +2,16 @@ const cheerio = require('cheerio');
 const { inferBrand } = require('../utils/brand');
 
 const BASE_URL = 'https://bonbanh.com/';
-const SALON_LIST_URL = `${BASE_URL}salon-oto-xe-cu-dak-lak`;
+const DEFAULT_LIST_URL = process.env.BONBANH_LIST_URL || `${BASE_URL}oto`;
+const DEFAULT_MAX_PAGES = Number(process.env.BONBANH_MAX_PAGES) || 5;
+const DEFAULT_PAGE_DELAY_MS = Number(process.env.BONBANH_PAGE_DELAY_MS) || 500;
 const REQUEST_HEADERS = {
   'User-Agent':
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0 Safari/537.36',
   'Accept-Language': 'vi,en;q=0.9'
 };
-const SOURCE_NAME = 'Bonbanh (Đắk Lắk)';
+const SOURCE_NAME = 'Bonbanh';
+const SALON_LIST_URL = `${BASE_URL}salon-oto-xe-cu-dak-lak`;
 
 const cleanText = (value = '') => value.replace(/\s+/g, ' ').trim();
 const cleanMultiline = (value = '') =>
@@ -117,7 +120,152 @@ function parseSalonCars(html, salon) {
   return cars;
 }
 
-async function fetchBonbanhCars() {
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+function parseListingPage(html) {
+  const $ = cheerio.load(html);
+  const cars = [];
+
+  $('li.car-item').each((_, element) => {
+    const item = $(element);
+    const anchor = item.find('a[itemprop="url"]').first();
+    const href = anchor.attr('href');
+    if (!href) return;
+
+    const url = absoluteUrl(href);
+    const title = cleanText(item.find('h3[itemprop="name"]').text()) || cleanText(anchor.attr('title'));
+    if (!title) return;
+
+    const priceEl = item.find('b[itemprop="price"]').first();
+    const priceRaw = priceEl.attr('content');
+    const priceText = cleanText(priceEl.clone().find('meta').remove().end().text());
+
+    const year = cleanText(item.find('.cb1 b').text());
+    const location = cleanText(item.find('.cb4 b').text());
+    const thumbnail = absoluteUrl(item.find('.cb5 img').attr('src'));
+    const dealer = cleanText(item.find('.cb7 b').text());
+    const dealerAddress = cleanText(
+      item.find('.cb7 span').first().text()
+    );
+    const description = cleanText(item.find('.cb6_02').text());
+
+    const codeMatch = item.find('.car_code').text().match(/\d+/);
+    const idMatch = href.match(/-(\d+)(?:$|[?#])/);
+    const carId = codeMatch?.[0] || idMatch?.[1];
+    if (!carId) return;
+
+    const brandInfo = inferBrand([title, url]);
+
+    const attributes = [];
+    if (year) attributes.push({ label: 'Năm sản xuất', value: year });
+    if (location) attributes.push({ label: 'Vị trí', value: location });
+    if (dealer) attributes.push({ label: 'Người bán', value: dealer });
+    if (dealerAddress) attributes.push({ label: 'Địa chỉ', value: dealerAddress });
+    if (description) attributes.push({ label: 'Mô tả', value: description });
+
+    cars.push({
+      id: `bonbanh-${carId}`,
+      source: 'bonbanh',
+      sourceName: SOURCE_NAME,
+      title,
+      priceText,
+      priceValue: priceRaw ? Number(priceRaw) : null,
+      yearValue: year ? Number(year) : null,
+      location,
+      thumbnail,
+      url,
+      attributes,
+      brand: brandInfo.brand,
+      brandSlug: brandInfo.brandSlug
+    });
+  });
+
+  return cars;
+}
+
+function nextPageUrl(html, currentPage) {
+  const $ = cheerio.load(html);
+  const explicit = $('link[rel="next"]').attr('href');
+  if (explicit) return absoluteUrl(explicit);
+  // Fallback: derive from base URL of current listing (no rel=next on last page).
+  return null;
+}
+
+async function fetchBonbanhCars(options = {}) {
+  const listUrl = options.listUrl || DEFAULT_LIST_URL;
+  const maxPages = Number(options.maxPages) || DEFAULT_MAX_PAGES;
+  const pageDelayMs = Number(options.pageDelayMs ?? DEFAULT_PAGE_DELAY_MS);
+  // Chế độ incremental: dừng khi gặp chuỗi tin liên tiếp đã có trong existingIds.
+  const existingIds = options.existingIds instanceof Set ? options.existingIds : null;
+  const earlyStopStreak = Number(options.earlyStopStreak) || 40;
+
+  const allCars = [];
+  const seen = new Set();
+  let currentUrl = listUrl;
+  let consecutiveOld = 0;
+  let pagesRead = 0;
+  let stopReason = 'reached-max-pages';
+
+  for (let page = 1; page <= maxPages && currentUrl; page += 1) {
+    let html;
+    try {
+      html = await fetchHtml(currentUrl);
+    } catch (error) {
+      console.warn(`[Bonbanh] Trang ${page} lỗi (${currentUrl}):`, error.message);
+      stopReason = 'fetch-error';
+      break;
+    }
+    pagesRead = page;
+
+    const cars = parseListingPage(html);
+    if (!cars.length) {
+      stopReason = 'empty-page';
+      break;
+    }
+
+    let added = 0;
+    let oldOnPage = 0;
+    for (const car of cars) {
+      if (seen.has(car.id)) continue;
+      seen.add(car.id);
+      allCars.push(car);
+      added += 1;
+
+      if (existingIds && existingIds.has(car.id)) {
+        consecutiveOld += 1;
+        oldOnPage += 1;
+      } else if (existingIds) {
+        consecutiveOld = 0;
+      }
+    }
+
+    console.log(
+      `[Bonbanh] Page ${page}: +${added} mới (${oldOnPage} đã có, streak=${consecutiveOld})`
+    );
+
+    if (existingIds && consecutiveOld >= earlyStopStreak) {
+      stopReason = 'incremental-early-stop';
+      break;
+    }
+
+    const next = nextPageUrl(html);
+    if (!next) {
+      stopReason = 'no-next-page';
+      break;
+    }
+    currentUrl = next;
+
+    if (pageDelayMs > 0) {
+      await sleep(pageDelayMs + Math.floor(Math.random() * pageDelayMs));
+    }
+  }
+
+  allCars.meta = { pagesRead, stopReason, total: allCars.length };
+  return allCars;
+}
+
+// Legacy: giữ crawl theo salon Đắk Lắk cho các use case cũ.
+async function fetchBonbanhSalonCars() {
   const html = await fetchHtml(SALON_LIST_URL);
   const salons = parseSalonList(html);
   if (!salons.length) {
@@ -190,16 +338,47 @@ function extractTabSections($, pane) {
 
 function extractGallery($) {
   const images = new Set();
-  $('#detail_list_img_left a, #detail_list_img_right img, #detail_list_img_right a').each((_, element) => {
-    const node = $(element);
-    const href = node.attr('href');
-    const src = node.attr('src');
-    const url = absoluteUrl(href || src);
-    if (url) {
-      images.add(url);
+  // Full-size images: <a class="highslide" href="...l_xxx.jpg"> quanh <img id="imgN">
+  $('#medium_img a.highslide, #medium_img a[id^="lnk"]').each((_, element) => {
+    const href = $(element).attr('href');
+    const url = absoluteUrl(href);
+    if (url) images.add(url);
+  });
+  if (images.size === 0) {
+    $('#medium_img img[id^="img"]').each((_, element) => {
+      const src = $(element).attr('src');
+      const url = absoluteUrl(src);
+      if (url) images.add(url);
+    });
+  }
+  return [...images];
+}
+
+function extractSpecs($) {
+  const items = [];
+  $('.row, .row_last').each((_, row) => {
+    const $row = $(row);
+    const label = cleanText($row.find('.label label').text()).replace(/:$/, '');
+    const value = cleanText($row.find('.txt_input .inp').text());
+    if (label && value) {
+      items.push({ label, value });
     }
   });
-  return [...images];
+  return items;
+}
+
+function extractContact($) {
+  const contactBox = $('.contact-box .cinfo');
+  const dealer = cleanText(contactBox.find('.cname').first().text());
+  const hotline = cleanText(contactBox.find('.cphone').first().text());
+  // Address là text node giữa "Địa chỉ:" và "Website:"
+  const contactText = cleanMultiline(contactBox.find('.contact-txt').text());
+  const addressMatch = contactText.match(/Địa chỉ:\s*(.+?)(?:\s*Website:|$)/i);
+  return {
+    dealer,
+    hotline,
+    address: addressMatch ? cleanText(addressMatch[1]) : ''
+  };
 }
 
 async function fetchBonbanhCarDetail(detailUrl) {
@@ -207,53 +386,26 @@ async function fetchBonbanhCarDetail(detailUrl) {
   const html = await fetchHtml(url);
   const $ = cheerio.load(html);
 
-  const title = cleanText($('#detail_title p').text());
-  const priceText = cleanText($('.price_list_car b').text());
+  const rawTitle = cleanText($('.title h1').first().text());
+  // Tách "Xe VinFast VF7 Eco 2026 - 725 Triệu" → title + price
+  const titleMatch = rawTitle.match(/^(?:Xe\s+)?(.+?)\s*-\s*([\d.,]+\s*(?:Triệu|Tỷ)[^\-]*)$/i);
+  const title = titleMatch ? cleanText(titleMatch[1]) : rawTitle;
+  const priceText = titleMatch ? cleanText(titleMatch[2]) : '';
 
-  const tabSections = [];
-  let summary = [];
-  let description = '';
+  const specs = extractSpecs($);
+  const summary = specs.slice(0, 8);
+  const description = cleanMultiline($('.des_txt').text());
+  const contact = extractContact($);
 
-  $('#detail_tabber .tab-pane').each((index, pane) => {
-    const paneSections = extractTabSections($, pane);
-    if (!paneSections.length) {
-      return;
-    }
-    paneSections.forEach((section) => {
-      if (
-        !description &&
-        /mô tả|chi tiết/i.test(section.title || '') &&
-        section.items?.[0]?.value
-      ) {
-        description = section.items[0].value;
-      }
-      tabSections.push(section);
+  const sections = specs.length
+    ? [{ title: 'Thông số kỹ thuật', items: specs }]
+    : [];
+  if (description) {
+    sections.push({
+      title: 'Mô tả',
+      items: [{ label: 'Chi tiết', value: description }]
     });
-    if (index === 0) {
-      paneSections.forEach((section) => {
-        section.items.forEach((item) => {
-          if (summary.length < 8) {
-            summary.push(item);
-          }
-        });
-      });
-    }
-  });
-
-  const summaryFallback = cleanMultiline($('#item_description, .item_description').first().text());
-  if (!summary.length && summaryFallback) {
-    summary = [{ label: 'Mô tả', value: summaryFallback }];
   }
-
-  if (!description) {
-    description = summaryFallback || '';
-  }
-
-  const contact = {
-    dealer: cleanText($('#item_head').text()),
-    hotline: cleanText($('#item_phone span').text()),
-    address: cleanText($('#item_address').text().replace(/^Địa chỉ:\s*/i, ''))
-  };
 
   return {
     source: 'bonbanh',
@@ -262,7 +414,7 @@ async function fetchBonbanhCarDetail(detailUrl) {
     title,
     priceText,
     summary,
-    sections: tabSections,
+    sections,
     description,
     gallery: extractGallery($),
     contact,
@@ -270,4 +422,4 @@ async function fetchBonbanhCarDetail(detailUrl) {
   };
 }
 
-module.exports = { fetchBonbanhCars, fetchBonbanhCarDetail };
+module.exports = { fetchBonbanhCars, fetchBonbanhCarDetail, fetchBonbanhSalonCars };
