@@ -153,6 +153,37 @@ async function saveSnapshot(snapshot) {
   }
 }
 
+/**
+ * Load the latest snapshot from MongoDB (for Vercel cold-start hydration).
+ * Excludes community cars — those are re-merged separately by buildPayloadWithCommunity.
+ */
+async function getLatestSnapshot() {
+  if (!db) return null;
+  try {
+    const meta = await db.collection(SNAPSHOTS_COLLECTION)
+      .find({})
+      .sort({ fetchedAt: -1 })
+      .limit(1)
+      .next();
+    if (!meta) return null;
+
+    const cars = await db.collection(COLLECTION)
+      .find({ source: { $ne: 'community' } })
+      .sort({ updatedAt: -1 })
+      .toArray();
+
+    return {
+      cars,
+      fetchedAt: meta.fetchedAt,
+      sources: meta.sources || [],
+      errors: meta.errors || []
+    };
+  } catch (error) {
+    console.error('[MongoDB] Error loading latest snapshot:', error.message);
+    return null;
+  }
+}
+
 async function saveNewCarSnapshot(snapshot) {
   if (!db) {
     console.warn('[MongoDB] Database not initialized, skipping saveNewCarSnapshot');
@@ -518,6 +549,7 @@ module.exports = {
   initMongo,
   saveCars,
   saveSnapshot,
+  getLatestSnapshot,
   saveNewCarSnapshot,
   getCars,
   getCarCount,

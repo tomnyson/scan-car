@@ -47,4 +47,39 @@ curl "http://localhost:3000/api/cars?refresh=true"
 ```
 
 Kết quả trả về gồm thời gian cập nhật (`updatedAt`), tổng số xe (`count`), danh sách nguồn, lỗi (nếu có) và mảng dữ liệu chi tiết.
+
+## Deploy Vercel
+
+Repo đã sẵn sàng chạy trên Vercel (serverless). Các thay đổi chính:
+- `api/index.js` là entry serverless, re-export Express app.
+- `vercel.json` khai báo rewrites + Vercel Cron gọi `/api/cron/refresh` mỗi 6 giờ.
+- Filesystem cache tự động tắt; **MongoDB làm source of truth**.
+- Upload ảnh dùng **Vercel Blob** (`@vercel/blob`).
+
+### Cấu hình env trên Vercel
+
+Bắt buộc:
+
+| Biến | Mô tả |
+| --- | --- |
+| `MONGO_URL` | Connection string MongoDB Atlas |
+| `MONGO_DB` | Tên database (mặc định `scan_car`) |
+| `MONGO_COLLECTION` | Collection xe (mặc định `cars`) |
+| `CRON_SECRET` | Chuỗi ngẫu nhiên dài, bảo vệ endpoint cron |
+| `BLOB_READ_WRITE_TOKEN` | Token Vercel Blob (Storage → Blob → Create) |
+| `ADMIN_KEY` | Key auth cho `/api/admin/*` |
+
+### Các bước deploy
+
+```bash
+npm install                 # cài @vercel/blob
+vercel link
+vercel env add MONGO_URL production
+vercel env add CRON_SECRET production
+vercel env add BLOB_READ_WRITE_TOKEN production
+vercel env add ADMIN_KEY production
+vercel deploy --prod
+```
+
+Sau khi deploy, gọi thử `curl -H "Authorization: Bearer $CRON_SECRET" "https://<domain>/api/cron/refresh"` để refresh lần đầu.
 # scan-car

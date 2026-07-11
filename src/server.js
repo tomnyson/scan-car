@@ -6,20 +6,21 @@ const fsPromises = fs.promises;
 const express = require('express');
 const compression = require('compression');
 const helmet = require('helmet');
-const cron = require('node-cron');
 const { fetchXeLuotToanTrungCars, fetchXeLuotToanTrungCarDetail } = require('./scrapers/xeluottoantrung');
 const { fetchOtoAnhLuongCars, fetchOtoAnhLuongCarDetail } = require('./scrapers/otoanhluong');
 const { fetchBonbanhCars, fetchBonbanhCarDetail } = require('./scrapers/bonbanh');
 const { fetchChototCars, fetchChototCarDetail } = require('./scrapers/chotot');
 const { fetchVCarPrices } = require('./scrapers/vcar');
 const { checkTrafficFine } = require('./scrapers/trafficfine');
-const { initMongo, saveSnapshot, saveNewCarSnapshot, saveUserCar, getUserCars, deleteUserCar, getPendingUserCars, approveUserCar, rejectUserCar, toggleUserCarVisibility, updateUserCar } = require('./mongo');
+const { initMongo, saveSnapshot, getLatestSnapshot, saveNewCarSnapshot, saveUserCar, getUserCars, deleteUserCar, getPendingUserCars, approveUserCar, rejectUserCar, toggleUserCarVisibility, updateUserCar } = require('./mongo');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const CACHE_TTL_MS = Number(process.env.CACHE_TTL_MS || 2 * 60 * 60 * 1000);
 const CRON_SCHEDULE = process.env.CRON_SCHEDULE || '0 3 * * *';
 const CRON_TIMEZONE = process.env.CRON_TIMEZONE || 'Asia/Ho_Chi_Minh';
+const CRON_SECRET = process.env.CRON_SECRET || '';
+const isVercel = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
 const CACHE_FILE_PATH = path.join(__dirname, '../cache/cars-cache.json');
 const tasks = [
   { id: 'xeluottoantrung', name: 'Xe Lướt Toàn Trung', loader: fetchXeLuotToanTrungCars },
@@ -61,6 +62,7 @@ const detailCache = new Map();
 const createEmptyCache = () => ({ cars: [], fetchedAt: 0, sources: [], errors: [] });
 
 const loadCacheFromDisk = () => {
+  if (isVercel) return createEmptyCache();
   try {
     if (!fs.existsSync(CACHE_FILE_PATH)) {
       return createEmptyCache();
@@ -82,6 +84,7 @@ const loadCacheFromDisk = () => {
 };
 
 const persistCacheToDisk = async (snapshot) => {
+  if (isVercel) return;
   try {
     await fsPromises.mkdir(path.dirname(CACHE_FILE_PATH), { recursive: true });
     await fsPromises.writeFile(CACHE_FILE_PATH, JSON.stringify(snapshot, null, 2), 'utf8');
@@ -93,6 +96,50 @@ const persistCacheToDisk = async (snapshot) => {
 let cache = loadCacheFromDisk();
 const DETAIL_CACHE_TTL_MS = CACHE_TTL_MS;
 let mongoReady = false;
+
+let mongoInitPromise = null;
+const ensureMongo = () => {
+  if (!mongoInitPromise) {
+    mongoInitPromise = initMongo()
+      .then((result) => {
+        mongoReady = Boolean(result?.ok);
+        if (!mongoReady) {
+          console.warn('MongoDB không bật:', result?.message);
+        } else {
+          console.log(result.message);
+        }
+        return result;
+      })
+      .catch((error) => {
+        mongoReady = false;
+        console.warn('Không thể kết nối Mongo:', error.message);
+        mongoInitPromise = null; // allow retry
+      });
+  }
+  return mongoInitPromise;
+};
+
+let mongoHydratePromise = null;
+const hydrateFromMongo = async () => {
+  if (cache.cars.length > 0) return;
+  if (!mongoHydratePromise) {
+    mongoHydratePromise = (async () => {
+      await ensureMongo();
+      if (!mongoReady) return;
+      try {
+        const snapshot = await getLatestSnapshot();
+        if (snapshot && snapshot.cars.length > 0 && cache.cars.length === 0) {
+          cache = snapshot;
+          console.log(`[Hydrate] Loaded ${snapshot.cars.length} cars from MongoDB snapshot`);
+        }
+      } catch (error) {
+        console.warn('[Hydrate] Failed:', error.message);
+        mongoHydratePromise = null; // allow retry
+      }
+    })();
+  }
+  return mongoHydratePromise;
+};
 
 const normalizeHost = (value = '') => value.trim().toLowerCase().replace(/^www\./, '');
 const matchesHost = (host, candidate) => host === candidate || host.endsWith(`.${candidate}`);
@@ -249,6 +296,11 @@ async function buildPayloadWithCommunity(snapshot, fallbackDate = Date.now()) {
 app.get('/api/cars', async (req, res) => {
   res.set('Cache-Control', 'no-store');
   const shouldRefresh = req.query.refresh === 'true';
+
+  if (!shouldRefresh && cache.cars.length === 0) {
+    await hydrateFromMongo();
+  }
+
   const hasCache = cache.cars.length > 0;
   const isFresh = hasCache && Date.now() - cache.fetchedAt < CACHE_TTL_MS;
 
@@ -500,59 +552,86 @@ app.delete('/api/user-cars/:id', async (req, res) => {
 
 // ========== FILE UPLOAD ==========
 const multer = require('multer');
-const isVercel = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
-const UPLOAD_DIR = isVercel
-  ? path.join(os.tmpdir(), 'scan-car-uploads')
-  : path.join(publicDir, 'uploads');
 
-// Ensure upload directory exists
-if (!fs.existsSync(UPLOAD_DIR)) {
-  fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+const uploadFileFilter = (req, file, cb) => {
+  const allowed = /jpeg|jpg|png|gif|webp/;
+  const ext = path.extname(file.originalname).toLowerCase().replace('.', '');
+  if (allowed.test(ext) && allowed.test(file.mimetype.split('/')[1])) {
+    cb(null, true);
+  } else {
+    cb(new Error('Chỉ chấp nhận file hình ảnh (jpg, png, gif, webp)'));
+  }
+};
+
+if (isVercel) {
+  // Vercel: filesystem read-only → store trong memory rồi upload lên Vercel Blob
+  const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024 },
+    fileFilter: uploadFileFilter
+  });
+
+  app.post('/api/upload', upload.array('images', 10), async (req, res) => {
+    try {
+      if (!req.files || req.files.length === 0) {
+        return res.status(400).json({ success: false, error: 'Không có file nào được upload' });
+      }
+      if (!process.env.BLOB_READ_WRITE_TOKEN) {
+        return res.status(500).json({ success: false, error: 'Thiếu BLOB_READ_WRITE_TOKEN' });
+      }
+
+      const { put } = require('@vercel/blob');
+      const urls = await Promise.all(req.files.map(async (file) => {
+        const ext = path.extname(file.originalname);
+        const filename = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}${ext}`;
+        const blob = await put(`scan-car/${filename}`, file.buffer, {
+          access: 'public',
+          contentType: file.mimetype
+        });
+        return blob.url;
+      }));
+
+      return res.json({ success: true, count: urls.length, urls });
+    } catch (error) {
+      console.error('Lỗi upload Blob:', error);
+      return res.status(500).json({ success: false, error: error.message || 'Không thể upload file' });
+    }
+  });
+} else {
+  const UPLOAD_DIR = path.join(publicDir, 'uploads');
+  if (!fs.existsSync(UPLOAD_DIR)) {
+    fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+  }
+  app.use('/uploads', express.static(UPLOAD_DIR, { maxAge: '1h' }));
+
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, UPLOAD_DIR),
+    filename: (req, file, cb) => {
+      const ext = path.extname(file.originalname);
+      const uniqueName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}${ext}`;
+      cb(null, uniqueName);
+    }
+  });
+
+  const upload = multer({
+    storage,
+    limits: { fileSize: 5 * 1024 * 1024 },
+    fileFilter: uploadFileFilter
+  });
+
+  app.post('/api/upload', upload.array('images', 10), (req, res) => {
+    try {
+      if (!req.files || req.files.length === 0) {
+        return res.status(400).json({ success: false, error: 'Không có file nào được upload' });
+      }
+      const urls = req.files.map(f => `/uploads/${f.filename}`);
+      return res.json({ success: true, count: urls.length, urls });
+    } catch (error) {
+      console.error('Lỗi upload:', error);
+      return res.status(500).json({ success: false, error: error.message || 'Không thể upload file' });
+    }
+  });
 }
-
-app.use('/uploads', express.static(UPLOAD_DIR, { maxAge: isVercel ? '5m' : '1h' }));
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, UPLOAD_DIR),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const uniqueName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}${ext}`;
-    cb(null, uniqueName);
-  }
-});
-
-const upload = multer({
-  storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max
-  fileFilter: (req, file, cb) => {
-    const allowed = /jpeg|jpg|png|gif|webp/;
-    const ext = path.extname(file.originalname).toLowerCase().replace('.', '');
-    if (allowed.test(ext) && allowed.test(file.mimetype.split('/')[1])) {
-      cb(null, true);
-    } else {
-      cb(new Error('Chỉ chấp nhận file hình ảnh (jpg, png, gif, webp)'));
-    }
-  }
-});
-
-// POST /api/upload - Upload multiple images
-app.post('/api/upload', upload.array('images', 10), (req, res) => {
-  try {
-    if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ success: false, error: 'Không có file nào được upload' });
-    }
-
-    const urls = req.files.map(f => `/uploads/${f.filename}`);
-    return res.json({
-      success: true,
-      count: urls.length,
-      urls
-    });
-  } catch (error) {
-    console.error('Lỗi upload:', error);
-    return res.status(500).json({ success: false, error: error.message || 'Không thể upload file' });
-  }
-});
 
 // ========== ADMIN ENDPOINTS ==========
 const ADMIN_KEY = process.env.ADMIN_KEY || 'admin123'; // Simple auth key
@@ -723,6 +802,31 @@ app.get('/api/captcha', (_, res) => {
   }
 });
 
+// ========== VERCEL CRON ==========
+// Vercel Cron gửi GET request với header Authorization: Bearer <CRON_SECRET>.
+// Cấu hình schedule trong vercel.json.
+app.get('/api/cron/refresh', async (req, res) => {
+  if (CRON_SECRET) {
+    const auth = req.headers.authorization || '';
+    if (auth !== `Bearer ${CRON_SECRET}`) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+  }
+  try {
+    await ensureMongo();
+    await refreshCache();
+    return res.json({
+      success: true,
+      count: cache.cars.length,
+      updatedAt: new Date(cache.fetchedAt).toISOString(),
+      errors: cache.errors
+    });
+  } catch (error) {
+    console.error('[Cron] refresh thất bại:', error);
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 app.use((req, res, next) => {
   if (req.path.startsWith('/api')) {
     return next();
@@ -733,34 +837,36 @@ app.use((req, res, next) => {
   return res.sendFile(path.join(publicDir, 'index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`🚗  Scan Car server đang chạy tại http://localhost:${PORT}`);
-  initMongo()
-    .then((result) => {
-      mongoReady = result.ok;
-      if (!result.ok) {
-        console.warn('MongoDB không bật:', result.message);
-      } else {
-        console.log(result.message);
-      }
-    })
-    .catch((error) => {
-      mongoReady = false;
-      console.warn('Không thể kết nối Mongo:', error.message);
-    });
+// ========== ENTRY ==========
+if (isVercel) {
+  // Serverless: kick off Mongo connect on cold start.
+  ensureMongo();
+} else {
+  app.listen(PORT, () => {
+    console.log(`🚗  Scan Car server đang chạy tại http://localhost:${PORT}`);
+    ensureMongo();
 
-  // Lịch chạy tự động mỗi ngày 03:00
-  if (cron.validate(CRON_SCHEDULE)) {
-    console.log(`[Cron] Đăng ký lịch "${CRON_SCHEDULE}" (TZ: ${CRON_TIMEZONE})`);
-    cron.schedule(
-      CRON_SCHEDULE,
-      () => {
-        console.log('[Cron] Đang làm mới dữ liệu...');
-        refreshCache().catch((error) => console.error('[Cron] Không làm mới được:', error.message));
-      },
-      { timezone: CRON_TIMEZONE }
+    // Refresh ngay khi khởi động — tránh cache stale nếu server tắt lâu.
+    refreshCache().catch((error) =>
+      console.error('[Startup] Không refresh được:', error.message)
     );
-  } else {
-    console.warn(`[Cron] Biểu thức không hợp lệ: ${CRON_SCHEDULE}`);
-  }
-});
+
+    // node-cron chỉ chạy khi có process dài (dev/self-hosted). Trên Vercel dùng Vercel Cron.
+    const cron = require('node-cron');
+    if (cron.validate(CRON_SCHEDULE)) {
+      console.log(`[Cron] Đăng ký lịch "${CRON_SCHEDULE}" (TZ: ${CRON_TIMEZONE})`);
+      cron.schedule(
+        CRON_SCHEDULE,
+        () => {
+          console.log('[Cron] Đang làm mới dữ liệu...');
+          refreshCache().catch((error) => console.error('[Cron] Không làm mới được:', error.message));
+        },
+        { timezone: CRON_TIMEZONE }
+      );
+    } else {
+      console.warn(`[Cron] Biểu thức không hợp lệ: ${CRON_SCHEDULE}`);
+    }
+  });
+}
+
+module.exports = app;

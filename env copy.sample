@@ -6,4 +6,15 @@ MONGO_URL=mongodb://localhost:27017/scan_car
 MONGO_DB=scan_car
 MONGO_COLLECTION=cars
 
-# Cron (đang cố định 03:00 mỗi ngày trong mã; chỉnh trong src/server.js nếu cần)
+# Cron (chỉ áp dụng khi tự host, không dùng trên Vercel — cấu hình schedule trong vercel.json)
+CRON_SCHEDULE=0 */6 * * *
+CRON_TIMEZONE=Asia/Ho_Chi_Minh
+
+# Admin key cho các endpoint /api/admin/*
+ADMIN_KEY=change-me
+
+# --- Chỉ dành cho Vercel ---
+# Vercel Cron sẽ gửi header Authorization: Bearer $CRON_SECRET tới /api/cron/refresh
+CRON_SECRET=change-me-random-long-string
+# Token Vercel Blob cho feature upload ảnh (tạo trong Vercel dashboard → Storage → Blob)
+BLOB_READ_WRITE_TOKEN=
