@@ -537,12 +537,20 @@ const renderBrandFilters = () => {
 
 const updateSeatOptions = () => {
   const counts = new Map();
+  // Đếm dựa vào cars thỏa mọi filter khác trừ chính seat — count động theo lựa chọn hiện tại.
+  const scope = filterCarsExcept(['seat']);
 
-  state.data.forEach((car) => {
+  scope.forEach((car) => {
     const seatCount = Number(car?.seatCount);
     if (!Number.isFinite(seatCount) || seatCount <= 0) return;
     const bucket = seatCount >= 10 ? 10 : seatCount;
     counts.set(bucket, (counts.get(bucket) || 0) + 1);
+  });
+
+  // Đảm bảo các bucket đang được chọn vẫn xuất hiện (kể cả khi count = 0)
+  // để user còn thấy checkbox mà bỏ chọn.
+  state.filters.selectedSeatBuckets.forEach((bucket) => {
+    if (!counts.has(bucket)) counts.set(bucket, 0);
   });
 
   state.seatOptions = [...counts.entries()]
@@ -659,112 +667,93 @@ const renderYearFilters = () => {
   state.filters.yearMax = Number.isFinite(normalizedMax) && normalizedMax < boundsMax ? normalizedMax : null;
 };
 
-const filterCars = () => {
+// Predicates cho từng dimension filter — cho phép tính facet count động
+// bằng cách bỏ qua predicate của chính dimension đang render.
+const buildFilterPredicates = () => {
   const keyword = state.filters.keyword.toLowerCase();
-  const selected = state.filters.selectedSources;
+  const selectedSources = state.filters.selectedSources;
   const selectedBrands = state.filters.selectedBrands;
   const selectedSeatBuckets = state.filters.selectedSeatBuckets;
-  const priceMin = state.filters.priceMin;
-  const priceMax = state.filters.priceMax;
-  const odoMin = state.filters.odoMin;
-  const odoMax = state.filters.odoMax;
-  const yearMin = state.filters.yearMin;
-  const yearMax = state.filters.yearMax;
+  const { priceMin, priceMax, odoMin, odoMax, yearMin, yearMax } = state.filters;
 
-  return state.data.filter((car) => {
-    // Source filter
-    if (selected.size && !selected.has(car.source)) {
-      return false;
-    }
-
-    // Brand filter
-    if (selectedBrands.size) {
-      const slug = car.brandSlug || '';
-      if (!selectedBrands.has(slug)) {
-        return false;
-      }
-    }
-
-    // Price range filter
-    if (priceMin !== null || priceMax !== null) {
+  return {
+    source(car) {
+      if (!selectedSources.size) return true;
+      return selectedSources.has(car.source);
+    },
+    brand(car) {
+      if (!selectedBrands.size) return true;
+      return selectedBrands.has(car.brandSlug || '');
+    },
+    price(car) {
+      if (priceMin === null && priceMax === null) return true;
       const carPrice = extractPrice(car.priceText);
-      if (carPrice !== null) {
-        if (priceMin !== null && carPrice < priceMin) {
-          return false;
-        }
-        if (priceMax !== null && carPrice > priceMax) {
-          return false;
-        }
-      }
-    }
-
-    // ODO (km) range filter
-    if (odoMin !== null || odoMax !== null) {
-      // Extract km from attributes
+      if (carPrice === null) return true; // giữ car nếu không parse được giá
+      if (priceMin !== null && carPrice < priceMin) return false;
+      if (priceMax !== null && carPrice > priceMax) return false;
+      return true;
+    },
+    odo(car) {
+      if (odoMin === null && odoMax === null) return true;
       let carOdo = null;
-      (car.attributes || []).forEach(attr => {
+      (car.attributes || []).forEach((attr) => {
         const label = (attr.label || '').toLowerCase();
         if (label.includes('km') || label.includes('odo') || label.includes('số km')) {
           const value = (attr.value || '').replace(/[^\d]/g, '');
-          if (value) {
-            carOdo = parseInt(value);
-          }
+          if (value) carOdo = parseInt(value);
         }
       });
-
-      if (carOdo !== null) {
-        if (odoMin !== null && carOdo < odoMin) {
-          return false;
-        }
-        if (odoMax !== null && odoMax < 200000 && carOdo > odoMax) {
-          return false;
-        }
-      }
-    }
-
-    // Seat count filter
-    if (selectedSeatBuckets.size) {
+      if (carOdo === null) return true;
+      if (odoMin !== null && carOdo < odoMin) return false;
+      if (odoMax !== null && odoMax < 200000 && carOdo > odoMax) return false;
+      return true;
+    },
+    seat(car) {
+      if (!selectedSeatBuckets.size) return true;
       const seatCount = Number.isFinite(Number(car.seatCount)) ? Number(car.seatCount) : null;
-      if (seatCount === null) {
-        return false;
-      }
-      const matched = [...selectedSeatBuckets].some((bucket) => {
-        if (bucket === 10) return seatCount >= 10;
-        return seatCount === bucket;
-      });
-      if (!matched) return false;
-    }
-
-    // Year range filter
-    if (yearMin !== null || yearMax !== null) {
+      if (seatCount === null) return false;
+      return [...selectedSeatBuckets].some((bucket) =>
+        bucket === 10 ? seatCount >= 10 : seatCount === bucket
+      );
+    },
+    year(car) {
+      if (yearMin === null && yearMax === null) return true;
       const yearValue = Number.isFinite(Number(car.yearValue)) ? Number(car.yearValue) : null;
-      if (yearValue === null) {
-        return false;
-      }
-      if (yearMin !== null && yearValue < yearMin) {
-        return false;
-      }
-      if (yearMax !== null && yearValue > yearMax) {
-        return false;
-      }
+      if (yearValue === null) return false;
+      if (yearMin !== null && yearValue < yearMin) return false;
+      if (yearMax !== null && yearValue > yearMax) return false;
+      return true;
+    },
+    keyword(car) {
+      if (!keyword) return true;
+      const haystack = [
+        car.title,
+        car.priceText,
+        car.sourceName,
+        car.brand,
+        ...(car.attributes || []).map((attr) => `${attr.label} ${attr.value}`)
+      ].join(' ').toLowerCase();
+      return haystack.includes(keyword);
     }
+  };
+};
 
-    // Keyword search
-    if (!keyword) return true;
+const filterCarsExcept = (excludeDimensions = null) => {
+  const predicates = buildFilterPredicates();
+  const skip = excludeDimensions instanceof Set
+    ? excludeDimensions
+    : (Array.isArray(excludeDimensions) ? new Set(excludeDimensions) : new Set());
 
-    const haystack = [
-      car.title,
-      car.priceText,
-      car.sourceName,
-      car.brand,
-      ...(car.attributes || []).map((attr) => `${attr.label} ${attr.value}`)
-    ]
-      .join(' ')
-      .toLowerCase();
-
-    return haystack.includes(keyword);
+  return state.data.filter((car) => {
+    for (const [dim, pred] of Object.entries(predicates)) {
+      if (skip.has(dim)) continue;
+      if (!pred(car)) return false;
+    }
+    return true;
   });
 };
+
+const filterCars = () => filterCarsExcept();
 
 const sortCars = (cars) => {
   const sorted = [...cars];
@@ -795,6 +784,10 @@ const sortCars = (cars) => {
 };
 
 const renderCars = () => {
+  // Cập nhật lại facet count (seat) trước khi filter chính,
+  // để sidebar phản ánh số xe khả dụng theo các filter khác đang chọn.
+  renderSeatFilters();
+
   const filtered = filterCars();
   const allCars = sortCars(filtered);
 
