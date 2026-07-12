@@ -12,7 +12,7 @@ const { fetchBonbanhCars, fetchBonbanhCarDetail } = require('./scrapers/bonbanh'
 const { fetchChototCars, fetchChototCarDetail } = require('./scrapers/chotot');
 const { fetchVCarPrices } = require('./scrapers/vcar');
 const { checkTrafficFine } = require('./scrapers/trafficfine');
-const { initMongo, saveSnapshot, getLatestSnapshot, getSettings, updateSettings, getBonbanhExistingIds, saveNewCarSnapshot, saveUserCar, getUserCars, deleteUserCar, getPendingUserCars, approveUserCar, rejectUserCar, toggleUserCarVisibility, updateUserCar } = require('./mongo');
+const { initMongo, saveSnapshot, getLatestSnapshot, getSettings, updateSettings, getBonbanhExistingIds, getDetailCache, saveDetailCache, saveNewCarSnapshot, saveUserCar, getUserCars, deleteUserCar, getPendingUserCars, approveUserCar, rejectUserCar, toggleUserCarVisibility, updateUserCar } = require('./mongo');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -319,8 +319,27 @@ async function buildPayloadWithCommunity(snapshot, fallbackDate = Date.now()) {
   };
 }
 
+// Trả cache headers cho response — chỉ dùng khi payload xuất phát từ cache in-memory hiện tại.
+const sendCarsPayload = (req, res, payload, { shouldRefresh, isStale }) => {
+  if (shouldRefresh) {
+    res.set('Cache-Control', 'no-store');
+    return res.json(payload);
+  }
+
+  // ETag = hash cache.fetchedAt + total count. Đủ để invalidate khi refresh scan xong.
+  const etag = `W/"${cache.fetchedAt}-${payload.count}"`;
+  res.set('ETag', etag);
+  // Public: CDN edge của Vercel có thể cache 60s + serve stale trong 5 phút khi revalidate.
+  res.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+  if (isStale) res.set('X-Data-Stale', 'true');
+
+  if (req.headers['if-none-match'] === etag) {
+    return res.status(304).end();
+  }
+  return res.json(payload);
+};
+
 app.get('/api/cars', async (req, res) => {
-  res.set('Cache-Control', 'no-store');
   const shouldRefresh = req.query.refresh === 'true';
 
   if (!shouldRefresh && cache.cars.length === 0) {
@@ -332,22 +351,25 @@ app.get('/api/cars', async (req, res) => {
 
   if (!shouldRefresh && hasCache) {
     if (!isFresh) {
-      res.set('X-Data-Stale', 'true');
       refreshCache().catch((error) => {
         console.error('Không thể làm mới cache nền:', error);
       });
     }
-    return res.json(await buildPayloadWithCommunity(cache));
+    const payload = await buildPayloadWithCommunity(cache);
+    return sendCarsPayload(req, res, payload, { shouldRefresh, isStale: !isFresh });
   }
 
   try {
     await refreshCache();
-    return res.json(await buildPayloadWithCommunity(cache));
+    const payload = await buildPayloadWithCommunity(cache);
+    return sendCarsPayload(req, res, payload, { shouldRefresh, isStale: false });
   } catch (error) {
     console.error('Không thể tải dữ liệu xe:', error);
     if (hasCache) {
-      return res.status(200).json(await buildPayloadWithCommunity(cache));
+      const payload = await buildPayloadWithCommunity(cache);
+      return sendCarsPayload(req, res, payload, { shouldRefresh: false, isStale: true });
     }
+    res.set('Cache-Control', 'no-store');
     return res.status(500).json({ error: 'Không thể lấy dữ liệu xe. Vui lòng thử lại sau.' });
   }
 });
@@ -435,11 +457,27 @@ app.get('/api/cars/detail', async (req, res) => {
   }
 
   const cacheKey = `${source}|${parsed.href}`;
-  const cached = getDetailCacheEntry(cacheKey);
-  if (cached) {
-    return res.json({ data: cached, cached: true });
+
+  // L1: in-memory (nhanh nhất, chỉ hit khi warm invocation)
+  const memoryHit = getDetailCacheEntry(cacheKey);
+  if (memoryHit) {
+    return res.json({ data: memoryHit, cached: 'memory' });
   }
 
+  // L2: Mongo (sống qua cold start)
+  if (mongoReady) {
+    try {
+      const mongoHit = await getDetailCache(cacheKey);
+      if (mongoHit) {
+        detailCache.set(cacheKey, { data: mongoHit, fetchedAt: Date.now() });
+        return res.json({ data: mongoHit, cached: 'mongo' });
+      }
+    } catch (error) {
+      console.warn('Không đọc được detail cache Mongo:', error.message);
+    }
+  }
+
+  // L3: fetch từ source
   try {
     const fetcher = detailFetchers[source];
     if (!fetcher) {
@@ -447,6 +485,11 @@ app.get('/api/cars/detail', async (req, res) => {
     }
     const data = await fetcher(parsed.href);
     detailCache.set(cacheKey, { data, fetchedAt: Date.now() });
+    if (mongoReady) {
+      saveDetailCache(cacheKey, data).catch((error) => {
+        console.warn('Không lưu được detail cache Mongo:', error.message);
+      });
+    }
     return res.json({ data });
   } catch (error) {
     console.error('Không thể tải chi tiết xe:', error);

@@ -4279,3 +4279,47 @@ body.modal-open {
   white-space: nowrap;
   border: 0;
 }
+
+/* ========== SWR revalidate indicator ========== */
+.revalidate-indicator {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 1200;
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gray-800, #1f2937);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--gray-200, #e5e7eb);
+  border-radius: 999px;
+  box-shadow: 0 8px 24px -12px rgba(15, 23, 42, 0.35);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+  transform: translateY(4px);
+  opacity: 0;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+.revalidate-indicator.is-visible {
+  display: inline-flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+.revalidate-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary, #0b5b7c);
+  box-shadow: 0 0 0 4px rgba(11, 91, 124, 0.15);
+  animation: revalidatePulse 1s ease-in-out infinite;
+}
+@keyframes revalidatePulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(0.7); opacity: 0.5; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .revalidate-dot { animation: none; }
+}

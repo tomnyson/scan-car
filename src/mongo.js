@@ -10,6 +10,8 @@ const NEW_CAR_COLLECTION = process.env.MONGO_NEW_CAR_COLLECTION || 'new_car_pric
 const SNAPSHOTS_COLLECTION = process.env.MONGO_SNAPSHOTS_COLLECTION || 'snapshots';
 const USER_CARS_COLLECTION = process.env.MONGO_USER_CARS_COLLECTION || 'user_cars';
 const SETTINGS_COLLECTION = process.env.MONGO_SETTINGS_COLLECTION || 'settings';
+const CAR_DETAILS_COLLECTION = process.env.MONGO_CAR_DETAILS_COLLECTION || 'car_details';
+const CAR_DETAIL_TTL_SECONDS = Number(process.env.MONGO_CAR_DETAIL_TTL_SECONDS) || 24 * 60 * 60;
 
 const DEFAULT_SETTINGS = Object.freeze({
   bonbanhMaxPages: 5,
@@ -45,6 +47,12 @@ async function initMongo() {
     await db.collection(USER_CARS_COLLECTION).createIndex({ createdAt: -1 });
     await db.collection(USER_CARS_COLLECTION).createIndex({ status: 1 });
     await db.collection(USER_CARS_COLLECTION).createIndex({ phone: 1 });
+
+    // Car details cache — TTL auto-expire
+    await db.collection(CAR_DETAILS_COLLECTION).createIndex(
+      { expireAt: 1 },
+      { expireAfterSeconds: 0 }
+    );
 
     console.log(`[MongoDB] Connected to ${MONGO_DB}, collections: ${COLLECTION}, ${NEW_CAR_COLLECTION}, ${SNAPSHOTS_COLLECTION}, ${USER_CARS_COLLECTION}`);
     return { ok: true, message: `Mongo connected: ${MONGO_DB}/${COLLECTION}` };
@@ -225,6 +233,31 @@ async function updateSettings(patch = {}) {
     { upsert: true }
   );
   return getSettings();
+}
+
+async function getDetailCache(cacheKey) {
+  if (!db || !cacheKey) return null;
+  try {
+    const doc = await db.collection(CAR_DETAILS_COLLECTION).findOne({ _id: cacheKey });
+    return doc?.data || null;
+  } catch (error) {
+    console.error('[MongoDB] Error loading detail cache:', error.message);
+    return null;
+  }
+}
+
+async function saveDetailCache(cacheKey, data) {
+  if (!db || !cacheKey || !data) return;
+  try {
+    const expireAt = new Date(Date.now() + CAR_DETAIL_TTL_SECONDS * 1000);
+    await db.collection(CAR_DETAILS_COLLECTION).updateOne(
+      { _id: cacheKey },
+      { $set: { data, expireAt, savedAt: Date.now() } },
+      { upsert: true }
+    );
+  } catch (error) {
+    console.warn('[MongoDB] Error saving detail cache:', error.message);
+  }
 }
 
 async function getBonbanhExistingIds() {
@@ -610,6 +643,8 @@ module.exports = {
   getSettings,
   updateSettings,
   getBonbanhExistingIds,
+  getDetailCache,
+  saveDetailCache,
   saveNewCarSnapshot,
   getCars,
   getCarCount,

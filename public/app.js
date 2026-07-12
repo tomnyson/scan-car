@@ -82,8 +82,8 @@ const els = {
 
 const placeholderImage = '/image/placeholder-car.svg';
 const CACHE_KEY = 'scanCar:data';
-const CACHE_TTL_MS = 2 * 60 * 60 * 1000; // 2 hours
-const AUTO_RELOAD_INTERVAL_MS = CACHE_TTL_MS;
+const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24h — chỉ để show ngay, luôn revalidate ở background
+const AUTO_RELOAD_INTERVAL_MS = 2 * 60 * 60 * 1000; // 2h — refresh tự động
 const detailCache = new Map();
 
 const dataCache = {
@@ -316,9 +316,25 @@ const formatPriceMillions = (value) => {
   return `${Number(value).toLocaleString('vi-VN')} triệu`;
 };
 
+const ensureRevalidateIndicator = () => {
+  let el = document.getElementById('revalidate-indicator');
+  if (el) return el;
+  el = document.createElement('div');
+  el.id = 'revalidate-indicator';
+  el.className = 'revalidate-indicator';
+  el.setAttribute('role', 'status');
+  el.setAttribute('aria-live', 'polite');
+  el.innerHTML = '<span class="revalidate-dot"></span><span>Đang cập nhật dữ liệu…</span>';
+  document.body.appendChild(el);
+  return el;
+};
+
 const setLoading = (flag, { silent = false } = {}) => {
   state.isLoading = flag;
   if (silent) {
+    // Chế độ silent: user đang xem data cached — chỉ hiện indicator nhỏ, không đè spinner full-screen.
+    const indicator = ensureRevalidateIndicator();
+    indicator.classList.toggle('is-visible', flag);
     return;
   }
 
@@ -2154,9 +2170,12 @@ if (resetFiltersBtn) {
   });
 }
 
+// SWR init: nếu có cache local → hiển thị ngay (instant paint), fetch mới ở background.
+// Nếu không có → fetch full-screen loading như bình thường.
+const hasLocalCache = Boolean(dataCache.load());
 hydrateFromCache();
 renderDetailModal();
-fetchCars();
+fetchCars({ silent: hasLocalCache });
 
 // Mobile menu toggle
 const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
